@@ -9,7 +9,7 @@ import Footer from '../layouts/Footer.astro';
 	<main>
 		<Header />
 		<Content>
-			Main content
+			<button onclick="request()">send hello</button>
 		</Content>
 		<Footer />
 	</main>
@@ -34,3 +34,12 @@ import Footer from '../layouts/Footer.astro';
 		background-position: 0%;
 	}
 </style>
+
+<script is:inline>
+	const request = async () => {
+		fetch("/api/completions", {
+			method: "POST",
+			body: JSON.stringify({}),
+		})
+	}
+</script>
