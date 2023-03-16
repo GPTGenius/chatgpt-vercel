@@ -6,6 +6,7 @@ import Footer from '../layouts/Footer.astro';
 import MessageBox from '@components/MessageBox';
 import "katex/dist/katex.min.css"
 import "highlight.js/styles/atom-one-dark.css"
+import MessageInput from '@components/MessageInput';
 ---
 
 <Layout title="ChatGPT">
@@ -13,6 +14,7 @@ import "highlight.js/styles/atom-one-dark.css"
 		<Header />
 		<Content>
 			<MessageBox />
+			<MessageInput />
 			<button onclick="request()">send hello</button>
 		</Content>
 		<Footer />

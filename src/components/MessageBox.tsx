@@ -7,7 +7,7 @@ import mdKbd from 'markdown-it-kbd'
 import { mockMarkdownData } from '@mock/markdown'
 
 const defaultMessage: Message[] = [{
-  content: '\nhello!hello!hello!hello!hello!hello!\n\nhello!\n\nhello!hello!hello!hello!hello!hello!hello!\n\nhello!\n\nhello!',
+  content: '\nhello!hello!hello!hello!hello!hhello!hello!hello!hello!hello!helloelhello!hello!hello!hello!hello!hellolohello!hello!hello!hello!hello!hello!\n\nhello!\n\nhello!hello!hello!hello!hello!hello!hello!\n\nhello!\n\nhello!',
   role: 'assistant'
 }, {
   content: 'hel\nlo!\n\n',
