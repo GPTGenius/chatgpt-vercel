@@ -16,19 +16,23 @@ export const post: APIRoute = async ({ request }) => {
     }],
     key = apiKey,
   } = body;
-  
-  const completion = await fetch(`https://${baseURL}/v1/chat/completions`, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`
-    },
-    method: "POST",
-    body: JSON.stringify({
-      model: "gpt-3.5-turbo",
-      messages,
+  try {
+    const completion = await fetch(`https://${baseURL}/v1/chat/completions`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${key}`
+      },
+      method: "POST",
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages,
+      })
     })
-  })
-  const data = await completion.json();
+    const data = await completion.json();
+  
+    return new Response(JSON.stringify(data), { status: 200 })
+  } catch (e) {
+    return new Response(JSON.stringify({ msg: e?.message || e?.stack || e  }), { status: 500 })
+  }
 
-  return new Response(JSON.stringify(data), { status: 200 })
 }

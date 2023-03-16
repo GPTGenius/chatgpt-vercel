@@ -1,23 +1,18 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../layouts/Header.astro';
-import Content from '../layouts/Content.astro';
-import Footer from '../layouts/Footer.astro';
-import MessageBox from '@components/MessageBox';
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/layouts/Header.astro';
+import Content from '@/layouts/Content.astro';
+import Conversation from '@components/Conversation';
 import "katex/dist/katex.min.css"
 import "highlight.js/styles/atom-one-dark.css"
-import MessageInput from '@components/MessageInput';
 ---
 
 <Layout title="ChatGPT">
 	<main>
 		<Header />
 		<Content>
-			<MessageBox />
-			<MessageInput />
-			<button onclick="request()">send hello</button>
+			<Conversation client:visible />
 		</Content>
-		<Footer />
 	</main>
 </Layout>
 
@@ -40,12 +35,3 @@ import MessageInput from '@components/MessageInput';
 		background-position: 0%;
 	}
 </style>
-
-<script is:inline>
-	const request = async () => {
-		fetch("/api/completions", {
-			method: "POST",
-			body: JSON.stringify({}),
-		})
-	}
-</script>
