@@ -3,12 +3,14 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../layouts/Header.astro';
 import Content from '../layouts/Content.astro';
 import Footer from '../layouts/Footer.astro';
+import MessageBox from '@components/MessageBox';
 ---
 
 <Layout title="ChatGPT">
 	<main>
 		<Header />
 		<Content>
+			<MessageBox />
 			<button onclick="request()">send hello</button>
 		</Content>
 		<Footer />
