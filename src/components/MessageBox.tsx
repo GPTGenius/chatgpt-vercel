@@ -37,7 +37,7 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
 
   return (
     <div className={`flex mb-[8px] ${message.role === 'user' ? 'flex-row-reverse' : ''}`}>
-      <div dangerouslySetInnerHTML={{ __html: md.render(message.content) }} className={`p-4 ${message.role === 'user' ? 'bg-[#0086ff] text-white rounded-br-none' : 'rounded-bl-none bg-[#f1f2f6]'} break-words overflow-hidden rounded-[20px]`}>
+      <div dangerouslySetInnerHTML={{ __html: md.render(message.content) }} className={`shadow-sm p-4 ${message.role === 'user' ? 'bg-[#0086ff] text-white rounded-br-none' : 'rounded-bl-none bg-[#f1f2f6]'} break-words overflow-hidden rounded-[20px]`}>
       </div>
     </div>
   )
