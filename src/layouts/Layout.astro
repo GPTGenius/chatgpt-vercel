@@ -45,4 +45,44 @@ const { title } = Astro.props;
     padding-bottom: 2rem;
     width: var(--content-width);
   }
+  /* 定义动画效果 */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* 给要添加动画的元素应用动画 */
+  .msg-fade-in {
+    animation-name: fadeIn;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+  }
+
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loading:before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border-radius: 10px;
+    border-bottom: 2px solid #c6c1c1;
+    animation: spin 0.75s linear infinite;
+    margin-right: 10px;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 </style>

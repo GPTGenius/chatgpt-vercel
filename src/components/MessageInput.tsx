@@ -1,9 +1,17 @@
-import { FC, useState } from 'react';
+import { FC, useState, useCallback } from 'react';
 
-const MessageInput: FC<{ onSubmit: (message: string) => Promise<void> }> = ({
-  onSubmit,
-}) => {
+const MessageInput: FC<{
+  onSubmit: (message: string) => Promise<void>;
+  loading: boolean;
+}> = ({ onSubmit, loading }) => {
   const [input, setInput] = useState('');
+  const disabled = input.trim() === '' || loading;
+
+  const handleSubmit = useCallback(() => {
+    if (disabled) return;
+    onSubmit(input);
+    setInput('');
+  }, [disabled, input, onSubmit]);
 
   return (
     <div className="flex mt-[20px]">
@@ -16,12 +24,9 @@ const MessageInput: FC<{ onSubmit: (message: string) => Promise<void> }> = ({
         }}
       />
       <button
-        disabled={input.trim() === ''}
-        className="shadow-sm text-white bg-[#0086ff] ml-[10px] p-[12px] px-[20px] border-none rounded-md"
-        onClick={() => {
-          onSubmit(input);
-          setInput('');
-        }}
+        disabled={disabled}
+        className="disabled:cursor-not-allowed disabled:bg-[#50a5f0] shadow-sm text-white bg-[#0086ff] ml-[10px] p-[12px] px-[20px] border-none rounded-md"
+        onClick={() => handleSubmit()}
       >
         Submit
       </button>

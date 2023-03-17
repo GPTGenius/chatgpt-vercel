@@ -1,10 +1,11 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Message } from '@interfaces';
 import MessageBox from './MessageBox';
 import MessageInput from './MessageInput';
 
 const Conversation: FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const sendChatMessages = async (content: string) => {
     const input: Message[] = messages.concat([
@@ -14,6 +15,7 @@ const Conversation: FC = () => {
       },
     ]);
     setMessages(input);
+    setLoading(true);
     try {
       const res = await fetch('/api/completions', {
         method: 'POST',
@@ -27,18 +29,30 @@ const Conversation: FC = () => {
     } catch {
       setMessages(input.concat([{ role: 'assistant', content: 'Error' }]));
     }
+    setLoading(false);
   };
 
+  useEffect(() => {
+    const element = document.querySelector('#content');
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+    });
+  }, [messages]);
+
   return (
-    <>
+    <div id="content">
       <MessageBox messages={messages} />
       {messages.length === 0 ? (
-        <div>Start a conversation via "Submit" button</div>
+        <div className="text-gray-400 mb-[20px]">
+          Start a conversation via "Submit" button
+        </div>
       ) : null}
-      <footer>
-        <MessageInput onSubmit={sendChatMessages} />
-      </footer>
-    </>
+      {loading && (
+        <div className="loading text-center text-gray-400">思考中...</div>
+      )}
+      <MessageInput onSubmit={sendChatMessages} loading={loading} />
+    </div>
   );
 };
 

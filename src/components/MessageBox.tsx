@@ -18,7 +18,7 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
 
   return (
     <div
-      className={`flex mb-[8px] ${
+      className={`msg-fade-in flex mb-[8px] ${
         message.role === 'user' ? 'flex-row-reverse' : ''
       }`}
     >
