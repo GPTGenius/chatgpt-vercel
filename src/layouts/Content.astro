@@ -1,9 +1,14 @@
-<div class="content"> 
+<div class="content">
   <slot />
 </div>
 
 <style>
   .content {
     margin-top: 1.6rem;
+    height: calc(100vh - 4rem - 100px - 72px - 1.6rem);
+    overflow-y: scroll;
+  }
+  .content::-webkit-scrollbar {
+    display: none;
   }
 </style>

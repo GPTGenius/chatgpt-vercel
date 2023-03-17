@@ -1,37 +1,41 @@
 ---
+import Conversation from '@components/Conversation';
 import Layout from '@/layouts/Layout.astro';
 import Header from '@/layouts/Header.astro';
 import Content from '@/layouts/Content.astro';
-import Conversation from '@components/Conversation';
-import "katex/dist/katex.min.css"
-import "highlight.js/styles/atom-one-dark.css"
+import 'katex/dist/katex.min.css';
+import 'highlight.js/styles/atom-one-dark.css';
 ---
 
 <Layout title="ChatGPT">
-	<main>
-		<Header />
-		<Content>
-			<Conversation client:visible />
-		</Content>
-	</main>
+  <main>
+    <Header />
+    <Content>
+      <Conversation client:visible />
+    </Content>
+  </main>
 </Layout>
 
 <style>
-	main {
-		margin: auto;
-		padding: 4rem 2rem;
-		max-width: var(--content-width);
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
+  main {
+    margin: auto;
+    padding: 4rem 2rem 100px 2rem;
+    max-width: var(--content-width);
+    height: 100vh;
+  }
+  h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0;
+  }
+  input {
+    border-color: #fff;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
 </style>

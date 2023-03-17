@@ -1,0 +1,50 @@
+{
+  "root": true,
+  "env": {
+    "commonjs": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "airbnb-base", "prettier"],
+  "plugins": ["import", "prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "import/no-unresolved": 0,
+    "import/extensions": 0,
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0
+  },
+  "overrides": [
+    {
+      "files": ["*.astro"],
+      "extends": ["plugin:astro/recommended"],
+      "plugins": ["astro"],
+      "parser": "astro-eslint-parser"
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": [
+        "plugin:react/recommended",
+        "plugin:react/jsx-runtime",
+        "plugin:react-hooks/recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "plugins": ["@typescript-eslint", "react"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 2021
+      },
+      "rules": {
+        "react/no-unescaped-entities": 0,
+        "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }]
+      },
+      "settings": {
+        "react": {
+          "version": "detect"
+        }
+      }
+    }
+  ]
+}
