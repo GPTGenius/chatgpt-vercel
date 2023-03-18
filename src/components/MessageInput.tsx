@@ -14,7 +14,7 @@ const MessageInput: FC<{
   }, [disabled, input, onSubmit]);
 
   return (
-    <div className="flex mt-[20px]">
+    <div className="flex">
       <input
         placeholder="Start conversation"
         className="shadow-inner flex-1 border-none rounded-md text-[#273346] bg-[#f8f8fa] p-[12px]"
@@ -25,10 +25,10 @@ const MessageInput: FC<{
       />
       <button
         disabled={disabled}
-        className="disabled:cursor-not-allowed disabled:bg-[#50a5f0] shadow-sm text-white bg-[#0086ff] ml-[10px] p-[12px] px-[20px] border-none rounded-md"
+        className="disabled:cursor-not-allowed disabled:bg-[#50a5f0] shadow-sm text-white bg-[#0086ff] ml-[0.5rem] p-[12px] px-[20px] border-none rounded-md"
         onClick={() => handleSubmit()}
       >
-        Submit
+        {'Send'}
       </button>
     </div>
   );

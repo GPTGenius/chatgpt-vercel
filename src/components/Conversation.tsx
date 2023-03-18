@@ -45,13 +45,15 @@ const Conversation: FC = () => {
       <MessageBox messages={messages} />
       {messages.length === 0 ? (
         <div className="text-gray-400 mb-[20px]">
-          Start a conversation via "Submit" button
+          Start a conversation via "Send" button
         </div>
       ) : null}
       {loading && (
-        <div className="loading text-center text-gray-400">思考中...</div>
+        <div className="loading text-center text-gray-400">Thinking...</div>
       )}
-      <MessageInput onSubmit={sendChatMessages} loading={loading} />
+      <footer>
+        <MessageInput onSubmit={sendChatMessages} loading={loading} />
+      </footer>
     </div>
   );
 };
