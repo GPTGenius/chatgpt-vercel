@@ -16,7 +16,7 @@ const MessageInput: FC<{
   return (
     <div className="flex">
       <input
-        placeholder="Start conversation"
+        placeholder="Start a conversation"
         className="shadow-inner flex-1 border-none rounded-md text-[#273346] bg-[#f8f8fa] p-[12px]"
         value={input}
         onChange={(event) => {
@@ -34,7 +34,7 @@ const MessageInput: FC<{
         className="disabled:cursor-not-allowed disabled:bg-[#50a5f0] shadow-sm text-white bg-[#0086ff] ml-[0.5rem] p-[12px] px-[20px] border-none rounded-md"
         onClick={() => handleSubmit()}
       >
-        {'Send'}
+        <i className="ri-send-plane-fill"></i>
       </button>
     </div>
   );

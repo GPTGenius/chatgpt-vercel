@@ -1,3 +1,4 @@
+import { defaultModel, supportedModels } from '@configs';
 import type { APIRoute } from 'astro';
 
 // read apiKey from env/process.env
@@ -11,15 +12,17 @@ const baseURL =
 
 export const post: APIRoute = async ({ request }) => {
   const body = await request.json();
-  const {
-    messages = [
-      {
-        role: 'user',
-        content: 'hello',
-      },
-    ],
-    key = apiKey,
-  } = body;
+  const { messages } = body;
+  let { key, model } = body;
+
+  if (!key?.startsWith('sk')) {
+    key = apiKey;
+  }
+
+  if (!supportedModels.includes(model)) {
+    model = defaultModel;
+  }
+
   try {
     const completion = await fetch(`https://${baseURL}/v1/chat/completions`, {
       headers: {
@@ -28,7 +31,7 @@ export const post: APIRoute = async ({ request }) => {
       },
       method: 'POST',
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model,
         messages,
       }),
     });

@@ -12,6 +12,10 @@ const { title } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
@@ -38,14 +42,33 @@ const { title } = Astro.props;
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
       DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
   }
+  header,
   footer {
     position: fixed;
-    bottom: 0;
     left: calc(50%);
     transform: translateX(-50%);
     padding: 2rem;
     max-width: var(--content-width);
     width: 100%;
+    z-index: 999;
+  }
+  header {
+    top: 4rem;
+  }
+  footer {
+    bottom: 0;
+  }
+  header .title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0;
+  }
+  header .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
   }
   /* 定义动画效果 */
   @keyframes fadeIn {

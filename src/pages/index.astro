@@ -1,18 +1,15 @@
 ---
 import Conversation from '@components/Conversation';
 import Layout from '@/layouts/Layout.astro';
-import Header from '@/layouts/Header.astro';
-import Content from '@/layouts/Content.astro';
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/atom-one-dark.css';
 ---
 
 <Layout title="ChatGPT">
   <main>
-    <Header />
-    <Content>
+    <div id="container">
       <Conversation client:visible />
-    </Content>
+    </div>
   </main>
 </Layout>
 
@@ -24,19 +21,12 @@ import 'highlight.js/styles/atom-one-dark.css';
     width: 100%;
     height: 100vh;
   }
-  h1 {
-    font-size: 3rem;
-    font-weight: 800;
-    margin: 0;
+  #container {
+    margin-top: calc(72px + 4rem);
+    height: calc(100vh - 4rem - 72px - 4rem - 50px - 4rem);
+    overflow-y: scroll;
   }
-  input {
-    border-color: #fff;
-  }
-  .text-gradient {
-    background-image: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 400%;
-    background-position: 0%;
+  #container::-webkit-scrollbar {
+    display: none;
   }
 </style>

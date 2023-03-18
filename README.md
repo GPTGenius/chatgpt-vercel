@@ -1,7 +1,9 @@
 # ChatGPT-Vercel
 Building your own ChatGPT website by Vercel
 
-## Quick Start
+![](https://github.com/GPTGenius/chatgpt-vercel/blob/main/assets/preview-2023-03-18.png)
+
+## Getting Started
 
 ### 1. Create Project
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/GPTGenius/chatgpt-vercel&env=OPENAI_API_KEY)

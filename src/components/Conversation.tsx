@@ -1,11 +1,16 @@
 import { FC, useState, useEffect } from 'react';
-import { Message } from '@interfaces';
+import { GlobalConfig, Message } from '@interfaces';
 import MessageBox from './MessageBox';
 import MessageInput from './MessageInput';
+import GlobalConfigs from './GlobalConfigs';
 
 const Conversation: FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
+  const [configs, setConfigs] = useState<GlobalConfig>({
+    openAIApiKey: '',
+    model: '',
+  });
 
   const sendChatMessages = async (content: string) => {
     const input: Message[] = messages.concat([
@@ -20,6 +25,8 @@ const Conversation: FC = () => {
       const res = await fetch('/api/completions', {
         method: 'POST',
         body: JSON.stringify({
+          key: configs.openAIApiKey,
+          model: configs.model,
           messages: input,
         }),
       });
@@ -42,10 +49,16 @@ const Conversation: FC = () => {
 
   return (
     <div id="content">
+      <header className="flex items-center justify-between">
+        <div className="title">
+          <span className="text-gradient">ChatGPT</span>
+        </div>
+        <GlobalConfigs configs={configs} setConfigs={setConfigs} />
+      </header>
       <MessageBox messages={messages} />
       {messages.length === 0 ? (
         <div className="text-gray-400 mb-[20px]">
-          Start a conversation via "Send" button
+          Chat with us now, powered by OpenAI and Vercel
         </div>
       ) : null}
       {loading && (
