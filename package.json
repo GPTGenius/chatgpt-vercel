@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "postinstall": "npx simple-git-hooks",
+    "postinstall": "simple-git-hooks",
     "dev": "cross-env NODE_ENV=development astro dev",
     "start": "cross-env NODE_ENV=development astro dev",
     "build": "astro build",

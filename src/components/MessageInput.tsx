@@ -1,4 +1,4 @@
-import { FC, useState, useCallback } from 'react';
+import { FC, useState } from 'react';
 
 const MessageInput: FC<{
   onSubmit: (message: string) => Promise<void>;
@@ -7,11 +7,11 @@ const MessageInput: FC<{
   const [input, setInput] = useState('');
   const disabled = input.trim() === '' || loading;
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = () => {
     if (disabled) return;
     onSubmit(input);
     setInput('');
-  }, [disabled, input, onSubmit]);
+  };
 
   return (
     <div className="flex">
@@ -21,6 +21,12 @@ const MessageInput: FC<{
         value={input}
         onChange={(event) => {
           setInput(event.target.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSubmit();
+          }
         }}
       />
       <button
