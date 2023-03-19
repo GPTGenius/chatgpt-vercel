@@ -3,6 +3,7 @@ import { GlobalConfig, Message } from '@interfaces';
 import MessageBox from './MessageBox';
 import MessageInput from './MessageInput';
 import GlobalConfigs from './GlobalConfigs';
+import ClearMessages from './ClearMessages';
 
 const Conversation: FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -66,6 +67,7 @@ const Conversation: FC = () => {
       )}
       <footer>
         <MessageInput onSubmit={sendChatMessages} loading={loading} />
+        <ClearMessages onClear={() => setMessages([])} />
       </footer>
     </div>
   );
