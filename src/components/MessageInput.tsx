@@ -14,7 +14,7 @@ const MessageInput: FC<{
   };
 
   return (
-    <div className="flex">
+    <div className="flex items-center">
       <input
         placeholder="Start a conversation"
         className="shadow-inner flex-1 border-none rounded-md text-[#273346] bg-[#f8f8fa] p-[12px]"
@@ -29,13 +29,12 @@ const MessageInput: FC<{
           }
         }}
       />
-      <button
-        disabled={disabled}
-        className="disabled:cursor-not-allowed disabled:bg-[#50a5f0] shadow-sm text-white bg-[#0086ff] ml-[0.5rem] p-[12px] px-[20px] border-none rounded-md"
+      <i
+        className={`${
+          disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+        } text-gradient text-[24px] ml-[0.5rem] ri-send-plane-fill`}
         onClick={() => handleSubmit()}
-      >
-        <i className="ri-send-plane-fill"></i>
-      </button>
+      ></i>
     </div>
   );
 };
