@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
 import { GlobalConfig, Message } from '@interfaces';
 import MessageBox from './MessageBox';
 import MessageInput from './MessageInput';
@@ -40,16 +40,8 @@ const Conversation: FC = () => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    const element = document.querySelector('#content');
-    element.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end',
-    });
-  }, [messages]);
-
   return (
-    <div id="content">
+    <div>
       <header className="flex items-center justify-between">
         <div className="title">
           <span className="text-gradient">ChatGPT</span>
