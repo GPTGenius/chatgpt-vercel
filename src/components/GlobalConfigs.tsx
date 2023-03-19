@@ -29,7 +29,7 @@ const GlobalConfigs: FC<{
   return (
     <div
       className={`w-[36px] text-center rounded-[4px] relative ${
-        showConfigs ? 'bg-[rgb(229,230,235)]' : ''
+        showConfigs ? 'bg-[#f1f2f6]' : ''
       }`}
     >
       <i
@@ -44,7 +44,7 @@ const GlobalConfigs: FC<{
             maxWidth: 'calc(var(--content-width) - 4rem)',
           }}
         >
-          <div className="bg-[rgb(229,230,235)] rounded-[4px] p-3 text-left">
+          <div className="bg-[#f1f2f6] rounded-[4px] p-3 text-left shadow-md">
             <div className="flex items-center justify-between mb-[8px]">
               <div>OpenAI Api Key:</div>
               <input

@@ -48,15 +48,12 @@ const Conversation: FC = () => {
         </div>
         <GlobalConfigs configs={configs} setConfigs={setConfigs} />
       </header>
-      <MessageBox messages={messages} />
       {messages.length === 0 ? (
         <div className="text-gray-400 mb-[20px]">
           Chat with us now, powered by OpenAI and Vercel
         </div>
       ) : null}
-      {loading && (
-        <div className="loading text-center text-gray-400">Thinking...</div>
-      )}
+      <MessageBox messages={messages} loading={loading} />
       <footer>
         <MessageInput onSubmit={sendChatMessages} loading={loading} />
         <ClearMessages onClear={() => setMessages([])} />

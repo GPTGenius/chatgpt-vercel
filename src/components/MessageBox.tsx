@@ -34,7 +34,10 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
   );
 };
 
-const MessageBox: FC<{ messages: Message[] }> = ({ messages }) => {
+const MessageBox: FC<{ messages: Message[]; loading: boolean }> = ({
+  messages,
+  loading,
+}) => {
   useEffect(() => {
     const element = document.querySelector('#content');
     element.scrollIntoView({
@@ -44,10 +47,16 @@ const MessageBox: FC<{ messages: Message[] }> = ({ messages }) => {
   }, [messages]);
 
   return (
-    <div id="content" className="mb-[40px]">
+    <div
+      id="content"
+      style={{ marginBottom: 'calc(4rem + 48px + 2rem + 24px)' }}
+    >
       {messages.map((message, index) => (
         <MessageItem key={index} message={message} />
       ))}
+      {loading && (
+        <div className="loading text-center text-gray-400">Thinking...</div>
+      )}
     </div>
   );
 };
