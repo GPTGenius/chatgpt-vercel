@@ -1,7 +1,7 @@
 # ChatGPT-Vercel
 Building your own ChatGPT website by Vercel
 
-![](https://github.com/GPTGenius/chatgpt-vercel/blob/main/assets/preview-2023-03-18.png)
+<img src="https://github.com/GPTGenius/chatgpt-vercel/blob/main/assets/preview.png" width="300">
 
 ## Getting Started
 
