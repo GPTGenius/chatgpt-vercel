@@ -14,6 +14,9 @@ There are three ways to set your openai api key:
 - Rename your `.env.expample` file to `.env` and set **OPENAI_API_KEY**
 - Set **OPENAI_API_KEY** within the page
 
+## Live Demo
+- [chatgpt-vercel-sample](https://chatgpt-vercel-sample.vercel.app/)
+
 ## Features
 - [x] Text
 - [ ] Images
