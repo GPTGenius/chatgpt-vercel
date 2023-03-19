@@ -15,12 +15,22 @@ export const post: APIRoute = async ({ request }) => {
   const { messages } = body;
   let { key, model } = body;
 
-  if (!key?.startsWith('sk')) {
-    key = apiKey;
+  key = key || apiKey;
+  model = model || defaultModel;
+
+  if (!key) {
+    return new Response(JSON.stringify({ msg: 'No API key provided' }), {
+      status: 400,
+    });
   }
 
   if (!supportedModels.includes(model)) {
-    model = defaultModel;
+    return new Response(
+      JSON.stringify({ msg: `Not supported model ${model}` }),
+      {
+        status: 400,
+      }
+    );
   }
 
   try {

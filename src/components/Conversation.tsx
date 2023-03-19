@@ -32,9 +32,17 @@ const Conversation: FC = () => {
         }),
       });
       const data = await res.json();
-      const replay = data.choices[0].message;
-      setMessages(input.concat(replay));
-    } catch {
+      if (res.status < 400) {
+        const replay = data.choices[0].message;
+        setMessages(input.concat(replay));
+      } else {
+        setMessages(
+          input.concat([
+            { role: 'assistant', content: `Error: ${data.msg || 'Unknown'}` },
+          ])
+        );
+      }
+    } catch (e) {
       setMessages(input.concat([{ role: 'assistant', content: 'Error' }]));
     }
     setLoading(false);
