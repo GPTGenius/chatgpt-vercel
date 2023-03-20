@@ -1,0 +1,6 @@
+{
+  "default_tips": "Chat with us now, powered by OpenAI and Vercel",
+  "chat_placeholder": "Start a conversation",
+  "action_clear": "clear",
+  "config_model": "Model:"
+}

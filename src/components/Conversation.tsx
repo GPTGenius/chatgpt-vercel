@@ -1,11 +1,13 @@
 import { FC, useState } from 'react';
-import { GlobalConfig, Message } from '@interfaces';
+import type { GlobalConfig, Message } from '@interfaces';
+import GlobalContext from '@contexts/global';
+import type { I18n } from '@utils';
 import MessageBox from './MessageBox';
 import MessageInput from './MessageInput';
 import GlobalConfigs from './GlobalConfigs';
 import ClearMessages from './ClearMessages';
 
-const Conversation: FC = () => {
+const Conversation: FC<{ i18n: I18n }> = ({ i18n }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [configs, setConfigs] = useState<GlobalConfig>({
@@ -49,7 +51,7 @@ const Conversation: FC = () => {
   };
 
   return (
-    <div>
+    <GlobalContext.Provider value={{ i18n }}>
       <header className="flex items-center justify-between">
         <div className="title">
           <span className="text-gradient">ChatGPT</span>
@@ -57,16 +59,18 @@ const Conversation: FC = () => {
         <GlobalConfigs configs={configs} setConfigs={setConfigs} />
       </header>
       {messages.length === 0 ? (
-        <div className="text-gray-400 mb-[20px]">
-          Chat with us now, powered by OpenAI and Vercel
-        </div>
+        <div className="text-gray-400 mb-[20px]">{i18n.default_tips}</div>
       ) : null}
       <MessageBox messages={messages} loading={loading} />
       <footer>
-        <MessageInput onSubmit={sendChatMessages} loading={loading} />
+        <MessageInput
+          // i18n={i18n}
+          onSubmit={sendChatMessages}
+          loading={loading}
+        />
         <ClearMessages onClear={() => setMessages([])} />
       </footer>
-    </div>
+    </GlobalContext.Provider>
   );
 };
 

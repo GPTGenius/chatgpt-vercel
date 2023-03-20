@@ -1,0 +1,6 @@
+{
+  "default_tips": "点击下方发起聊天，由 OpenAI 和 Vercel 提供支持",
+  "chat_placeholder": "开始聊天",
+  "action_clear": "清空",
+  "config_model": "模型："
+}

@@ -1,9 +1,11 @@
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
+import GlobalContext from '@contexts/global';
 
 const MessageInput: FC<{
   onSubmit: (message: string) => Promise<void>;
   loading: boolean;
 }> = ({ onSubmit, loading }) => {
+  const { i18n } = useContext(GlobalContext);
   const [input, setInput] = useState('');
   const disabled = input.trim() === '' || loading;
 
@@ -16,7 +18,7 @@ const MessageInput: FC<{
   return (
     <div className="flex items-center">
       <input
-        placeholder="Start a conversation"
+        placeholder={i18n.chat_placeholder}
         className="shadow-inner flex-1 border-none rounded-md text-[#273346] bg-[#f8f8fa] p-[12px]"
         value={input}
         onChange={(event) => {

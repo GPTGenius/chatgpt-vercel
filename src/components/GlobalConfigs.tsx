@@ -1,11 +1,13 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { GlobalConfig } from '@interfaces';
 import { globalConfigLocalKey } from '@configs';
+import GlobalContext from '@contexts/global';
 
 const GlobalConfigs: FC<{
   configs: GlobalConfig;
   setConfigs: (configs: GlobalConfig) => void;
 }> = ({ configs, setConfigs }) => {
+  const { i18n } = useContext(GlobalContext);
   const [showConfigs, setShowConfigs] = useState(false);
 
   useEffect(() => {
@@ -59,7 +61,7 @@ const GlobalConfigs: FC<{
               />
             </div>
             <div className="flex items-center justify-between">
-              <div>Model:</div>
+              <div>{i18n.config_model}</div>
               <input
                 value={configs.model}
                 onChange={(e) => {
