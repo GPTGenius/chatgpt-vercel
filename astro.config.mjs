@@ -9,5 +9,5 @@ import react from '@astrojs/react';
 export default defineConfig({
   integrations: [solidJs(), tailwind(), react()],
   output: 'server',
-  adapter: vercel(),
+  adapter: vercel({ analytics: true }),
 });
