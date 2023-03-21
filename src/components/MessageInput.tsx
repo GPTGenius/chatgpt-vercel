@@ -1,4 +1,5 @@
 import { FC, useContext, useState } from 'react';
+import { Input } from 'antd';
 import GlobalContext from '@contexts/global';
 
 const MessageInput: FC<{
@@ -17,26 +18,28 @@ const MessageInput: FC<{
 
   return (
     <div className="flex items-center">
-      <input
+      <Input.TextArea
         placeholder={i18n.chat_placeholder}
-        className="shadow-inner flex-1 border-none rounded-md text-[#273346] bg-[#f8f8fa] p-[12px]"
         value={input}
         onChange={(event) => {
           setInput(event.target.value);
         }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
+        onPressEnter={(e) => {
+          if (!e.shiftKey) {
             e.preventDefault();
             handleSubmit();
           }
         }}
+        size="large"
+        autoSize={{ minRows: 1, maxRows: 5 }}
+        allowClear
       />
       <i
         className={`${
           disabled ? 'cursor-not-allowed' : 'cursor-pointer'
         } text-gradient text-[24px] ml-[0.5rem] ri-send-plane-fill`}
         onClick={() => handleSubmit()}
-      ></i>
+      />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import type { GlobalConfig, Message } from '@interfaces';
 import GlobalContext from '@contexts/global';
 import type { I18n } from '@utils';
+import { defaultModel } from '@configs';
 import MessageBox from './MessageBox';
 import MessageInput from './MessageInput';
 import GlobalConfigs from './GlobalConfigs';
@@ -12,7 +13,7 @@ const Conversation: FC<{ i18n: I18n }> = ({ i18n }) => {
   const [loading, setLoading] = useState(false);
   const [configs, setConfigs] = useState<GlobalConfig>({
     openAIApiKey: '',
-    model: '',
+    model: defaultModel,
   });
 
   const sendChatMessages = async (content: string) => {
@@ -63,11 +64,7 @@ const Conversation: FC<{ i18n: I18n }> = ({ i18n }) => {
       ) : null}
       <MessageBox messages={messages} loading={loading} />
       <footer>
-        <MessageInput
-          // i18n={i18n}
-          onSubmit={sendChatMessages}
-          loading={loading}
-        />
+        <MessageInput onSubmit={sendChatMessages} loading={loading} />
         <ClearMessages onClear={() => setMessages([])} />
       </footer>
     </GlobalContext.Provider>

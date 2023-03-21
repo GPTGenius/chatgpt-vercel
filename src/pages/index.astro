@@ -13,7 +13,7 @@ const i18n = getI18n(lang);
 <Layout title="ChatGPT">
   <main>
     <div id="container">
-      <Conversation i18n={i18n} client:visible />
+      <Conversation i18n={i18n} client:only="react" />
     </div>
   </main>
 </Layout>

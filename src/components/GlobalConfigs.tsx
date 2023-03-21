@@ -1,7 +1,8 @@
 import { FC, useContext, useEffect, useState } from 'react';
 import { GlobalConfig } from '@interfaces';
-import { globalConfigLocalKey } from '@configs';
+import { globalConfigLocalKey, supportedModels } from '@configs';
 import GlobalContext from '@contexts/global';
+import { Input, Popover, Select } from 'antd';
 
 const GlobalConfigs: FC<{
   configs: GlobalConfig;
@@ -29,52 +30,57 @@ const GlobalConfigs: FC<{
   };
 
   return (
-    <div
-      className={`w-[36px] text-center rounded-[4px] relative ${
-        showConfigs ? 'bg-[#f1f2f6]' : ''
-      }`}
-    >
-      <i
-        className="ri-settings-4-line text-[24px] cursor-pointer"
-        onClick={() => setShowConfigs((show) => !show)}
-      />
-      {showConfigs ? (
+    <Popover
+      open={showConfigs}
+      onOpenChange={setShowConfigs}
+      content={
         <div
-          className="absolute right-0 top-[44px]"
           style={{
-            width: 'calc(100vw - 4rem)',
-            maxWidth: 'calc(var(--content-width) - 4rem)',
+            width: 'calc(100vw - 4rem - 24px)',
+            maxWidth: 'var(--content-width)',
           }}
         >
-          <div className="bg-[#f1f2f6] rounded-[4px] p-3 text-left shadow-md">
-            <div className="flex items-center justify-between mb-[8px]">
-              <div>OpenAI Api Key:</div>
-              <input
-                type="password"
-                autoComplete="off"
-                value={configs.openAIApiKey}
-                onChange={(e) => {
-                  const { value } = e.target;
-                  const newConfigs = { ...configs, openAIApiKey: value };
-                  updateConfigsAndStorages(newConfigs);
-                }}
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <div>{i18n.config_model}</div>
-              <input
-                value={configs.model}
-                onChange={(e) => {
-                  const { value } = e.target;
-                  const newConfigs = { ...configs, model: value };
-                  updateConfigsAndStorages(newConfigs);
-                }}
-              />
-            </div>
+          <div className="flex items-center justify-between mb-[12px]">
+            <div>OpenAI Api Key:</div>
+            <Input
+              className="w-1/2"
+              type="password"
+              autoComplete="off"
+              value={configs.openAIApiKey}
+              onChange={(e) => {
+                const { value } = e.target;
+                const newConfigs = { ...configs, openAIApiKey: value };
+                updateConfigsAndStorages(newConfigs);
+              }}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <div>{i18n.config_model}</div>
+            <Select
+              className="w-1/2"
+              value={configs.model}
+              options={supportedModels.map((model) => ({
+                label: model,
+                value: model,
+              }))}
+              onChange={(model) =>
+                updateConfigsAndStorages({ ...configs, model })
+              }
+            />
           </div>
         </div>
-      ) : null}
-    </div>
+      }
+      trigger="click"
+      placement="bottomRight"
+    >
+      <div className={`w-[36px] text-center rounded-[4px]`}>
+        <i
+          className={`${
+            showConfigs ? 'ri-settings-4-fill' : 'ri-settings-4-line'
+          } text-[24px] cursor-pointer`}
+        />
+      </div>
+    </Popover>
   );
 };
 
