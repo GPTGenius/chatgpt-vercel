@@ -1,8 +1,8 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { GlobalConfig } from '@interfaces';
 import { globalConfigLocalKey, supportedModels } from '@configs';
 import GlobalContext from '@contexts/global';
-import { Input, Popover, Select } from 'antd';
+import { Input, Popover, Select, Switch } from 'antd';
 
 const GlobalConfigs: FC<{
   configs: GlobalConfig;
@@ -11,20 +11,8 @@ const GlobalConfigs: FC<{
   const { i18n } = useContext(GlobalContext);
   const [showConfigs, setShowConfigs] = useState(false);
 
-  useEffect(() => {
-    // read from localstorage in the first time
-    const localConfigs = localStorage.getItem(globalConfigLocalKey);
-    if (localConfigs) {
-      try {
-        setConfigs(JSON.parse(localConfigs));
-      } catch (e) {
-        //
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const updateConfigsAndStorages = (newConfigs: GlobalConfig) => {
+  const updateConfigsAndStorages = (updates: Partial<GlobalConfig>) => {
+    const newConfigs = { ...configs, ...updates };
     setConfigs(newConfigs);
     localStorage.setItem(globalConfigLocalKey, JSON.stringify(newConfigs));
   };
@@ -47,14 +35,10 @@ const GlobalConfigs: FC<{
               type="password"
               autoComplete="off"
               value={configs.openAIApiKey}
-              onChange={(e) => {
-                const { value } = e.target;
-                const newConfigs = { ...configs, openAIApiKey: value };
-                updateConfigsAndStorages(newConfigs);
-              }}
+              onChange={(e) => ({ openAIApiKey: e.target.value })}
             />
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-[12px]">
             <div>{i18n.config_model}</div>
             <Select
               className="w-1/2"
@@ -63,9 +47,17 @@ const GlobalConfigs: FC<{
                 label: model,
                 value: model,
               }))}
-              onChange={(model) =>
-                updateConfigsAndStorages({ ...configs, model })
-              }
+              onChange={(model) => updateConfigsAndStorages({ model })}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <div>{i18n.config_save}</div>
+            <Switch
+              style={{
+                background: !configs.save ? 'rgba(0, 0, 0, 0.45)' : undefined,
+              }}
+              checked={configs.save}
+              onChange={(save) => updateConfigsAndStorages({ save })}
             />
           </div>
         </div>

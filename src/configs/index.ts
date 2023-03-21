@@ -1,4 +1,5 @@
 export const globalConfigLocalKey = 'GLOBAL_CONFIG_LOCAL';
+export const localConversationKey = 'LOCAL_CONVERSATION';
 
 // From https://platform.openai.com/docs/models/model-endpoint-compatibility
 export const supportedModels = [

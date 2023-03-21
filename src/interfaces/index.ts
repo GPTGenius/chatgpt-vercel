@@ -6,4 +6,5 @@ export interface Message {
 export interface GlobalConfig {
   openAIApiKey: string;
   model: string;
+  save: boolean;
 }

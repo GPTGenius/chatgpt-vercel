@@ -1,8 +1,12 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import type { GlobalConfig, Message } from '@interfaces';
 import GlobalContext from '@contexts/global';
 import type { I18n } from '@utils';
-import { defaultModel } from '@configs';
+import {
+  defaultModel,
+  globalConfigLocalKey,
+  localConversationKey,
+} from '@configs';
 import MessageBox from './MessageBox';
 import MessageInput from './MessageInput';
 import GlobalConfigs from './GlobalConfigs';
@@ -14,7 +18,37 @@ const Conversation: FC<{ i18n: I18n }> = ({ i18n }) => {
   const [configs, setConfigs] = useState<GlobalConfig>({
     openAIApiKey: '',
     model: defaultModel,
+    save: false,
   });
+
+  useEffect(() => {
+    // read from localstorage in the first time
+    const localConfigsStr = localStorage.getItem(globalConfigLocalKey);
+    if (localConfigsStr) {
+      try {
+        const localConfigs = JSON.parse(localConfigsStr);
+        setConfigs(localConfigs);
+        if (localConfigs.save) {
+          const localConversation = localStorage.getItem(localConversationKey);
+          if (localConversation) {
+            setMessages(JSON.parse(localConversation));
+          }
+        }
+      } catch (e) {
+        //
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // save current conversation
+  useEffect(() => {
+    if (configs.save) {
+      localStorage.setItem(localConversationKey, JSON.stringify(messages));
+    } else {
+      localStorage.removeItem(localConversationKey);
+    }
+  }, [messages, configs.save]);
 
   const sendChatMessages = async (content: string) => {
     const input: Message[] = messages.concat([
