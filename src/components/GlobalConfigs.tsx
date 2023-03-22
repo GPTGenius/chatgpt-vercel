@@ -35,7 +35,9 @@ const GlobalConfigs: FC<{
               type="password"
               autoComplete="off"
               value={configs.openAIApiKey}
-              onChange={(e) => ({ openAIApiKey: e.target.value })}
+              onChange={(e) =>
+                updateConfigsAndStorages({ openAIApiKey: e.target.value })
+              }
             />
           </div>
           <div className="flex items-center justify-between mb-[12px]">
@@ -53,9 +55,6 @@ const GlobalConfigs: FC<{
           <div className="flex items-center justify-between">
             <div>{i18n.config_save}</div>
             <Switch
-              style={{
-                background: !configs.save ? 'rgba(0, 0, 0, 0.45)' : undefined,
-              }}
               checked={configs.save}
               onChange={(save) => updateConfigsAndStorages({ save })}
             />

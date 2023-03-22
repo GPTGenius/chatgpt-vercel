@@ -1,7 +1,11 @@
-# ChatGPT-Vercel
-Building your own ChatGPT website by Vercel
-
 ![](assets/preview.png)
+
+<h2 align="center">ChatGPT-Vercel</h2>
+
+English | [简体中文](./README.zh-CN.md)
+
+## Introduction
+Building your own ChatGPT website by Vercel, support text conversation and prompt preset. Powered by OpenAI API GPT-4/3.5
 
 ## Getting Started
 
@@ -18,6 +22,6 @@ There are three ways to set your openai api key:
 - [chatgpt-vercel-sample](https://chatgpt-vercel-sample.vercel.app/)
 
 ## Features
-- [x] Text
-- [ ] Images
+- [x] Text Conversation
+- [ ] Images Generation
 - [ ] Audio
