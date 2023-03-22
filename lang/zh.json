@@ -1,7 +1,8 @@
 {
-  "default_tips": "点击下方发起聊天，由 OpenAI 和 Vercel 提供支持",
+  "default_tips": "点击下方发起聊天，点击左下角按钮或者输入\"/\"添加 prompt 预设，由 OpenAI 和 Vercel 提供支持",
   "chat_placeholder": "开始聊天",
   "action_clear": "清空",
+  "action_prompt": "添加 prompt 预设",
   "config_model": "模型：",
   "config_save": "保留当前会话："
 }

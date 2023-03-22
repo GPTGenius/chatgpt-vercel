@@ -8,3 +8,10 @@ export interface GlobalConfig {
   model: string;
   save: boolean;
 }
+
+export type Lang = 'zh' | 'en';
+
+export interface Prompt {
+  act: string;
+  prompt: string;
+}

@@ -1,0 +1,5 @@
+.ant-dropdown-menu {
+  max-height: 400px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

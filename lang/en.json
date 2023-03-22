@@ -1,7 +1,8 @@
 {
-  "default_tips": "Chat with us now, powered by OpenAI and Vercel",
+  "default_tips": "Chat with us now, click on the bottom left button or input \"/\" to add a prompt preset, powered by OpenAI and Vercel",
   "chat_placeholder": "Start a conversation",
-  "action_clear": "clear",
+  "action_clear": "Clear",
+  "action_prompt": "Add a prompt",
   "config_model": "Model:",
   "config_save": "Save current conversation:"
 }

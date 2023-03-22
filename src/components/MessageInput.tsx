@@ -1,39 +1,63 @@
 import { FC, useContext, useState } from 'react';
 import { Input } from 'antd';
 import GlobalContext from '@contexts/global';
+import PromptSelect from './PromptSelect';
 
 const MessageInput: FC<{
+  text: string;
+  setText: (text: string) => void;
+  showPrompt: boolean;
+  setShowPrompt: (showPrompt: boolean) => void;
   onSubmit: (message: string) => Promise<void>;
   loading: boolean;
-}> = ({ onSubmit, loading }) => {
+}> = ({ text, setText, showPrompt, setShowPrompt, onSubmit, loading }) => {
   const { i18n } = useContext(GlobalContext);
-  const [input, setInput] = useState('');
-  const disabled = input.trim() === '' || loading;
+  const [promptKeyword, setPromptKeyword] = useState('');
+  const disabled = text.trim() === '' || loading;
 
   const handleSubmit = () => {
     if (disabled) return;
-    onSubmit(input);
-    setInput('');
+    onSubmit(text);
+  };
+
+  const onPromptSelect = (prompt) => {
+    setText(prompt);
+    setShowPrompt(false);
   };
 
   return (
     <div className="flex items-center">
-      <Input.TextArea
-        placeholder={i18n.chat_placeholder}
-        value={input}
-        onChange={(event) => {
-          setInput(event.target.value);
-        }}
-        onPressEnter={(e) => {
-          if (!e.shiftKey) {
-            e.preventDefault();
-            handleSubmit();
-          }
-        }}
-        size="large"
-        autoSize={{ minRows: 1, maxRows: 5 }}
-        allowClear
-      />
+      <PromptSelect
+        keyword={promptKeyword}
+        showPrompt={showPrompt}
+        onSelect={onPromptSelect}
+      >
+        <Input.TextArea
+          placeholder={i18n.chat_placeholder}
+          value={text}
+          onChange={(event) => {
+            const val = event.target.value;
+            setText(val);
+            if (val.startsWith('/')) {
+              setShowPrompt(true);
+              setPromptKeyword(val.slice(1));
+            } else {
+              setShowPrompt(false);
+              setPromptKeyword('');
+            }
+          }}
+          onPressEnter={(e) => {
+            if (!e.shiftKey) {
+              e.preventDefault();
+              handleSubmit();
+            }
+          }}
+          size="large"
+          autoSize={{ minRows: 1, maxRows: 5 }}
+          allowClear
+        />
+      </PromptSelect>
+
       <i
         className={`${
           disabled ? 'cursor-not-allowed' : 'cursor-pointer'

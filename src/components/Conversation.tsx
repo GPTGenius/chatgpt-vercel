@@ -1,25 +1,32 @@
 import { FC, useEffect, useState } from 'react';
-import type { GlobalConfig, Message } from '@interfaces';
 import GlobalContext from '@contexts/global';
-import type { I18n } from '@utils';
 import {
   defaultModel,
   globalConfigLocalKey,
   localConversationKey,
 } from '@configs';
+import type { GlobalConfig, Lang, Message } from '@interfaces';
+import type { I18n } from '@utils';
+import { Tooltip } from 'antd';
 import MessageBox from './MessageBox';
 import MessageInput from './MessageInput';
 import GlobalConfigs from './GlobalConfigs';
 import ClearMessages from './ClearMessages';
 
-const Conversation: FC<{ i18n: I18n }> = ({ i18n }) => {
+const Conversation: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
+  // input text
+  const [text, setText] = useState('');
+  // chat messages
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
+  // gloabl configs
   const [configs, setConfigs] = useState<GlobalConfig>({
     openAIApiKey: '',
     model: defaultModel,
     save: false,
   });
+  // prompt
+  const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
     // read from localstorage in the first time
@@ -38,7 +45,6 @@ const Conversation: FC<{ i18n: I18n }> = ({ i18n }) => {
         //
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // save current conversation
@@ -58,6 +64,7 @@ const Conversation: FC<{ i18n: I18n }> = ({ i18n }) => {
       },
     ]);
     setMessages(input);
+    setText('');
     setLoading(true);
     try {
       const res = await fetch('/api/completions', {
@@ -86,7 +93,7 @@ const Conversation: FC<{ i18n: I18n }> = ({ i18n }) => {
   };
 
   return (
-    <GlobalContext.Provider value={{ i18n }}>
+    <GlobalContext.Provider value={{ i18n, lang }}>
       <header className="flex items-center justify-between">
         <div className="title">
           <span className="text-gradient">ChatGPT</span>
@@ -98,8 +105,28 @@ const Conversation: FC<{ i18n: I18n }> = ({ i18n }) => {
       ) : null}
       <MessageBox messages={messages} loading={loading} />
       <footer>
-        <MessageInput onSubmit={sendChatMessages} loading={loading} />
-        <ClearMessages onClear={() => setMessages([])} />
+        <MessageInput
+          text={text}
+          setText={setText}
+          showPrompt={showPrompt}
+          setShowPrompt={setShowPrompt}
+          onSubmit={sendChatMessages}
+          loading={loading}
+        />
+        <div className="flex items-center justify-between pr-8">
+          <Tooltip title={i18n.action_prompt}>
+            <div
+              className="flex items-center cursor-pointer p-1 text-gray-500"
+              onClick={() => {
+                setText('/');
+                setShowPrompt(true);
+              }}
+            >
+              <i className="ri-user-voice-line" />
+            </div>
+          </Tooltip>
+          <ClearMessages onClear={() => setMessages([])} />
+        </div>
       </footer>
     </GlobalContext.Provider>
   );
