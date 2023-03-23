@@ -35,6 +35,7 @@ There are three ways to set your openai api key:
 
 ## Live Demo
 - [chatgpt-vercel-sample](https://chatgpt-vercel-sample.vercel.app/)
+- [chatgpt-vercel-zh-sample](https://chatgpt-vercel-zh-sample.vercel.app/)
 
 ## Configurations
 ### Deployment Configurations
@@ -60,4 +61,4 @@ All global configurations will be stored locally
 - Chinese prompts are modified from [awesome-chatgpt-prompts-zh](https://github.com/PlexPt/awesome-chatgpt-prompts-zh)
 
 ## License
-Based on [MIT License]('./LICENSE')
+Based on [MIT License](./LICENSE)
