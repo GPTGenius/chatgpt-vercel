@@ -66,7 +66,11 @@ const PromptSelect: FC<{
   );
 
   return (
-    <Dropdown menu={{ items }} placement="topLeft" open={showPrompt}>
+    <Dropdown
+      menu={{ items }}
+      placement="topLeft"
+      open={items.length > 0 && showPrompt}
+    >
       {children}
     </Dropdown>
   );

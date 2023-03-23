@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useRef, useState } from 'react';
 import { Input } from 'antd';
 import GlobalContext from '@contexts/global';
 import PromptSelect from './PromptSelect';
@@ -13,6 +13,10 @@ const MessageInput: FC<{
 }> = ({ text, setText, showPrompt, setShowPrompt, onSubmit, loading }) => {
   const { i18n } = useContext(GlobalContext);
   const [promptKeyword, setPromptKeyword] = useState('');
+
+  // textarea ref
+  const ref = useRef(null);
+
   const disabled = text.trim() === '' || loading;
 
   const handleSubmit = () => {
@@ -21,8 +25,11 @@ const MessageInput: FC<{
   };
 
   const onPromptSelect = (prompt) => {
-    setText(prompt);
     setShowPrompt(false);
+    setTimeout(() => {
+      setText(prompt);
+      ref.current.focus();
+    }, 400);
   };
 
   return (
@@ -33,8 +40,10 @@ const MessageInput: FC<{
         onSelect={onPromptSelect}
       >
         <Input.TextArea
+          ref={ref}
           placeholder={i18n.chat_placeholder}
           value={text}
+          autoFocus
           onChange={(event) => {
             const val = event.target.value;
             setText(val);
