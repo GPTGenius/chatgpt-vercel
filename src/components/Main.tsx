@@ -64,10 +64,22 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
           const localConversation = localStorage.getItem(localConversationKey);
           if (localConversation) {
             const conversation = JSON.parse(localConversation);
-            setConversations(conversation);
-            setCurrentTab(
-              Object.keys(conversation)?.[0] ?? defaultConversation.id
-            );
+            // historical localstorage
+            if (Array.isArray(conversation) && conversation.length > 0) {
+              setConversations({
+                [defaultConversation.id]: {
+                  title: conversation[0].content,
+                  messages: conversation,
+                  id: defaultConversation.id,
+                  createdAt: Date.now(),
+                },
+              });
+            } else {
+              setConversations(conversation);
+              setCurrentTab(
+                Object.keys(conversation)?.[0] ?? defaultConversation.id
+              );
+            }
           }
         }
       } catch (e) {
@@ -181,7 +193,16 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
               <i className="ri-user-voice-line" />
             </div>
           </Tooltip>
-          <ClearMessages onClear={() => setConversations({})} />
+          <ClearMessages
+            onClear={() =>
+              setConversations({
+                [defaultConversation.id]: {
+                  ...defaultConversation,
+                  title: i18n.status_empty,
+                },
+              })
+            }
+          />
         </div>
       </footer>
     </GlobalContext.Provider>

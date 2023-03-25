@@ -29,7 +29,6 @@ const ConversationTabs: FC<{
       }));
       setCurrentTab(id);
     } else if (action === 'remove') {
-      // setTabs((items) => items.filter((tab) => tab.key !== key));
       setConversations((items) => omit(items, [key]));
       setCurrentTab(tabs.filter((tab) => tab.key !== key)[0].key);
     }
