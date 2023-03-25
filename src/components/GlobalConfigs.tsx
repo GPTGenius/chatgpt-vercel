@@ -55,6 +55,11 @@ const GlobalConfigs: FC<{
           <div className="flex items-center justify-between">
             <div>{i18n.config_save}</div>
             <Switch
+              className={
+                !configs.save
+                  ? 'bg-[rgb(0,0,0,0.25)] hover:bg-[rgb(0,0,0,0.4)]'
+                  : ''
+              }
               checked={configs.save}
               onChange={(save) => updateConfigsAndStorages({ save })}
             />

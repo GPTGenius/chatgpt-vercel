@@ -12,10 +12,7 @@ const { title } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
+    <link href="/remixicon.css" rel="stylesheet" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
@@ -82,6 +79,14 @@ const { title } = Astro.props;
   }
   pre code.hljs {
     border-radius: 4px;
+  }
+  code.hljs:not(pre code.hljs) {
+    /* remove inline code background */
+    background: transparent;
+  }
+  .katex-display: {
+    overflow-x: scroll;
+    overflow-y: hidden;
   }
   ol,
   ul,

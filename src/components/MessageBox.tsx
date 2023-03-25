@@ -1,9 +1,10 @@
-import { FC, useEffect } from 'react';
-import { Message } from '@interfaces';
+import { FC, useContext, useEffect } from 'react';
 import MarkdownIt from 'markdown-it';
 import mdKatex from 'markdown-it-katex';
 import mdHighlight from 'markdown-it-highlightjs';
 import mdKbd from 'markdown-it-kbd';
+import GlobalContext from '@contexts/global';
+import { Message } from '@interfaces';
 
 const MessageItem: FC<{ message: Message }> = ({ message }) => {
   const md = MarkdownIt({
@@ -23,7 +24,9 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
       }`}
     >
       <div
-        dangerouslySetInnerHTML={{ __html: md.render(message.content) }}
+        dangerouslySetInnerHTML={{
+          __html: md.render(message.content),
+        }}
         className={`shadow-sm p-4 ${
           message.role === 'user'
             ? 'bg-gradient text-white rounded-br-none'
@@ -38,6 +41,8 @@ const MessageBox: FC<{ messages: Message[]; loading: boolean }> = ({
   messages,
   loading,
 }) => {
+  const { i18n } = useContext(GlobalContext);
+
   useEffect(() => {
     const element = document.querySelector('#content');
     element.scrollIntoView({
@@ -55,7 +60,9 @@ const MessageBox: FC<{ messages: Message[]; loading: boolean }> = ({
         <MessageItem key={index} message={message} />
       ))}
       {loading && (
-        <div className="loading text-center text-gray-400">Thinking...</div>
+        <div className="loading text-center text-gray-400">
+          {i18n.status_loading}
+        </div>
       )}
     </div>
   );

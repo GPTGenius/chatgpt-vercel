@@ -49,14 +49,7 @@ const PromptSelect: FC<{
       filterPrompts.map((prompt) => ({
         key: prompt.act,
         label: (
-          <div
-            className="p-1"
-            style={{
-              width: 'calc(100vw - 8rem)',
-              maxWidth: 'var(--content-width)',
-            }}
-            onClick={() => onSelect(prompt.prompt)}
-          >
+          <div className="p-1" onClick={() => onSelect(prompt.prompt)}>
             <div className="font-bold leading-8">{prompt.act}</div>
             <div>{prompt.prompt}</div>
           </div>
@@ -70,6 +63,7 @@ const PromptSelect: FC<{
       menu={{ items }}
       placement="topLeft"
       open={items.length > 0 && showPrompt}
+      getPopupContainer={(node) => node}
     >
       {children}
     </Dropdown>

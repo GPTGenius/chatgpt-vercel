@@ -4,5 +4,6 @@
   "action_clear": "清空",
   "action_prompt": "添加预设提示",
   "config_model": "模型：",
-  "config_save": "保留当前会话："
+  "config_save": "保留当前会话：",
+  "status_loading": "AI 正在思考..."
 }

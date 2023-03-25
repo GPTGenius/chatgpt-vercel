@@ -4,5 +4,6 @@
   "action_clear": "Clear",
   "action_prompt": "Add a prompt",
   "config_model": "Model:",
-  "config_save": "Save current conversation:"
+  "config_save": "Save current conversation:",
+  "status_loading": "AI is thinking..."
 }
