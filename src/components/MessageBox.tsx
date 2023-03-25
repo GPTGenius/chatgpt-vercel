@@ -54,8 +54,14 @@ const MessageBox: FC<{ messages: Message[]; loading: boolean }> = ({
   return (
     <div
       id="content"
-      style={{ marginBottom: 'calc(4rem + 48px + 2rem + 24px)' }}
+      className="pt-[2rem]"
+      style={{
+        paddingBottom: 'calc(74px + 4rem)',
+      }}
     >
+      {messages.length === 0 ? (
+        <div className="text-gray-400 mb-[20px]">{i18n.default_tips}</div>
+      ) : null}
       {messages.map((message, index) => (
         <MessageItem key={index} message={message} />
       ))}

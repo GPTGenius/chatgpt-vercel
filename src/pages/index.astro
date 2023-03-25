@@ -1,6 +1,6 @@
 ---
-import Conversation from '@components/Conversation';
-import { getI18n } from '@utils';
+import Main from '@components/Main';
+import { getI18n } from '@utils/i18n';
 import type { Lang } from '@interfaces';
 import Layout from '@/layouts/Layout.astro';
 import 'katex/dist/katex.min.css';
@@ -14,7 +14,7 @@ const i18n = getI18n(lang);
 <Layout title="ChatGPT">
   <main>
     <div id="container">
-      <Conversation i18n={i18n} lang={lang} client:only="react" />
+      <Main i18n={i18n} lang={lang} client:only="react" />
     </div>
   </main>
 </Layout>
@@ -22,14 +22,14 @@ const i18n = getI18n(lang);
 <style>
   main {
     margin: auto;
-    padding: 4rem 2rem calc(48px + 4rem) 2rem;
+    padding: 4rem 2rem var(--footer-height) 2rem;
     max-width: var(--content-width);
     width: 100%;
     height: 100vh;
   }
   #container {
-    margin-top: calc(72px + 4rem);
-    height: calc(100vh - 4rem - 72px - 4rem);
+    margin-top: var(--header-height);
+    height: calc(100vh - 4rem - var(--header-height));
     overflow-y: scroll;
   }
   #container::-webkit-scrollbar {

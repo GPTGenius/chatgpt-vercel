@@ -5,28 +5,53 @@ import {
   globalConfigLocalKey,
   localConversationKey,
 } from '@configs';
-import type { GlobalConfig, Lang, Message } from '@interfaces';
-import type { I18n } from '@utils';
+import type { Conversation, GlobalConfig, Lang, Message } from '@interfaces';
+import type { I18n } from '@utils/i18n';
 import { Tooltip } from 'antd';
 import MessageBox from './MessageBox';
 import MessageInput from './MessageInput';
 import GlobalConfigs from './GlobalConfigs';
 import ClearMessages from './ClearMessages';
+import ConversationTabs from './ConversationTabs';
 
-const Conversation: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
+const defaultConversation = {
+  id: '1',
+  messages: [],
+  createdAt: Date.now(),
+};
+
+const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
   // input text
   const [text, setText] = useState('');
-  // chat messages
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [loading, setLoading] = useState(false);
+
+  // chat informations
+  const [currentTab, setCurrentTab] = useState<string>('1');
+  const [conversations, setConversations] = useState<
+    Record<string, Conversation>
+  >({
+    [defaultConversation.id]: {
+      ...defaultConversation,
+      title: i18n.status_empty,
+    },
+  });
+
+  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
+
   // gloabl configs
   const [configs, setConfigs] = useState<GlobalConfig>({
     openAIApiKey: '',
     model: defaultModel,
     save: false,
   });
+
   // prompt
   const [showPrompt, setShowPrompt] = useState(false);
+
+  const tabs = Object.values(conversations).map((conversation) => ({
+    label: conversation.title,
+    key: conversation.id,
+  }));
+  const currentMessages = conversations[currentTab]?.messages ?? [];
 
   useEffect(() => {
     // read from localstorage in the first time
@@ -38,7 +63,11 @@ const Conversation: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
         if (localConfigs.save) {
           const localConversation = localStorage.getItem(localConversationKey);
           if (localConversation) {
-            setMessages(JSON.parse(localConversation));
+            const conversation = JSON.parse(localConversation);
+            setConversations(conversation);
+            setCurrentTab(
+              Object.keys(conversation)?.[0] ?? defaultConversation.id
+            );
           }
         }
       } catch (e) {
@@ -50,22 +79,41 @@ const Conversation: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
   // save current conversation
   useEffect(() => {
     if (configs.save) {
-      localStorage.setItem(localConversationKey, JSON.stringify(messages));
+      localStorage.setItem(localConversationKey, JSON.stringify(conversations));
     } else {
       localStorage.removeItem(localConversationKey);
     }
-  }, [messages, configs.save]);
+  }, [conversations, configs.save]);
+
+  const updateMessages = (messages: Message[]) => {
+    setConversations((msg) => ({
+      ...msg,
+      [currentTab]: {
+        ...conversations[currentTab],
+        messages,
+        ...(messages.length > 0
+          ? {
+              title: messages[0].content,
+            }
+          : {}),
+      },
+    }));
+  };
 
   const sendChatMessages = async (content: string) => {
-    const input: Message[] = messages.concat([
+    const current = currentTab;
+    const input: Message[] = currentMessages.concat([
       {
         role: 'user',
         content,
       },
     ]);
-    setMessages(input);
+    updateMessages(input);
     setText('');
-    setLoading(true);
+    setLoadingMap((map) => ({
+      ...map,
+      [current]: true,
+    }));
     try {
       const res = await fetch('/api/completions', {
         method: 'POST',
@@ -78,32 +126,40 @@ const Conversation: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
       const data = await res.json();
       if (res.status < 400) {
         const replay = data.choices[0].message;
-        setMessages(input.concat(replay));
+        updateMessages(input.concat(replay));
       } else {
-        setMessages(
+        updateMessages(
           input.concat([
             { role: 'assistant', content: `Error: ${data.msg || 'Unknown'}` },
           ])
         );
       }
     } catch (e) {
-      setMessages(input.concat([{ role: 'assistant', content: 'Error' }]));
+      updateMessages(input.concat([{ role: 'assistant', content: 'Error' }]));
     }
-    setLoading(false);
+    setLoadingMap((map) => ({
+      ...map,
+      [current]: false,
+    }));
   };
 
   return (
     <GlobalContext.Provider value={{ i18n, lang }}>
-      <header className="flex items-center justify-between">
-        <div className="title">
-          <span className="text-gradient">ChatGPT</span>
+      <header>
+        <div className="flex items-center justify-between">
+          <div className="title">
+            <span className="text-gradient">ChatGPT</span>
+          </div>
+          <GlobalConfigs configs={configs} setConfigs={setConfigs} />
         </div>
-        <GlobalConfigs configs={configs} setConfigs={setConfigs} />
+        <ConversationTabs
+          tabs={tabs}
+          setConversations={setConversations}
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
+        />
       </header>
-      {messages.length === 0 ? (
-        <div className="text-gray-400 mb-[20px]">{i18n.default_tips}</div>
-      ) : null}
-      <MessageBox messages={messages} loading={loading} />
+      <MessageBox messages={currentMessages} loading={loadingMap[currentTab]} />
       <footer>
         <MessageInput
           text={text}
@@ -111,7 +167,7 @@ const Conversation: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
           showPrompt={showPrompt}
           setShowPrompt={setShowPrompt}
           onSubmit={sendChatMessages}
-          loading={loading}
+          loading={loadingMap[currentTab]}
         />
         <div className="flex items-center justify-between pr-8">
           <Tooltip title={i18n.action_prompt}>
@@ -125,11 +181,11 @@ const Conversation: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
               <i className="ri-user-voice-line" />
             </div>
           </Tooltip>
-          <ClearMessages onClear={() => setMessages([])} />
+          <ClearMessages onClear={() => setConversations({})} />
         </div>
       </footer>
     </GlobalContext.Provider>
   );
 };
 
-export default Conversation;
+export default Main;

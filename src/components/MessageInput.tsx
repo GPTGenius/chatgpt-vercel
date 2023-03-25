@@ -1,4 +1,4 @@
-import { FC, useContext, useRef, useState } from 'react';
+import { FC, useContext, useEffect, useRef, useState } from 'react';
 import { Input } from 'antd';
 import GlobalContext from '@contexts/global';
 import PromptSelect from './PromptSelect';
@@ -31,6 +31,12 @@ const MessageInput: FC<{
       ref.current.focus();
     }, 400);
   };
+
+  useEffect(() => {
+    if (showPrompt) {
+      ref.current.focus();
+    }
+  }, [showPrompt]);
 
   return (
     <div className="flex items-center">

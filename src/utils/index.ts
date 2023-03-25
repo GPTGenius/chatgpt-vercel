@@ -1,6 +1,12 @@
-import zhLang from 'lang/zh.json';
-import enLang from 'lang/en.json';
+import { TabsProps } from 'antd';
 
-export const getI18n = (lang) => (lang === 'zh' ? zhLang : enLang);
-
-export type I18n = ReturnType<typeof getI18n>;
+export const getMaxTabIndex = (tabs: TabsProps['items']) => {
+  let max = tabs.length;
+  tabs.forEach((tab) => {
+    const index = Number(tab.key);
+    if (!Number.isNaN(index) && Number(tab.key) >= max) {
+      max = index + 1;
+    }
+  });
+  return max;
+};

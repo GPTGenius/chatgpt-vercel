@@ -1,9 +1,10 @@
 {
   "default_tips": "点击下方发起聊天，点击左下角按钮或者输入\"/\"添加预设提示，由 OpenAI 和 Vercel 提供支持",
   "chat_placeholder": "开始聊天",
-  "action_clear": "清空",
+  "action_clear": "清空所有会话",
   "action_prompt": "添加预设提示",
   "config_model": "模型：",
   "config_save": "保留当前会话：",
-  "status_loading": "AI 正在思考..."
+  "status_loading": "AI 正在思考...",
+  "status_empty": "空对话"
 }

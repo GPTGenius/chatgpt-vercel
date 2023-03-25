@@ -3,6 +3,14 @@ export interface Message {
   role: 'assistant' | 'user';
 }
 
+export interface Conversation {
+  id: string;
+  title: string;
+  messages: Message[];
+  createdAt: number;
+  updatedAt?: number;
+}
+
 export interface GlobalConfig {
   openAIApiKey: string;
   model: string;

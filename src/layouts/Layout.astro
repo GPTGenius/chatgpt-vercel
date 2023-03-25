@@ -23,6 +23,8 @@ const { title } = Astro.props;
 <style is:global>
   :root {
     --content-width: 72ch;
+    --header-height: calc(112px + 2rem);
+    --footer-height: calc(74px + 4rem);
     --content-background: #f6f6f6;
     --accent: 124, 58, 237;
     --accent-gradient: linear-gradient(
@@ -56,6 +58,7 @@ const { title } = Astro.props;
   }
   header {
     top: 4rem;
+    padding-bottom: 0;
   }
   footer {
     bottom: 0;
@@ -134,5 +137,13 @@ const { title } = Astro.props;
     to {
       transform: rotate(360deg);
     }
+  }
+  /* antd css rewrite */
+  #container .ant-tabs-tab-active {
+    background-color: var(--content-background);
+    border-bottom-color: var(--content-background);
+  }
+  .ant-tabs > .ant-tabs-nav {
+    margin-bottom: 0;
   }
 </style>
