@@ -64,6 +64,9 @@
 - **NodeJS** `v16.12.0` 或更高版本
 - **pnpm** `v7` 或更高版本
 
+代理：
+- 本地默认通过第三方代理请求 openapi，不需要代理可以在 `.env` 中设置 `DISABLE_LOCAL_PROXY=true` 来关闭本地代理，此时会直接请求 `api.openai.com`
+
 本地启动：
 - 运行：`pnpm dev`
 - 需要暴露端口，例如在 cloud ide 中使用，运行：`pnpm start`

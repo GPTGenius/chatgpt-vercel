@@ -61,6 +61,9 @@ Requirements:
 - **NodeJS** `v16.12.0` or higher
 - **pnpm** `v7` or higher
 
+Proxy
+- By default, local requests for openapi are made through a third-party proxy. If there is no need for a proxy, you can disable local proxy by setting `DISABLE_LOCAL_PROXY=true` in the `.env` file. At this point, `api.openai.com` will be directly requested.
+
 Development:
 - Run `pnpm dev`
 - Expose port, for example, when using in cloud ide, run `pnpm start`
@@ -70,7 +73,7 @@ Build:
 
 ## Contribution
 Any contributions are highly appreciated. Here are some tips:
-- To improve the translation or add a new language, modify the lang directory. If adding a new language, you will also need to modify src/utils/i18n.ts.
+- To improve the translation or add a new language, modify the `lang` directory. If adding a new language, you will also need to modify `src/utils/i18n.ts`.
 - To improve or add new preset prompts, modify the `prompts` directory.
 - To optimize the API, modify the `src/pages/api` directory.
 - To optimize page interactions, modify the `src/components` directory.

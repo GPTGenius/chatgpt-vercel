@@ -135,19 +135,25 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
           messages: input,
         }),
       });
-      const data = await res.json();
+      const { data, msg } = await res.json();
       if (res.status < 400) {
-        const replay = data.choices[0].message;
-        updateMessages(input.concat(replay));
+        updateMessages(input.concat(data));
       } else {
         updateMessages(
           input.concat([
-            { role: 'assistant', content: `Error: ${data.msg || 'Unknown'}` },
+            { role: 'assistant', content: `Error: ${msg || 'Unknown'}` },
           ])
         );
       }
     } catch (e) {
-      updateMessages(input.concat([{ role: 'assistant', content: 'Error' }]));
+      updateMessages(
+        input.concat([
+          {
+            role: 'assistant',
+            content: `Error: ${e.message || e.stack || e}`,
+          },
+        ])
+      );
     }
     setLoadingMap((map) => ({
       ...map,
@@ -197,7 +203,7 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
                 setShowPrompt(true);
               }}
             >
-              <i className="ri-user-voice-line" />
+              <i className="ri-user-add-line" />
             </div>
           </Tooltip>
           <ClearMessages

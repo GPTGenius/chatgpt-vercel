@@ -4,9 +4,12 @@ import type { APIRoute } from 'astro';
 // read apiKey from env/process.env
 const apiKey = import.meta.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY;
 
+// read disableProxy from env
+const disableProxy = import.meta.env.DISABLE_LOCAL_PROXY === 'true';
+
 // use proxy in local env
 const baseURL =
-  process.env.NODE_ENV === 'development'
+  process.env.NODE_ENV === 'development' && !disableProxy
     ? 'gptgenius-proxy.zeabur.app/proxy'
     : 'api.openai.com';
 
@@ -47,7 +50,19 @@ export const post: APIRoute = async ({ request }) => {
     });
     const data = await completion.json();
 
-    return new Response(JSON.stringify(data), { status: 200 });
+    const { choices = [], error } = data;
+
+    // error from openapi
+    if (error?.message) {
+      throw new Error(error.message);
+    }
+
+    return new Response(
+      JSON.stringify({
+        data: choices?.[0]?.message || '',
+      }),
+      { status: 200 }
+    );
   } catch (e) {
     return new Response(JSON.stringify({ msg: e?.message || e?.stack || e }), {
       status: 500,
