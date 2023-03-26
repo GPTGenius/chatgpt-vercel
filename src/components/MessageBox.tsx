@@ -1,41 +1,26 @@
 import { FC, useContext, useEffect } from 'react';
-import MarkdownIt from 'markdown-it';
-import mdKatex from 'markdown-it-katex';
-import mdHighlight from 'markdown-it-highlightjs';
-import mdKbd from 'markdown-it-kbd';
 import GlobalContext from '@contexts/global';
 import { Message } from '@interfaces';
+import markdown from '@utils/markdown';
 
-const MessageItem: FC<{ message: Message }> = ({ message }) => {
-  const md = MarkdownIt({
-    linkify: true,
-    breaks: true,
-  })
-    .use(mdKatex)
-    .use(mdHighlight, {
-      inline: true,
-    })
-    .use(mdKbd);
-
-  return (
+const MessageItem: FC<{ message: Message }> = ({ message }) => (
+  <div
+    className={`msg-fade-in flex mb-[8px] ${
+      message.role === 'user' ? 'flex-row-reverse' : ''
+    }`}
+  >
     <div
-      className={`msg-fade-in flex mb-[8px] ${
-        message.role === 'user' ? 'flex-row-reverse' : ''
-      }`}
-    >
-      <div
-        dangerouslySetInnerHTML={{
-          __html: md.render(message.content),
-        }}
-        className={`shadow-sm p-4 ${
-          message.role === 'user'
-            ? 'bg-gradient text-white rounded-br-none'
-            : 'rounded-bl-none bg-[#f1f2f6]'
-        } break-words overflow-hidden rounded-[20px]`}
-      ></div>
-    </div>
-  );
-};
+      dangerouslySetInnerHTML={{
+        __html: markdown.render(message.content),
+      }}
+      className={`shadow-sm p-4 ${
+        message.role === 'user'
+          ? 'bg-gradient text-white rounded-br-none'
+          : 'rounded-bl-none bg-[#f1f2f6]'
+      } break-words overflow-hidden rounded-[20px]`}
+    ></div>
+  </div>
+);
 
 const MessageBox: FC<{ messages: Message[]; loading: boolean }> = ({
   messages,
@@ -60,7 +45,12 @@ const MessageBox: FC<{ messages: Message[]; loading: boolean }> = ({
       }}
     >
       {messages.length === 0 ? (
-        <div className="text-gray-400 mb-[20px]">{i18n.default_tips}</div>
+        <div
+          className="text-gray-500 mb-[20px]"
+          dangerouslySetInnerHTML={{
+            __html: markdown.render(i18n.default_tips),
+          }}
+        />
       ) : null}
       {messages.map((message, index) => (
         <MessageItem key={index} message={message} />

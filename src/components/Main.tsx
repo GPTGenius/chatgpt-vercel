@@ -159,8 +159,15 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
     <GlobalContext.Provider value={{ i18n, lang }}>
       <header>
         <div className="flex items-center justify-between">
-          <div className="title">
-            <span className="text-gradient">ChatGPT</span>
+          <div className="flex items-baseline">
+            <span className="title text-gradient">ChatGPT</span>
+            <a
+              href="https://github.com/GPTGenius/chatgpt-vercel"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <i className="ml-2 ri-github-fill text-xl" />
+            </a>
           </div>
           <GlobalConfigs configs={configs} setConfigs={setConfigs} />
         </div>

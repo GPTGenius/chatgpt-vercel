@@ -23,7 +23,7 @@ const { title } = Astro.props;
 <style is:global>
   :root {
     --content-width: 72ch;
-    --header-height: calc(112px + 2rem);
+    --header-height: calc(112px + 2.5rem);
     --footer-height: calc(74px + 4rem);
     --content-background: #f6f6f6;
     --accent: 124, 58, 237;
@@ -98,6 +98,9 @@ const { title } = Astro.props;
     padding: 10px;
     margin-left: 20px;
   }
+  ul {
+    list-style: initial;
+  }
   /* 定义动画效果 */
   @keyframes fadeIn {
     0% {
@@ -145,5 +148,11 @@ const { title } = Astro.props;
   }
   .ant-tabs > .ant-tabs-nav {
     margin-bottom: 0;
+  }
+  #container .ant-tabs-tab > .ant-tabs-tab-btn {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 </style>

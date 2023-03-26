@@ -1,10 +1,10 @@
 {
-  "default_tips": "Chat with us now, click on the bottom left button or input \"/\" to add a prompt preset, powered by OpenAI and Vercel",
+  "default_tips": "Powered by OpenAI and Vercel\n- Chat with us now. Press `Enter` to send and `Shift`+`Enter` to add a new line. \n- Input `/` or click the button at the bottom left to add a preset prompt",
   "chat_placeholder": "Start a conversation",
   "action_clear": "Clear all conversations",
   "action_prompt": "Add a prompt",
   "config_model": "Model:",
-  "config_save": "Save current conversation:",
+  "config_save": "Save all conversation:",
   "status_loading": "AI is thinking...",
   "status_empty": "Empty"
 }

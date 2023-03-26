@@ -36,7 +36,7 @@ const ConversationTabs: FC<{
 
   return (
     <Tabs
-      className="mb-0"
+      className="mb-0 mt-2"
       type="editable-card"
       onChange={setCurrentTab}
       activeKey={currentTab}

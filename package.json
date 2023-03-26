@@ -4,6 +4,10 @@
   "version": "0.0.1",
   "private": true,
   "license": "MIT",
+  "packageManager": "pnpm@7.29.3",
+  "engines": {
+    "node": ">=16.12.0"
+  },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "postinstall": "simple-git-hooks",
