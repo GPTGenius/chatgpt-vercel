@@ -1,5 +1,3 @@
-import { defaultModel, supportedModels } from '@configs';
-import { Message } from '@interfaces';
 import type { APIRoute } from 'astro';
 
 // read apiKey from env/process.env
@@ -16,11 +14,10 @@ const baseURL =
 
 export const post: APIRoute = async ({ request }) => {
   const body = await request.json();
-  const { messages } = body;
-  let { key, model } = body;
+  const { prompt, size = '256x256', n = 1 } = body;
+  let { key } = body;
 
   key = key || apiKey;
-  model = model || defaultModel;
 
   if (!key) {
     return new Response(JSON.stringify({ msg: 'No API key provided' }), {
@@ -28,33 +25,22 @@ export const post: APIRoute = async ({ request }) => {
     });
   }
 
-  if (!supportedModels.includes(model)) {
-    return new Response(
-      JSON.stringify({ msg: `Not supported model ${model}` }),
-      {
-        status: 400,
-      }
-    );
-  }
-
   try {
-    const completion = await fetch(`https://${baseURL}/v1/chat/completions`, {
+    const completion = await fetch(`https://${baseURL}/v1/images/generations`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${key}`,
       },
       method: 'POST',
       body: JSON.stringify({
-        model,
-        messages: messages.map((message: Message) => ({
-          role: message.role,
-          content: message.content,
-        })),
+        prompt,
+        size,
+        n,
       }),
     });
     const data = await completion.json();
 
-    const { choices = [], error } = data;
+    const { data: images = [], error } = data;
 
     // error from openapi
     if (error?.message) {
@@ -63,7 +49,7 @@ export const post: APIRoute = async ({ request }) => {
 
     return new Response(
       JSON.stringify({
-        data: choices?.[0]?.message || '',
+        data: images?.map((image) => image.url) || [],
       }),
       { status: 200 }
     );

@@ -1,4 +1,4 @@
-![](./assets/preview_zh.png)
+![](./assets/preview_zh_v0.1.0.png)
 
 <h2 align="center">ChatGPT-Vercel</h2>
 
@@ -11,20 +11,39 @@
 [English](./README.md) | 简体中文
 
 ## 简介
-通过 Vercel 创建你自己的 ChatGPT 站点， 支持多组文本对话和预设提示。由 OpenAI API GPT-4/3.5 和 Vercel 提供支持。
+通过 Vercel 创建你自己的 ChatGPT 站点， 支持多组文本对话/预设提示/图像生成。由 OpenAI API GPT-4/3.5 和 Vercel 提供支持。
 
 
-## 功能
+## 主要功能
 - [x] 文本对话
 - [x] 预设提示
-- [ ] 图像生成
+- [x] 图像生成
 - [ ] 音频
 
 ## 在线示例
 - [chatgpt-vercel-zh-sample](https://chatgpt-vercel-zh-sample.vercel.app/)
 - [chatgpt-vercel-sample](https://chatgpt-vercel-sample.vercel.app/)
 
-## 开始使用
+## 使用指南
+可以访问上面的在线示例或者自己私有化部署进行体验
+
+- 关于对话。点击左上角可以添加对话，有两种类型：
+  - 文本对话：
+    - 默认为连续对话，每次发送会携带全量上下文
+    - 支持添加预设提示，输入`/`或者点击左下角按钮添加
+    - 支持模型配置，点击右上角设置图标进行配置
+  - 图像生成对话：
+    - 不支持连续对话，每次发送不会携带上下文
+    - 直接输入你想要的图片效果，例如：`一只猫`
+    - 图片链接的有效访问时间为 `2` 小时，如有需要请及时保存
+- 关于历史记录：
+  - 全局设置中开启`保留所有会话`时会保存到本地缓存，默认不保存
+- 关于操作：
+  - `Enter` 键发送，`Shift`+`Enter` 键换行
+- 关于所有的设置：
+  - 见 [配置](#配置)
+
+## 私有化部署
 
 ### 1. 创建项目
 从 github fork 的仓库（推荐）或者直接从下面的 **Deploy** 按钮创建一个 Vercel 项目。

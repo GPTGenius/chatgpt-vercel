@@ -46,8 +46,8 @@ const PromptSelect: FC<{
 
   const items: ItemType[] = useMemo(
     () =>
-      filterPrompts.map((prompt) => ({
-        key: prompt.act,
+      filterPrompts.map((prompt, index) => ({
+        key: `${prompt.act}${index}`,
         label: (
           <div className="p-1" onClick={() => onSelect(prompt.prompt)}>
             <div className="font-bold leading-8">{prompt.act}</div>

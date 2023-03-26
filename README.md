@@ -1,4 +1,4 @@
-![](assets/preview.png)
+![](assets/preview_v0.1.0.png)
 
 <h2 align="center">ChatGPT-Vercel</h2>
 
@@ -11,18 +11,37 @@
 English | [简体中文](./README.zh-CN.md)
 
 ## Introduction
-Building your own ChatGPT website by Vercel, support muti text conversations and preset prompts. Powered by OpenAI API GPT-4/3.5 and Vercel.
+Building your own ChatGPT website by Vercel, support muti text conversations/preset prompts/images generation. Powered by OpenAI API GPT-4/3.5 and Vercel.
 
 
 ## Features
 - [x] Text Conversation
 - [x] Preset Prompts
-- [ ] Images Generation
+- [x] Images Generation
 - [ ] Audio
 
 ## Live Demo
 - [chatgpt-vercel-sample](https://chatgpt-vercel-sample.vercel.app/)
 - [chatgpt-vercel-zh-sample](https://chatgpt-vercel-zh-sample.vercel.app/)
+
+## User Guide
+You can access the online demo above or deploy it privately for experience.
+
+- About the conversation. Click the icon at the top left to add a conversation, which has two types:
+  - Text conversation:
+    - By default, it is a continuous conversation, and each sending will carry the full context.
+    - Supports adding preset prompts, type `/` or click the button at the bottom left to add.
+    - Supports model configuration, click the settings icon at the top right to configure.
+  - Image generation conversation:
+    - Does not support continuous conversation, and each sending will not carry the context.
+    - Directly input the image effect you want, for example: `a cat`.
+    - The valid access time of the image link is `2` hours. Please save it in time if necessary.
+- About the history record:
+  - When `Save all conversations` is enabled in the global settings, it will be saved to local cache. By default, it will not be saved.
+- About operation:
+  - Press `Enter` to send, press `Shift`+`Enter` to line break
+- About all settings: 
+  - see [Configurations](#Configurations)
 
 ## Getting Started
 

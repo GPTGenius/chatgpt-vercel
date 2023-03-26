@@ -1,12 +1,17 @@
 export interface Message {
   content: string;
   role: 'assistant' | 'user';
+  createdAt?: number;
+  expiredAt?: number; // for image mode
 }
+
+export type ConversationMode = 'text' | 'image';
 
 export interface Conversation {
   id: string;
   title: string;
   messages: Message[];
+  mode?: ConversationMode;
   createdAt: number;
   updatedAt?: number;
 }

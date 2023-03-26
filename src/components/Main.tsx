@@ -14,9 +14,10 @@ import GlobalConfigs from './GlobalConfigs';
 import ClearMessages from './ClearMessages';
 import ConversationTabs from './ConversationTabs';
 
-const defaultConversation = {
+const defaultConversation: Omit<Conversation, 'title'> = {
   id: '1',
   messages: [],
+  mode: 'text',
   createdAt: Date.now(),
 };
 
@@ -47,11 +48,23 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
   // prompt
   const [showPrompt, setShowPrompt] = useState(false);
 
-  const tabs = Object.values(conversations).map((conversation) => ({
-    label: conversation.title,
-    key: conversation.id,
-  }));
+  const tabs = Object.values(conversations)
+    .reverse()
+    .map((conversation) => ({
+      label: (
+        <span>
+          {conversation.mode === 'image' ? (
+            <i className="ri-image-line align-bottom" />
+          ) : (
+            <i className="ri-chat-4-line align-bottom" />
+          )}
+          <span className="ml-1">{conversation.title}</span>
+        </span>
+      ),
+      key: conversation.id,
+    }));
   const currentMessages = conversations[currentTab]?.messages ?? [];
+  const currentMode = conversations[currentTab]?.mode ?? 'text';
 
   useEffect(() => {
     // read from localstorage in the first time
@@ -77,7 +90,8 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
             } else {
               setConversations(conversation);
               setCurrentTab(
-                Object.keys(conversation)?.[0] ?? defaultConversation.id
+                Object.keys(conversation)?.reverse()?.[0] ??
+                  defaultConversation.id
               );
             }
           }
@@ -112,12 +126,13 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
     }));
   };
 
-  const sendChatMessages = async (content: string) => {
+  const sendTextChatMessages = async (content: string) => {
     const current = currentTab;
     const input: Message[] = currentMessages.concat([
       {
         role: 'user',
         content,
+        createdAt: Date.now(),
       },
     ]);
     updateMessages(input);
@@ -137,11 +152,22 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
       });
       const { data, msg } = await res.json();
       if (res.status < 400) {
-        updateMessages(input.concat(data));
+        updateMessages(
+          input.concat([
+            {
+              ...data,
+              createdAt: Date.now(),
+            },
+          ])
+        );
       } else {
         updateMessages(
           input.concat([
-            { role: 'assistant', content: `Error: ${msg || 'Unknown'}` },
+            {
+              role: 'assistant',
+              content: `Error: ${msg || 'Unknown'}`,
+              createdAt: Date.now(),
+            },
           ])
         );
       }
@@ -151,6 +177,75 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
           {
             role: 'assistant',
             content: `Error: ${e.message || e.stack || e}`,
+            createdAt: Date.now(),
+          },
+        ])
+      );
+    }
+    setLoadingMap((map) => ({
+      ...map,
+      [current]: false,
+    }));
+  };
+
+  const sendImageChatMessages = async (content: string) => {
+    const current = currentTab;
+    const input: Message[] = currentMessages.concat([
+      {
+        role: 'user',
+        content,
+        createdAt: Date.now(),
+      },
+    ]);
+    updateMessages(input);
+    setText('');
+    setLoadingMap((map) => ({
+      ...map,
+      [current]: true,
+    }));
+    try {
+      const res = await fetch('/api/images', {
+        method: 'POST',
+        body: JSON.stringify({
+          key: configs.openAIApiKey,
+          prompt: content,
+          size: '256x256',
+          n: 1,
+        }),
+      });
+      const { data = [], msg } = await res.json();
+
+      if (res.status < 400) {
+        const params = new URLSearchParams(data?.[0]);
+        const expiredAt = params.get('se');
+        updateMessages(
+          input.concat([
+            {
+              role: 'assistant',
+              content: data.map((url) => `![](${url})`).join('\n'),
+              createdAt: Date.now(),
+              expiredAt: new Date(expiredAt).getTime(),
+            },
+          ])
+        );
+      } else {
+        updateMessages(
+          input.concat([
+            {
+              role: 'assistant',
+              content: `Error: ${msg || 'Unknown'}`,
+              createdAt: Date.now(),
+            },
+          ])
+        );
+      }
+    } catch (e) {
+      updateMessages(
+        input.concat([
+          {
+            role: 'assistant',
+            content: `Error: ${e.message || e.stack || e}`,
+            createdAt: Date.now(),
           },
         ])
       );
@@ -184,14 +279,24 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
           setCurrentTab={setCurrentTab}
         />
       </header>
-      <MessageBox messages={currentMessages} loading={loadingMap[currentTab]} />
+      <MessageBox
+        messages={currentMessages}
+        loading={loadingMap[currentTab]}
+        mode={currentMode}
+      />
       <footer>
         <MessageInput
           text={text}
           setText={setText}
-          showPrompt={showPrompt}
+          showPrompt={showPrompt && currentMode !== 'image'}
           setShowPrompt={setShowPrompt}
-          onSubmit={sendChatMessages}
+          onSubmit={async (message: string) => {
+            if (currentMode === 'image') {
+              sendImageChatMessages(message);
+            } else {
+              sendTextChatMessages(message);
+            }
+          }}
           loading={loadingMap[currentTab]}
         />
         <div className="flex items-center justify-between pr-8">

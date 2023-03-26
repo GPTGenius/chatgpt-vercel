@@ -1,10 +1,14 @@
 {
-  "default_tips": "Powered by OpenAI and Vercel\n- Chat with us now. Press `Enter` to send and `Shift`+`Enter` to add a new line. \n- Input `/` or click the button at the bottom left to add a preset prompt",
+  "default_text_tips": "Powered by OpenAI and Vercel\n- Chat with us now. Press `Enter` to send and `Shift`+`Enter` to add a new line. \n- Input `/` or click the button at the bottom left to add a preset prompt",
+  "default_image_tips": "Powered by OpenAI and Vercel\n- Chat with us now. Press `Enter` to send and `Shift`+`Enter` to add a new line. \n- The image generation does not support continuous dialogue. Please input directly the desired image effect, for example: `a cat`.\n- The effective access time for the image link is `2` hours. Please make sure to save it in time if necessary.",
   "chat_placeholder": "Start a conversation",
   "action_clear": "Clear all conversations",
   "action_prompt": "Add a prompt",
   "config_model": "Model:",
-  "config_save": "Save all conversation:",
+  "config_save": "Save all conversations:",
   "status_loading": "AI is thinking...",
-  "status_empty": "Empty"
+  "status_empty": "Empty",
+  "status_image_expired": "Image has expired",
+  "chat_mode_text": "Text conversation",
+  "chat_mode_image": "Image generation conversation"
 }
