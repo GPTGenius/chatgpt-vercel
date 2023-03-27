@@ -75,8 +75,10 @@
 | 配置项           | 默认值        | 描述                                                                                                      |
 | --------------- | ------------- | --------------------------------------------------------------------------------------------------------- |
 | OpenAI Api Key  | -             | 和部署配置中的含义一样                                                                                      |
-| 模型            | gpt-3.5-turbo | Api 请求中使用的模型，[支持的所有模型](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
 | 保留所有会话     | false         | 页面刷新会话不会丢失                                                                                        |
+| 模型            | gpt-3.5-turbo | Api 请求中使用的模型，[支持的所有模型](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
+| 连续对话         | true          | 是否携带全量上下文进行对话                                                                                  |
+| 生成图片数       | 1             | 图像生成对话时，单次对话生成的图片数                                                                         |
 
 ## 本地开发
 需要：

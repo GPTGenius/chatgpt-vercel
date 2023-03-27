@@ -20,6 +20,8 @@ export interface GlobalConfig {
   openAIApiKey: string;
   model: string;
   save: boolean;
+  continuous: boolean;
+  imagesCount: number;
 }
 
 export type Lang = 'zh' | 'en';

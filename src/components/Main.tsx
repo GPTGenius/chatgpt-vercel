@@ -43,6 +43,8 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
     openAIApiKey: '',
     model: defaultModel,
     save: false,
+    continuous: true,
+    imagesCount: 1,
   });
 
   // prompt
@@ -72,7 +74,10 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
     if (localConfigsStr) {
       try {
         const localConfigs = JSON.parse(localConfigsStr);
-        setConfigs(localConfigs);
+        setConfigs((currentConfigs) => ({
+          ...currentConfigs,
+          ...localConfigs,
+        }));
         if (localConfigs.save) {
           const localConversation = localStorage.getItem(localConversationKey);
           if (localConversation) {
@@ -128,14 +133,15 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
 
   const sendTextChatMessages = async (content: string) => {
     const current = currentTab;
-    const input: Message[] = currentMessages.concat([
+    const input: Message[] = [
       {
         role: 'user',
         content,
         createdAt: Date.now(),
       },
-    ]);
-    updateMessages(input);
+    ];
+    const allMessages: Message[] = currentMessages.concat(input);
+    updateMessages(allMessages);
     setText('');
     setLoadingMap((map) => ({
       ...map,
@@ -147,13 +153,13 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
         body: JSON.stringify({
           key: configs.openAIApiKey,
           model: configs.model,
-          messages: input,
+          messages: configs.continuous ? allMessages : input,
         }),
       });
       const { data, msg } = await res.json();
       if (res.status < 400) {
         updateMessages(
-          input.concat([
+          allMessages.concat([
             {
               ...data,
               createdAt: Date.now(),
@@ -162,7 +168,7 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
         );
       } else {
         updateMessages(
-          input.concat([
+          allMessages.concat([
             {
               role: 'assistant',
               content: `Error: ${msg || 'Unknown'}`,
@@ -173,7 +179,7 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
       }
     } catch (e) {
       updateMessages(
-        input.concat([
+        allMessages.concat([
           {
             role: 'assistant',
             content: `Error: ${e.message || e.stack || e}`,
@@ -190,14 +196,14 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
 
   const sendImageChatMessages = async (content: string) => {
     const current = currentTab;
-    const input: Message[] = currentMessages.concat([
+    const allMessages: Message[] = currentMessages.concat([
       {
         role: 'user',
         content,
         createdAt: Date.now(),
       },
     ]);
-    updateMessages(input);
+    updateMessages(allMessages);
     setText('');
     setLoadingMap((map) => ({
       ...map,
@@ -210,7 +216,7 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
           key: configs.openAIApiKey,
           prompt: content,
           size: '256x256',
-          n: 1,
+          n: configs.imagesCount || 1,
         }),
       });
       const { data = [], msg } = await res.json();
@@ -219,7 +225,7 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
         const params = new URLSearchParams(data?.[0]);
         const expiredAt = params.get('se');
         updateMessages(
-          input.concat([
+          allMessages.concat([
             {
               role: 'assistant',
               content: data.map((url) => `![](${url})`).join('\n'),
@@ -230,7 +236,7 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
         );
       } else {
         updateMessages(
-          input.concat([
+          allMessages.concat([
             {
               role: 'assistant',
               content: `Error: ${msg || 'Unknown'}`,
@@ -241,7 +247,7 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
       }
     } catch (e) {
       updateMessages(
-        input.concat([
+        allMessages.concat([
           {
             role: 'assistant',
             content: `Error: ${e.message || e.stack || e}`,

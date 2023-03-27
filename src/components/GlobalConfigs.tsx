@@ -2,7 +2,7 @@ import { FC, useContext, useState } from 'react';
 import { GlobalConfig } from '@interfaces';
 import { globalConfigLocalKey, supportedModels } from '@configs';
 import GlobalContext from '@contexts/global';
-import { Input, Popover, Select, Switch } from 'antd';
+import { Divider, Input, InputNumber, Popover, Select, Switch } from 'antd';
 
 const GlobalConfigs: FC<{
   configs: GlobalConfig;
@@ -16,7 +16,6 @@ const GlobalConfigs: FC<{
     setConfigs(newConfigs);
     localStorage.setItem(globalConfigLocalKey, JSON.stringify(newConfigs));
   };
-
   return (
     <Popover
       open={showConfigs}
@@ -40,6 +39,21 @@ const GlobalConfigs: FC<{
               }
             />
           </div>
+          <div className="flex items-center justify-between">
+            <div>{i18n.config_save}</div>
+            <Switch
+              className={
+                !configs.save
+                  ? 'bg-[rgb(0,0,0,0.25)] hover:bg-[rgb(0,0,0,0.4)]'
+                  : ''
+              }
+              checked={configs.save}
+              onChange={(save) => updateConfigsAndStorages({ save })}
+            />
+          </div>
+          <Divider orientation="left" plain>
+            {i18n.chat_mode_text}
+          </Divider>
           <div className="flex items-center justify-between mb-[12px]">
             <div>{i18n.config_model}</div>
             <Select
@@ -53,15 +67,34 @@ const GlobalConfigs: FC<{
             />
           </div>
           <div className="flex items-center justify-between">
-            <div>{i18n.config_save}</div>
+            <div>{i18n.config_continuous}</div>
             <Switch
               className={
-                !configs.save
+                !configs.continuous
                   ? 'bg-[rgb(0,0,0,0.25)] hover:bg-[rgb(0,0,0,0.4)]'
                   : ''
               }
-              checked={configs.save}
-              onChange={(save) => updateConfigsAndStorages({ save })}
+              defaultChecked
+              checked={configs.continuous}
+              onChange={(continuous) =>
+                updateConfigsAndStorages({ continuous })
+              }
+            />
+          </div>
+          <Divider orientation="left" plain>
+            {i18n.chat_mode_image}
+          </Divider>
+          <div className="flex items-center justify-between">
+            <div>{i18n.config_images_count}</div>
+            <InputNumber
+              defaultValue={1}
+              value={configs.imagesCount}
+              onChange={(imagesCount) =>
+                updateConfigsAndStorages({ imagesCount })
+              }
+              max={10}
+              min={1}
+              formatter={(val) => Math.floor(val).toString()}
             />
           </div>
         </div>

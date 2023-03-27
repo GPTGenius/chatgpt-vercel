@@ -69,11 +69,13 @@ All deployment configurations could be configured in the `.env` file or in **Env
 ### Global Configurations
 All global configurations will be stored locally
 
-| Configuration             | Default Value | Description                                                                                                         |
-| ------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
-| OpenAI Api Key            | -             | The same with the deployment configuration                                                                          |
-| Model                     | gpt-3.5-turbo | Model used in api request, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
-| Save all conversations    | false         | The conversation won't be lost after the page is refreshed                                                          |
+| Configuration              | Default Value | Description                                                                                                         |
+| -------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
+| OpenAI Api Key             | -             | The same with the deployment configuration                                                                          |
+| Save all conversations     | false         | The conversation won't be lost after the page is refreshed                                                          |
+| Model                      | gpt-3.5-turbo | Model used in api request, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
+| Continuous conversations   | true          | Carry the full context for the conversations                                                                        |
+| Number of generated images | 1             | The number of images generated in a single image generation conversation                                            |
 
 ## Development
 Requirements:
