@@ -1,4 +1,4 @@
-![](assets/preview_v0.1.0.png)
+![](assets/preview.png)
 
 <h2 align="center">ChatGPT-Vercel</h2>
 
@@ -73,7 +73,7 @@ All global configurations will be stored locally
 | ------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
 | OpenAI Api Key            | -             | The same with the deployment configuration                                                                          |
 | Model                     | gpt-3.5-turbo | Model used in api request, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
-| Save current conversation | false         | The conversation won't be lost after the page is refreshed                                                          |
+| Save all conversations    | false         | The conversation won't be lost after the page is refreshed                                                          |
 
 ## Development
 Requirements:

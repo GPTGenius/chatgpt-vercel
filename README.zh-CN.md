@@ -1,4 +1,4 @@
-![](./assets/preview_zh_v0.1.0.png)
+![](./assets/preview_zh.png)
 
 <h2 align="center">ChatGPT-Vercel</h2>
 
@@ -76,7 +76,7 @@
 | --------------- | ------------- | --------------------------------------------------------------------------------------------------------- |
 | OpenAI Api Key  | -             | 和部署配置中的含义一样                                                                                      |
 | 模型            | gpt-3.5-turbo | Api 请求中使用的模型，[支持的所有模型](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
-| 保留当前会话     | false         | 页面刷新当前会话不会丢失                                                                                    |
+| 保留所有会话     | false         | 页面刷新会话不会丢失                                                                                        |
 
 ## 本地开发
 需要：
