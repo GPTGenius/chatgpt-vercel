@@ -5,6 +5,7 @@ specifiers:
   '@astrojs/solid-js': ^2.1.0
   '@astrojs/tailwind': ^3.1.1
   '@astrojs/vercel': ^3.2.1
+  '@esbuild/darwin-arm64': ^0.16.17
   '@types/node': ^18.15.3
   '@types/react': ^18.0.28
   '@types/react-dom': ^18.0.11
@@ -59,6 +60,7 @@ dependencies:
   solid-js: 1.6.15
 
 devDependencies:
+  '@esbuild/darwin-arm64': 0.16.17
   '@types/node': 18.15.3
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -593,8 +595,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/darwin-x64/0.16.17:
     resolution: {integrity: sha512-2By45OBHulkd9Svy5IOCZt376Aa2oOkiE9QWUK9fe6Tb+WDr8hXL3dpqi+DeLiMed8tVXspzsTAvd0jUl96wmg==}

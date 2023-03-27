@@ -37,6 +37,7 @@
     "solid-js": "^1.6.15"
   },
   "devDependencies": {
+    "@esbuild/darwin-arm64": "^0.16.17",
     "@types/node": "^18.15.3",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
