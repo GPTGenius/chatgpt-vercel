@@ -1,3 +1,5 @@
+import { SupportedModel } from '@configs';
+
 export interface Message {
   content: string;
   role: 'assistant' | 'user';
@@ -18,7 +20,7 @@ export interface Conversation {
 
 export interface GlobalConfig {
   openAIApiKey: string;
-  model: string;
+  model: SupportedModel;
   save: boolean;
   continuous: boolean;
   imagesCount: number;
