@@ -1,3 +1,8 @@
-* text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.css text eol=lf
+*.astro text eol=lf
+*.json text eol=lf
 
 public/** linguist-vendored
