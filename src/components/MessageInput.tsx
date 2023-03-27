@@ -1,4 +1,11 @@
-import { FC, useContext, useEffect, useRef, useState } from 'react';
+import {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Input } from 'antd';
 import GlobalContext from '@contexts/global';
 import PromptSelect from './PromptSelect';
@@ -24,13 +31,16 @@ const MessageInput: FC<{
     onSubmit(text);
   };
 
-  const onPromptSelect = (prompt) => {
-    setShowPrompt(false);
-    setTimeout(() => {
-      setText(prompt);
-      ref.current.focus();
-    }, 400);
-  };
+  const onPromptSelect = useCallback(
+    (prompt) => {
+      setShowPrompt(false);
+      setTimeout(() => {
+        setText(prompt);
+        ref.current.focus();
+      }, 400);
+    },
+    [setShowPrompt, setText]
+  );
 
   useEffect(() => {
     if (showPrompt) {
