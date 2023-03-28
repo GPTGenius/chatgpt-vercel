@@ -35,4 +35,13 @@ const i18n = getI18n(lang);
   #container::-webkit-scrollbar {
     display: none;
   }
+  /* mobile style */
+  @media screen and (max-width: 768px) {
+    main {
+      padding-top: 4rem;
+    }
+    #container {
+      margin-top: calc(var(--header-height) - 4rem);
+    }
+  }
 </style>

@@ -50,6 +50,9 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
   // prompt
   const [showPrompt, setShowPrompt] = useState(false);
 
+  // media query
+  const [isMobile, setIsMobile] = useState(false);
+
   const tabs = Object.values(conversations)
     .reverse()
     .map((conversation) => ({
@@ -67,6 +70,14 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
     }));
   const currentMessages = conversations[currentTab]?.messages ?? [];
   const currentMode = conversations[currentTab]?.mode ?? 'text';
+
+  // media query
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 768px)');
+    if (media.matches) {
+      setIsMobile(true);
+    }
+  }, []);
 
   useEffect(() => {
     // read from localstorage in the first time
@@ -263,7 +274,7 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
   };
 
   return (
-    <GlobalContext.Provider value={{ i18n, lang }}>
+    <GlobalContext.Provider value={{ i18n, lang, isMobile }}>
       <header>
         <div className="flex items-center justify-between">
           <div className="flex items-baseline">

@@ -3,3 +3,9 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
+
+@media screen and (max-width: 768px) {
+  .ant-dropdown-menu {
+    max-height: 200px;
+  }
+}
