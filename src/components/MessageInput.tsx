@@ -20,6 +20,7 @@ const MessageInput: FC<{
 }> = ({ text, setText, showPrompt, setShowPrompt, onSubmit, loading }) => {
   const { i18n } = useContext(GlobalContext);
   const [promptKeyword, setPromptKeyword] = useState('');
+  const [isInputComposition, setIsInputComposition] = useState(false);
 
   // textarea ref
   const ref = useRef(null);
@@ -71,8 +72,10 @@ const MessageInput: FC<{
               setPromptKeyword('');
             }
           }}
+          onCompositionStart={() => setIsInputComposition(true)}
+          onCompositionEnd={() => setIsInputComposition(false)}
           onPressEnter={(e) => {
-            if (!e.shiftKey) {
+            if (!e.shiftKey && !isInputComposition) {
               e.preventDefault();
               handleSubmit();
             }
