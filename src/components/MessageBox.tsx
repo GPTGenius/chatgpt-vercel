@@ -36,12 +36,22 @@ const MessageBox: FC<{
 }> = ({ messages, loading, mode }) => {
   const { i18n } = useContext(GlobalContext);
 
-  useEffect(() => {
+  const handleAutoScroll = () => {
     const element = document.querySelector('#content');
     element.scrollIntoView({
       behavior: 'smooth',
       block: 'end',
     });
+  };
+
+  useEffect(() => {
+    const clock = setTimeout(() => {
+      handleAutoScroll();
+    }, 300);
+
+    return () => {
+      clearTimeout(clock);
+    };
   }, [messages]);
 
   return (
