@@ -56,6 +56,8 @@ There are three ways to set your openai api key:
 - Rename your `.env.expample` file to `.env` and set **OPENAI_API_KEY**
 - Set **OPENAI_API_KEY** within the page
 
+> Attention: For Vercel, all environment variables need to be redeployed to take effect.
+
 ## Configurations
 ### Deployment Configurations
 All deployment configurations could be configured in the `.env` file or in **Environment Variables** of Vercel
