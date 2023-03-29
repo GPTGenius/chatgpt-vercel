@@ -64,6 +64,7 @@ const PromptSelect: FC<{
       placement="topLeft"
       open={items.length > 0 && showPrompt}
       getPopupContainer={(node) => node}
+      autoAdjustOverflow={false}
     >
       {children}
     </Dropdown>
