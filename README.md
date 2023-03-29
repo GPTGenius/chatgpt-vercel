@@ -51,7 +51,7 @@ Create Vercel project from a github forked project(recommand) or the following *
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/GPTGenius/chatgpt-vercel&env=OPENAI_API_KEY)
 
 ### 2. Set OPENAI_API_KEY
-There are three ways to set your openai api key:
+There are three ways to set your OpenAI API Key:
 - Set Vercel Environment Variables **OPENAI_API_KEY**
 - Rename your `.env.expample` file to `.env` and set **OPENAI_API_KEY**
 - Set **OPENAI_API_KEY** within the page

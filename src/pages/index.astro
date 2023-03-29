@@ -22,26 +22,17 @@ const i18n = getI18n(lang);
 <style>
   main {
     margin: auto;
-    padding: 4rem 2rem var(--footer-height) 2rem;
+    padding: var(--content-padding-top) 2rem var(--footer-height) 2rem;
     max-width: var(--content-width);
     width: 100%;
     height: 100vh;
   }
   #container {
     margin-top: var(--header-height);
-    height: calc(100vh - 4rem - var(--header-height));
+    height: calc(100vh - var(--content-padding-top) - var(--header-height));
     overflow-y: scroll;
   }
   #container::-webkit-scrollbar {
     display: none;
-  }
-  /* mobile style */
-  @media screen and (max-width: 768px) {
-    main {
-      padding-top: 4rem;
-    }
-    #container {
-      margin-top: calc(var(--header-height) - 4rem);
-    }
   }
 </style>

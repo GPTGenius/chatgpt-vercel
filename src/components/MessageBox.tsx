@@ -59,7 +59,7 @@ const MessageBox: FC<{
       id="content"
       className="pt-[2rem]"
       style={{
-        paddingBottom: 'calc(74px + 4rem)',
+        paddingBottom: 'var(--footer-height)',
       }}
     >
       {messages.length === 0 ? (

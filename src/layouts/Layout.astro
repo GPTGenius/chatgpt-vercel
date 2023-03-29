@@ -23,7 +23,8 @@ const { title } = Astro.props;
 <style is:global>
   :root {
     --content-width: 72ch;
-    --header-height: calc(112px + 2.5rem);
+    --content-padding-top: 4rem;
+    --header-height: calc(112px + 1rem);
     --footer-height: calc(74px + 4rem);
     --content-background: #f6f6f6;
     --accent: 124, 58, 237;
@@ -57,7 +58,8 @@ const { title } = Astro.props;
     background: var(--content-background);
   }
   header {
-    top: 4rem;
+    top: var(--content-padding-top);
+    padding-top: 0;
     padding-bottom: 0;
   }
   footer {
@@ -165,22 +167,18 @@ const { title } = Astro.props;
   /* mobile style */
   @media screen and (max-width: 768px) {
     :root {
-      --header-height: calc(82px + 2.5rem);
+      --header-height: calc(82px + 1rem);
       --footer-height: calc(70px + 3rem);
+      --content-padding-top: 2rem;
     }
     html {
       font-size: 14px;
-    }
-    header {
-      top: 0;
     }
     footer {
       padding-bottom: 1rem;
     }
     header .title {
       font-size: 2rem;
-      font-weight: 800;
-      margin: 0;
     }
   }
 </style>
