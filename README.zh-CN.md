@@ -51,13 +51,17 @@
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/GPTGenius/chatgpt-vercel&env=OPENAI_API_KEY&env=LANGUAGE)
 
 ### 2. 设置 OPENAI_API_KEY
-有三种方式设置你的 openai api key:
+有三种方式设置你的 OpenAI API Key:
 - 在 Vercel 上设置环境变量 **OPENAI_API_KEY**
 - 把 `.env.expample` 文件重命名为 `.env` 然后设置 **OPENAI_API_KEY**
 - 直接在页面中填写 **OPENAI_API_KEY** 
-- 没有 OpenAI API Key 可查看 [也许是时候拥有自己的「ChatGPT」了](https://juejin.cn/post/7210274432332939322)
+
+如果没有 OpenAI API Key 可查看 [也许是时候拥有自己的「ChatGPT」了](https://juejin.cn/post/7210274432332939322)
+
 ### 3. 设置语言
 默认部署的站点和预设提示是英文的，如果你希望部署一个中文站点，可以设置 **LANGUAGE** 为 `zh`，支持在 Vercel 环境变量和 `.env` 文件中配置
+
+> 注意：Vercel 所有环境变量设置后需要重新部署才能生效
 
 ## 配置
 ### 部署配置
