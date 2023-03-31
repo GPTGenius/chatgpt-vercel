@@ -27,21 +27,27 @@ Building your own ChatGPT website by Vercel, support muti text conversations/pre
 ## User Guide
 You can access the online demo above or deploy it privately for experience.
 
-- About the conversation. Click the icon at the top left to add a conversation, which has two types:
-  - Text conversation:
-    - By default, it is a continuous conversation, and each sending will carry the full context.
-    - Supports adding preset prompts, type `/` or click the button at the bottom left to add.
-    - Supports model configuration, click the settings icon at the top right to configure.
-  - Image generation conversation:
-    - Does not support continuous conversation, and each sending will not carry the context.
-    - Directly input the image effect you want, for example: `a cat`.
-    - The valid access time of the image link is `2` hours. Please save it in time if necessary.
-- About the history record:
-  - When `Save all conversations` is enabled in the global settings, it will be saved to local cache. By default, it will not be saved.
-- About operation:
-  - Press `Enter` to send, press `Shift`+`Enter` to line break
-- About all settings: 
-  - see [Configurations](#Configurations)
+### Conversation
+Click the icon at the top left to add a conversation, which has two types:
+- Text conversation:
+  - By default, it is a continuous conversation, and each sending will carry the full context.
+  - Supports adding preset prompts, type `/` or click the button at the bottom left to add.
+  - Supports model configuration, click the settings icon at the top right to configure.
+- Image generation conversation:
+  - Does not support continuous conversation, and each sending will not carry the context.
+  - Directly input the image effect you want, for example: `a cat`.
+  - The valid access time of the image link is `2` hours. Please save it in time if necessary.
+
+### History record
+When `Save all conversations` is enabled in the global settings, it will be saved to local cache. By default, it will not be saved.
+
+### Operation
+- Press `Enter` to send
+- Press `Shift`+`Enter` to line break
+- Enter `/` to add preset prompts, and searching is also supported.
+
+### All settings
+see [Configurations](#Configurations)
 
 ## Getting Started
 
@@ -85,7 +91,8 @@ Requirements:
 - **pnpm** `v7` or higher
 
 Proxy
-- By default, local requests for openapi are made through a third-party proxy. If there is no need for a proxy, you can disable local proxy by setting `DISABLE_LOCAL_PROXY=true` in the `.env` file. At this point, `api.openai.com` will be directly requested.
+- By default, a custom proxy is used to request openapi locally, and `LOCAL_PROXY` needs to be set in `.env`. There is currently no default proxy, so if you choose to set up a proxy, you assume the associated risks.
+- If there is no need for a proxy, you can disable local proxy by setting `DISABLE_LOCAL_PROXY=true` in the `.env` file. At this point, `api.openai.com` will be directly requested.
 
 Development:
 - Run `pnpm dev`

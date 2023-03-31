@@ -6,13 +6,22 @@ const apiKey = import.meta.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY;
 // read disableProxy from env
 const disableProxy = import.meta.env.DISABLE_LOCAL_PROXY === 'true';
 
+// read localProxy from env
+const localProxy = import.meta.env.LOCAL_PROXY;
+
 // use proxy in local env
 const baseURL =
   process.env.NODE_ENV === 'development' && !disableProxy
-    ? 'gptgenius-proxy.zeabur.app/proxy'
+    ? localProxy
     : 'api.openai.com';
 
 export const post: APIRoute = async ({ request }) => {
+  if (!baseURL) {
+    return new Response(JSON.stringify({ msg: 'No LOCAL_PROXY provided' }), {
+      status: 400,
+    });
+  }
+
   const body = await request.json();
   const { prompt, size = '256x256', n = 1 } = body;
   let { key } = body;
