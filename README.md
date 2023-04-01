@@ -68,10 +68,10 @@ There are three ways to set your OpenAI API Key:
 ### Deployment Configurations
 All deployment configurations could be configured in the `.env` file or in **Environment Variables** of Vercel
 
-| Configuration  | Default Value | Description                                                                          | 
-| -------------- | ------------- | ------------------------------------------------------------------------------------ |
-| OPENAI_API_KEY | -             | Key for API request, [how to generate](https://platform.openai.com/account/api-keys) |
-| LANGUAGE       | en            | Website language, including prompts. Supported languages: **zh**/**en**              |
+| Configuration  | Default Value | Description                                                                                | 
+| -------------- | ------------- | ------------------------------------------------------------------------------------------ |
+| OPENAI_API_KEY | -             | Key for API request, [how to generate](https://platform.openai.com/account/api-keys)       |
+| LANGUAGE       | en            | The default language of the website, including prompts. Supported languages: **zh**/**en** |
 
 
 ### Global Configurations

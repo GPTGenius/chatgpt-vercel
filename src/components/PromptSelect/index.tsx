@@ -11,7 +11,9 @@ const PromptSelect: FC<{
   onSelect: (prompt: string) => void;
   children?: ReactNode;
 }> = ({ keyword, showPrompt, onSelect, children }) => {
-  const { lang } = useContext(GlobalContext);
+  const {
+    configs: { lang },
+  } = useContext(GlobalContext);
 
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [filterPrompts, setFilterPrompts] = useState<Prompt[]>([]);
@@ -60,6 +62,7 @@ const PromptSelect: FC<{
 
   return (
     <Dropdown
+      overlayClassName="input-prompt"
       menu={{ items }}
       placement="topLeft"
       open={items.length > 0 && showPrompt}

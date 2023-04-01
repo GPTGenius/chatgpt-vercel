@@ -1,3 +1,5 @@
+import { GlobalConfig } from '@interfaces';
+
 export const globalConfigLocalKey = 'GLOBAL_CONFIG_LOCAL';
 export const localConversationKey = 'LOCAL_CONVERSATION';
 
@@ -14,3 +16,12 @@ export const supportedModels = [
 export type SupportedModel = (typeof supportedModels)[number];
 
 export const defaultModel: SupportedModel = 'gpt-3.5-turbo';
+
+export const defaultGloablConfig: GlobalConfig = {
+  openAIApiKey: '',
+  model: defaultModel,
+  save: false,
+  continuous: true,
+  imagesCount: 1,
+  lang: 'en',
+};

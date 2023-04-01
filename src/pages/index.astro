@@ -1,6 +1,6 @@
 ---
 import Main from '@components/Main';
-import { getI18n } from '@utils/i18n';
+import { initLang } from '@utils/i18n';
 import type { Lang } from '@interfaces';
 import Layout from '@/layouts/Layout.astro';
 import 'katex/dist/katex.min.css';
@@ -8,13 +8,13 @@ import 'highlight.js/styles/atom-one-dark.css';
 
 // read lang from env/process.env
 const lang: Lang = import.meta.env.LANGUAGE || process.env.LANGUAGE || 'en';
-const i18n = getI18n(lang);
+initLang(lang);
 ---
 
 <Layout title="ChatGPT">
   <main>
     <div id="container">
-      <Main i18n={i18n} lang={lang} client:only="react" />
+      <Main lang={lang} client:only="react" />
     </div>
   </main>
 </Layout>
