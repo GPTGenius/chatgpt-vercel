@@ -170,6 +170,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
           key: configs.openAIApiKey,
           model: configs.model,
           messages: configs.continuous ? allMessages : input,
+          temperature: configs.temperature ?? 1,
         }),
       });
       if (res.status < 400 && res.ok) {
@@ -252,7 +253,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
         body: JSON.stringify({
           key: configs.openAIApiKey,
           prompt: content,
-          size: '256x256',
+          size: configs.imageSize || '256x256',
           n: configs.imagesCount || 1,
         }),
       });

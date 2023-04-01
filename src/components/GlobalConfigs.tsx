@@ -1,13 +1,17 @@
 import { FC, useContext, useState } from 'react';
 import { GlobalConfig } from '@interfaces';
-import { globalConfigLocalKey, supportedModels } from '@configs';
+import {
+  globalConfigLocalKey,
+  supportedImgSizes,
+  supportedModels,
+} from '@configs';
 import GlobalContext from '@contexts/global';
-import { Divider, Input, InputNumber, Popover, Select, Switch } from 'antd';
+import { Divider, Input, Popover, Select, Slider, Switch } from 'antd';
 
 const GlobalConfigs: FC<{
   setConfigs: (configs: Partial<GlobalConfig>) => void;
 }> = ({ setConfigs }) => {
-  const { i18n, configs } = useContext(GlobalContext);
+  const { i18n, configs, isMobile } = useContext(GlobalContext);
   const [showConfigs, setShowConfigs] = useState(false);
 
   const updateConfigsAndStorages = (updates: Partial<GlobalConfig>) => {
@@ -65,7 +69,7 @@ const GlobalConfigs: FC<{
               onChange={(model) => updateConfigsAndStorages({ model })}
             />
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-[12px]">
             <div>{i18n.config_continuous}</div>
             <Switch
               className={
@@ -80,20 +84,47 @@ const GlobalConfigs: FC<{
               }
             />
           </div>
+          <div className="flex items-center justify-between">
+            <div>{i18n.config_temperature}</div>
+            <Slider
+              className={isMobile ? 'w-1/2' : 'w-1/4'}
+              min={0}
+              max={2}
+              step={0.1}
+              defaultValue={1}
+              value={configs.temperature}
+              onChange={(temperature) =>
+                updateConfigsAndStorages({ temperature })
+              }
+            />
+          </div>
           <Divider orientation="left" plain>
             {i18n.chat_mode_image}
           </Divider>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-[12px]">
             <div>{i18n.config_images_count}</div>
-            <InputNumber
+            <Slider
+              className={isMobile ? 'w-1/2' : 'w-1/4'}
+              min={1}
+              max={10}
+              step={1}
               defaultValue={1}
               value={configs.imagesCount}
               onChange={(imagesCount) =>
                 updateConfigsAndStorages({ imagesCount })
               }
-              max={10}
-              min={1}
-              formatter={(val) => Math.floor(val).toString()}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <div>{i18n.config_images_size}</div>
+            <Select
+              className="w-1/2"
+              value={configs.imageSize}
+              options={supportedImgSizes.map((size) => ({
+                label: size,
+                value: size,
+              }))}
+              onChange={(imageSize) => updateConfigsAndStorages({ imageSize })}
             />
           </div>
         </div>

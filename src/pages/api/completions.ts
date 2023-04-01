@@ -13,7 +13,7 @@ export const post: APIRoute = async ({ request }) => {
   }
 
   const body = await request.json();
-  const { messages } = body;
+  const { messages, temperature = 1 } = body;
   let { key, model } = body;
 
   key = key || apiKey;
@@ -47,6 +47,7 @@ export const post: APIRoute = async ({ request }) => {
           role: message.role,
           content: message.content,
         })),
+        temperature,
         stream: true,
       }),
     });

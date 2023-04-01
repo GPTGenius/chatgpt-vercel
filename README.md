@@ -82,9 +82,11 @@ All global configurations will be stored locally
 | -------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
 | OpenAI Api Key             | -             | The same with the deployment configuration                                                                          |
 | Save all conversations     | false         | The conversation won't be lost after the page is refreshed                                                          |
+| Temperature                | 1             | The larger the value, the more random the answer, with a range of 0-2                                               |
 | Model                      | gpt-3.5-turbo | Model used in api request, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
 | Continuous conversations   | true          | Carry the full context for the conversations                                                                        |
 | Number of generated images | 1             | The number of images generated in a single image generation conversation                                            |
+| Size of generated images   | 256x256       | The size of a single image in image generation conversation                                                         |
 
 ## Development
 Requirements:

@@ -1,4 +1,4 @@
-import { SupportedModel } from '@configs';
+import { SupportedImgSize, SupportedModel } from '@configs';
 
 export interface Message {
   content: string;
@@ -25,7 +25,9 @@ export interface GlobalConfig {
   model: SupportedModel;
   save: boolean;
   continuous: boolean;
+  temperature: number;
   imagesCount: number;
+  imageSize: SupportedImgSize;
   lang: Lang;
 }
 
