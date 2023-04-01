@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-continue */
 import { FC, useEffect, useState } from 'react';
 import GlobalContext from '@contexts/global';
 import {
@@ -35,6 +37,7 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
       title: i18n.status_empty,
     },
   });
+  const [streamMessage, setStreamMessage] = useState('');
 
   const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
 
@@ -167,17 +170,39 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
           messages: configs.continuous ? allMessages : input,
         }),
       });
-      const { data, msg } = await res.json();
-      if (res.status < 400) {
+      if (res.status < 400 && res.ok) {
+        const stream = res.body;
+        const reader = stream.getReader();
+        const decoder = new TextDecoder();
+        let tempMessage = '';
+        while (true) {
+          const { value, done } = await reader.read();
+          if (value) {
+            const char = decoder.decode(value);
+            if (char === '\n' && tempMessage.endsWith('\n')) {
+              continue;
+            }
+            if (char) {
+              tempMessage += char;
+              setStreamMessage(tempMessage);
+            }
+          }
+          if (done) {
+            break;
+          }
+        }
         updateMessages(
           allMessages.concat([
             {
-              ...data,
+              role: 'assistant',
+              content: tempMessage,
               createdAt: Date.now(),
             },
           ])
         );
+        setStreamMessage('');
       } else {
+        const { msg } = await res.json();
         updateMessages(
           allMessages.concat([
             {
@@ -297,6 +322,7 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
         />
       </header>
       <MessageBox
+        streamMessage={streamMessage}
         messages={currentMessages}
         loading={loadingMap[currentTab]}
         mode={currentMode}

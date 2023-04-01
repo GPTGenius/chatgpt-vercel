@@ -30,10 +30,11 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
 };
 
 const MessageBox: FC<{
+  streamMessage: string;
   messages: Message[];
   loading: boolean;
   mode: ConversationMode;
-}> = ({ messages, loading, mode }) => {
+}> = ({ streamMessage, messages, loading, mode }) => {
   const { i18n } = useContext(GlobalContext);
 
   const handleAutoScroll = () => {
@@ -43,6 +44,10 @@ const MessageBox: FC<{
       block: 'end',
     });
   };
+
+  useEffect(() => {
+    handleAutoScroll();
+  }, [streamMessage]);
 
   useEffect(() => {
     const clock = setTimeout(() => {
@@ -77,6 +82,9 @@ const MessageBox: FC<{
       {messages.map((message, index) => (
         <MessageItem key={index} message={message} />
       ))}
+      {streamMessage ? (
+        <MessageItem message={{ role: 'assistant', content: streamMessage }} />
+      ) : null}
       {loading && (
         <div className="loading text-center text-gray-400">
           {i18n.status_loading}

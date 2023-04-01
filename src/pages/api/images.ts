@@ -1,19 +1,5 @@
 import type { APIRoute } from 'astro';
-
-// read apiKey from env/process.env
-const apiKey = import.meta.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY;
-
-// read disableProxy from env
-const disableProxy = import.meta.env.DISABLE_LOCAL_PROXY === 'true';
-
-// read localProxy from env
-const localProxy = import.meta.env.LOCAL_PROXY;
-
-// use proxy in local env
-const baseURL =
-  process.env.NODE_ENV === 'development' && !disableProxy
-    ? localProxy
-    : 'api.openai.com';
+import { apiKey, baseURL } from '.';
 
 export const post: APIRoute = async ({ request }) => {
   if (!baseURL) {
@@ -35,7 +21,7 @@ export const post: APIRoute = async ({ request }) => {
   }
 
   try {
-    const completion = await fetch(`https://${baseURL}/v1/images/generations`, {
+    const image = await fetch(`https://${baseURL}/v1/images/generations`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${key}`,
@@ -47,7 +33,7 @@ export const post: APIRoute = async ({ request }) => {
         n,
       }),
     });
-    const data = await completion.json();
+    const data = await image.json();
 
     const { data: images = [], error } = data;
 
@@ -58,7 +44,7 @@ export const post: APIRoute = async ({ request }) => {
 
     return new Response(
       JSON.stringify({
-        data: images?.map((image) => image.url) || [],
+        data: images?.map((img) => img.url) || [],
       }),
       { status: 200 }
     );
