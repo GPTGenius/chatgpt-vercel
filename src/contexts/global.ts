@@ -1,14 +1,15 @@
 import { createContext } from 'react';
 import { I18n } from '@utils/i18n';
-import type { Lang } from '@interfaces';
+import { defaultGloablConfig } from '@configs';
+import type { GlobalConfig } from '@interfaces';
 
 const GlobalContext = createContext<{
   i18n: Partial<I18n>;
-  lang: Lang;
+  configs: GlobalConfig;
   isMobile: boolean;
 }>({
   i18n: {},
-  lang: 'en',
+  configs: defaultGloablConfig,
   isMobile: false,
 });
 export default GlobalContext;

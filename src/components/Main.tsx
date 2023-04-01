@@ -1,20 +1,19 @@
-/* eslint-disable no-await-in-loop */
-/* eslint-disable no-continue */
 import { FC, useEffect, useState } from 'react';
 import GlobalContext from '@contexts/global';
 import {
-  defaultModel,
+  defaultGloablConfig,
   globalConfigLocalKey,
   localConversationKey,
 } from '@configs';
 import type { Conversation, GlobalConfig, Lang, Message } from '@interfaces';
-import type { I18n } from '@utils/i18n';
+import { getI18n } from '@utils/i18n';
 import { Tooltip } from 'antd';
 import MessageBox from './MessageBox';
 import MessageInput from './MessageInput';
 import GlobalConfigs from './GlobalConfigs';
 import ClearMessages from './ClearMessages';
 import ConversationTabs from './ConversationTabs';
+import LanguageSwitch from './LanguageSwitch';
 
 const defaultConversation: Omit<Conversation, 'title'> = {
   id: '1',
@@ -23,9 +22,17 @@ const defaultConversation: Omit<Conversation, 'title'> = {
   createdAt: Date.now(),
 };
 
-const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
+const Main: FC<{ lang: Lang }> = ({ lang }) => {
   // input text
   const [text, setText] = useState('');
+
+  // gloabl configs
+  const [configs, setConfigs] = useState<GlobalConfig>({
+    ...defaultGloablConfig,
+    lang,
+  });
+
+  const i18n = getI18n(configs.lang);
 
   // chat informations
   const [currentTab, setCurrentTab] = useState<string>('1');
@@ -40,15 +47,6 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
   const [streamMessage, setStreamMessage] = useState('');
 
   const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
-
-  // gloabl configs
-  const [configs, setConfigs] = useState<GlobalConfig>({
-    openAIApiKey: '',
-    model: defaultModel,
-    save: false,
-    continuous: true,
-    imagesCount: 1,
-  });
 
   // prompt
   const [showPrompt, setShowPrompt] = useState(false);
@@ -202,12 +200,11 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
         );
         setStreamMessage('');
       } else {
-        const { msg } = await res.json();
         updateMessages(
           allMessages.concat([
             {
               role: 'assistant',
-              content: `Error: ${msg || 'Unknown'}`,
+              content: `Error: ${res.statusText || 'Unknown'}`,
               createdAt: Date.now(),
             },
           ])
@@ -299,7 +296,7 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
   };
 
   return (
-    <GlobalContext.Provider value={{ i18n, lang, isMobile }}>
+    <GlobalContext.Provider value={{ i18n, configs, isMobile }}>
       <header>
         <div className="flex items-center justify-between">
           <div className="flex items-baseline">
@@ -312,7 +309,10 @@ const Main: FC<{ i18n: I18n; lang: Lang }> = ({ i18n, lang }) => {
               <i className="ml-2 ri-github-fill text-xl" />
             </a>
           </div>
-          <GlobalConfigs configs={configs} setConfigs={setConfigs} />
+          <div className="flex items-center">
+            <LanguageSwitch />
+            <GlobalConfigs setConfigs={setConfigs} />
+          </div>
         </div>
         <ConversationTabs
           tabs={tabs}

@@ -1,11 +1,11 @@
-.ant-dropdown-menu {
+.input-prompt .ant-dropdown-menu {
   max-height: 400px;
   overflow-x: hidden;
   overflow-y: scroll;
 }
 
 @media screen and (max-width: 768px) {
-  .ant-dropdown-menu {
+  .input-prompt .ant-dropdown-menu {
     max-height: 200px;
   }
 }

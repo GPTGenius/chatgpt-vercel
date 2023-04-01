@@ -9,6 +9,8 @@ export interface Message {
 
 export type ConversationMode = 'text' | 'image';
 
+export type Lang = 'zh' | 'en';
+
 export interface Conversation {
   id: string;
   title: string;
@@ -24,9 +26,8 @@ export interface GlobalConfig {
   save: boolean;
   continuous: boolean;
   imagesCount: number;
+  lang: Lang;
 }
-
-export type Lang = 'zh' | 'en';
 
 export interface Prompt {
   act: string;
