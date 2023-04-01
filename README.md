@@ -16,9 +16,10 @@ Building your own ChatGPT website by Vercel, support muti text conversations/pre
 
 ## Features
 - [x] Text Conversation
+- [x] Images Generation Conversation
 - [x] Preset Prompts
-- [x] Images Generation
-- [ ] Audio
+- [x] Multi-language Switch
+- [ ] Audio Conversation
 
 ## Live Demo
 - [chatgpt-vercel-sample](https://chatgpt-vercel-sample.vercel.app/)

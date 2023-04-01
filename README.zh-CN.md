@@ -16,9 +16,10 @@
 
 ## 主要功能
 - [x] 文本对话
+- [x] 图像生成对话
 - [x] 预设提示
-- [x] 图像生成
-- [ ] 音频
+- [x] 多语言切换
+- [ ] 音频对话
 
 ## 在线示例
 - [chatgpt-vercel-zh-sample](https://chatgpt-vercel-zh-sample.vercel.app/)

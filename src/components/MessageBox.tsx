@@ -24,7 +24,7 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
             ? 'bg-gradient text-white rounded-br-none'
             : 'rounded-bl-none bg-[#f1f2f6]'
         } break-words overflow-hidden rounded-[20px]`}
-      ></div>
+      />
     </div>
   );
 };

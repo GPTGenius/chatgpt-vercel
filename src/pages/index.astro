@@ -1,6 +1,5 @@
 ---
 import Main from '@components/Main';
-import { initLang } from '@utils/i18n';
 import type { Lang } from '@interfaces';
 import Layout from '@/layouts/Layout.astro';
 import 'katex/dist/katex.min.css';
@@ -8,7 +7,6 @@ import 'highlight.js/styles/atom-one-dark.css';
 
 // read lang from env/process.env
 const lang: Lang = import.meta.env.LANGUAGE || process.env.LANGUAGE || 'en';
-initLang(lang);
 ---
 
 <Layout title="ChatGPT">

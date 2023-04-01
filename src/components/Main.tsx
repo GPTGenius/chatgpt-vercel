@@ -27,12 +27,9 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
   const [text, setText] = useState('');
 
   // gloabl configs
-  const [configs, setConfigs] = useState<GlobalConfig>({
-    ...defaultGloablConfig,
-    lang,
-  });
+  const [configs, setConfigs] = useState<Partial<GlobalConfig>>({});
 
-  const i18n = getI18n(configs.lang);
+  const i18n = getI18n(configs.lang ?? 'en');
 
   // chat informations
   const [currentTab, setCurrentTab] = useState<string>('1');
@@ -81,12 +78,17 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
   }, []);
 
   useEffect(() => {
+    const defaultConfigs = {
+      ...defaultGloablConfig,
+      lang,
+    };
     // read from localstorage in the first time
     const localConfigsStr = localStorage.getItem(globalConfigLocalKey);
     if (localConfigsStr) {
       try {
         const localConfigs = JSON.parse(localConfigsStr);
         setConfigs((currentConfigs) => ({
+          ...defaultConfigs,
           ...currentConfigs,
           ...localConfigs,
         }));
@@ -114,8 +116,10 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
           }
         }
       } catch (e) {
-        //
+        setConfigs(defaultConfigs);
       }
+    } else {
+      setConfigs(defaultConfigs);
     }
   }, []);
 

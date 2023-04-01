@@ -5,7 +5,7 @@ import GlobalContext from '@contexts/global';
 import { Divider, Input, InputNumber, Popover, Select, Switch } from 'antd';
 
 const GlobalConfigs: FC<{
-  setConfigs: (configs: GlobalConfig) => void;
+  setConfigs: (configs: Partial<GlobalConfig>) => void;
 }> = ({ setConfigs }) => {
   const { i18n, configs } = useContext(GlobalContext);
   const [showConfigs, setShowConfigs] = useState(false);
