@@ -11,7 +11,7 @@
 English | [简体中文](./README.zh-CN.md)
 
 ## Introduction
-Building your own ChatGPT website by Vercel, support muti text conversations/preset prompts/images generation. Powered by OpenAI API GPT-4/3.5 and Vercel.
+Create a private ChatGPT website with one-click for free using Vercel, support muti text conversations/preset prompts/images generation. Powered by OpenAI API GPT-4/3.5 and Vercel.
 
 
 ## Features
@@ -78,15 +78,16 @@ All deployment configurations could be configured in the `.env` file or in **Env
 ### Global Configurations
 All global configurations will be stored locally
 
-| Configuration              | Default Value | Description                                                                                                         |
-| -------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
-| OpenAI Api Key             | -             | The same with the deployment configuration                                                                          |
-| Save all conversations     | false         | The conversation won't be lost after the page is refreshed                                                          |
-| Temperature                | 1             | The larger the value, the more random the answer, with a range of 0-2                                               |
-| Model                      | gpt-3.5-turbo | Model used in api request, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
-| Continuous conversations   | true          | Carry the full context for the conversations                                                                        |
-| Number of generated images | 1             | The number of images generated in a single image generation conversation                                            |
-| Size of generated images   | 256x256       | The size of a single image in image generation conversation                                                         |
+| Configuration                         | Default Value | Description                                                                                                         |
+| ------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
+| OpenAI Api Key                        | -             | The same with the deployment configuration                                                                          |
+| Save all conversations                | false         | The conversation won't be lost after the page is refreshed                                                          |
+| Temperature                           | 1             | The larger the value, the more random the answer, with a range of 0-2                                               |
+| Model                                 | gpt-3.5-turbo | Model used in api request, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
+| Continuous conversations              | true          | Carry the context for the conversations                                                                             |
+| Number of historical messages carried | 4             | For continuous conversations, the number of historical messages carried                                             |
+| Number of generated images            | 1             | The number of images generated in a single image generation conversation                                            |
+| Size of generated images              | 256x256       | The size of a single image in image generation conversation                                                         |
 
 ## Development
 Requirements:

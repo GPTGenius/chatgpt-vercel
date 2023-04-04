@@ -7,6 +7,7 @@
   "config_model": "Model:",
   "config_save": "Save all conversations:",
   "config_continuous": "Continuous conversations:",
+  "config_messages_count": "Number of historical messages carried:",
   "config_temperature": "Temperature:",
   "config_images_count": "Number of generated images:",
   "config_images_size": "Size of generated images:",

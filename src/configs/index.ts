@@ -27,6 +27,7 @@ export const defaultGloablConfig: GlobalConfig = {
   model: defaultModel,
   save: false,
   continuous: true,
+  messagesCount: 4,
   temperature: 1,
   imagesCount: 1,
   imageSize: '256x256',

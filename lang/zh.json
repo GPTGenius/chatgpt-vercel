@@ -7,6 +7,7 @@
   "config_model": "模型：",
   "config_save": "保留所有会话：",
   "config_continuous": "连续对话：",
+  "config_messages_count": "携带历史消息数：",
   "config_temperature": "发散程度：",
   "config_images_count": "生成图片数：",
   "config_images_size": "图片尺寸：",
