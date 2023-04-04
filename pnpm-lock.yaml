@@ -28,6 +28,7 @@ specifiers:
   katex: ^0.16.4
   lint-staged: ^13.2.0
   lodash.omit: ^4.5.0
+  lodash.throttle: ^4.1.1
   markdown-it: ^13.0.1
   markdown-it-highlightjs: ^4.0.1
   markdown-it-katex: ^2.0.3
@@ -53,6 +54,7 @@ dependencies:
   highlight.js: 11.7.0
   katex: 0.16.4
   lodash.omit: 4.5.0
+  lodash.throttle: 4.1.1
   markdown-it: 13.0.1
   markdown-it-highlightjs: 4.0.1
   markdown-it-katex: 2.0.3
@@ -3474,6 +3476,10 @@ packages:
 
   /lodash.omit/4.5.0:
     resolution: {integrity: sha512-XeqSp49hNGmlkj2EJlfrQFIzQ6lXdNro9sddtQzcJY8QaoC2GO0DT7xaIokHeyM+mIT0mPMlPvkYzg2xCuHdZg==}
+    dev: false
+
+  /lodash.throttle/4.1.1:
+    resolution: {integrity: sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==}
     dev: false
 
   /log-symbols/5.1.0:

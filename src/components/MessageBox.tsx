@@ -1,4 +1,5 @@
-import { FC, useContext, useEffect } from 'react';
+import { FC, useCallback, useContext, useEffect } from 'react';
+import throttle from 'lodash.throttle';
 import GlobalContext from '@contexts/global';
 import { ConversationMode, Message } from '@interfaces';
 import markdown from '@utils/markdown';
@@ -32,18 +33,20 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
 const MessageBox: FC<{
   streamMessage: string;
   messages: Message[];
-  loading: boolean;
   mode: ConversationMode;
-}> = ({ streamMessage, messages, loading, mode }) => {
+}> = ({ streamMessage, messages, mode }) => {
   const { i18n } = useContext(GlobalContext);
 
-  const handleAutoScroll = () => {
-    const element = document.querySelector('#content');
-    element.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end',
-    });
-  };
+  const handleAutoScroll = useCallback(
+    throttle(() => {
+      const element = document.querySelector('#content');
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+      });
+    }, 300),
+    []
+  );
 
   useEffect(() => {
     handleAutoScroll();
@@ -85,11 +88,6 @@ const MessageBox: FC<{
       {streamMessage ? (
         <MessageItem message={{ role: 'assistant', content: streamMessage }} />
       ) : null}
-      {loading && (
-        <div className="loading text-center text-gray-400">
-          {i18n.status_loading}
-        </div>
-      )}
     </div>
   );
 };

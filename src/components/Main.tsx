@@ -41,7 +41,9 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
       title: i18n.status_empty,
     },
   });
-  const [streamMessage, setStreamMessage] = useState('');
+  const [streamMessageMap, setStreamMessageMap] = useState<
+    Record<string, string>
+  >({});
 
   const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
 
@@ -66,8 +68,10 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
       ),
       key: conversation.id,
     }));
-  const currentMessages = conversations[currentTab]?.messages ?? [];
-  const currentMode = conversations[currentTab]?.mode ?? 'text';
+  const messages = conversations[currentTab]?.messages ?? [];
+  const mode = conversations[currentTab]?.mode ?? 'text';
+  const stremMessage = streamMessageMap[currentTab] ?? '';
+  const loading = loadingMap[currentTab];
 
   // media query
   useEffect(() => {
@@ -132,15 +136,15 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
     }
   }, [conversations, configs.save]);
 
-  const updateMessages = (messages: Message[]) => {
+  const updateMessages = (msgs: Message[]) => {
     setConversations((msg) => ({
       ...msg,
       [currentTab]: {
         ...conversations[currentTab],
-        messages,
-        ...(messages.length > 0
+        messages: msgs,
+        ...(msgs.length > 0
           ? {
-              title: messages[0].content,
+              title: msgs[0].content,
             }
           : {}),
       },
@@ -156,7 +160,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
         createdAt: Date.now(),
       },
     ];
-    const allMessages: Message[] = currentMessages.concat(input);
+    const allMessages: Message[] = messages.concat(input);
     updateMessages(allMessages);
     setText('');
     setLoadingMap((map) => ({
@@ -187,7 +191,11 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
             }
             if (char) {
               tempMessage += char;
-              setStreamMessage(tempMessage);
+              // eslint-disable-next-line no-loop-func
+              setStreamMessageMap((map) => ({
+                ...map,
+                [current]: tempMessage,
+              }));
             }
           }
           if (done) {
@@ -203,7 +211,10 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
             },
           ])
         );
-        setStreamMessage('');
+        setStreamMessageMap((map) => ({
+          ...map,
+          [current]: '',
+        }));
       } else {
         updateMessages(
           allMessages.concat([
@@ -234,7 +245,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
 
   const sendImageChatMessages = async (content: string) => {
     const current = currentTab;
-    const allMessages: Message[] = currentMessages.concat([
+    const allMessages: Message[] = messages.concat([
       {
         role: 'user',
         content,
@@ -327,25 +338,29 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
         />
       </header>
       <MessageBox
-        streamMessage={streamMessage}
-        messages={currentMessages}
-        loading={loadingMap[currentTab]}
-        mode={currentMode}
+        streamMessage={stremMessage}
+        messages={messages}
+        mode={mode}
       />
       <footer>
+        {loading ? (
+          <div className="loading absolute top-1 text-center translate-x-[-50%] left-1/2 text-gray-400">
+            {i18n.status_loading}
+          </div>
+        ) : null}
         <MessageInput
           text={text}
           setText={setText}
-          showPrompt={showPrompt && currentMode !== 'image'}
+          showPrompt={showPrompt && mode !== 'image'}
           setShowPrompt={setShowPrompt}
           onSubmit={async (message: string) => {
-            if (currentMode === 'image') {
+            if (mode === 'image') {
               sendImageChatMessages(message);
             } else {
               sendTextChatMessages(message);
             }
           }}
-          loading={loadingMap[currentTab]}
+          loading={loading}
         />
         <div className="flex items-center justify-between pr-8">
           <Tooltip title={i18n.action_prompt}>
