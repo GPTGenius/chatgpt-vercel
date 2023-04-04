@@ -20,7 +20,7 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
             ? i18n.status_image_expired
             : markdown.render(message.content),
         }}
-        className={`shadow-sm p-4 ${
+        className={`prose shadow-sm p-4 ${
           message.role === 'user'
             ? 'bg-gradient text-white rounded-br-none'
             : 'rounded-bl-none bg-[#f1f2f6]'

@@ -46,12 +46,6 @@ const { title } = Astro.props;
   textarea::-webkit-scrollbar {
     display: none;
   }
-  a {
-    color: #1677ff;
-  }
-  a:hover {
-    color: #69b1ff;
-  }
   header,
   footer {
     position: fixed;
@@ -88,26 +82,13 @@ const { title } = Astro.props;
     background-size: 400%;
     background-position: 0%;
   }
-  pre code.hljs {
-    border-radius: 4px;
+  .prose pre code.hljs {
+    overflow: initial;
+    padding: 3px 5px;
   }
   code.hljs:not(pre code.hljs) {
     /* remove inline code background */
     background: transparent;
-  }
-  .katex-display: {
-    overflow-x: scroll;
-    overflow-y: hidden;
-  }
-  ol,
-  ul,
-  menu {
-    list-style: auto;
-    padding: 10px;
-    margin-left: 20px;
-  }
-  ul {
-    list-style: initial;
   }
   /* 定义动画效果 */
   @keyframes fadeIn {
