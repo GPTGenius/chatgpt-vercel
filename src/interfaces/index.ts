@@ -25,6 +25,7 @@ export interface GlobalConfig {
   model: SupportedModel;
   save: boolean;
   continuous: boolean;
+  messagesCount: number;
   temperature: number;
   imagesCount: number;
   imageSize: SupportedImgSize;

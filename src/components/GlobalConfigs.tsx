@@ -85,6 +85,21 @@ const GlobalConfigs: FC<{
             />
           </div>
           <div className="flex items-center justify-between">
+            <div>{i18n.config_messages_count}</div>
+            <Slider
+              className={isMobile ? 'w-1/2' : 'w-1/4'}
+              min={2}
+              max={24}
+              step={2}
+              disabled={!configs.continuous}
+              defaultValue={4}
+              value={configs.messagesCount}
+              onChange={(messagesCount) =>
+                updateConfigsAndStorages({ messagesCount })
+              }
+            />
+          </div>
+          <div className="flex items-center justify-between">
             <div>{i18n.config_temperature}</div>
             <Slider
               className={isMobile ? 'w-1/2' : 'w-1/4'}

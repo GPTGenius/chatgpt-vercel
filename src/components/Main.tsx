@@ -173,7 +173,9 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
         body: JSON.stringify({
           key: configs.openAIApiKey,
           model: configs.model,
-          messages: configs.continuous ? allMessages : input,
+          messages: configs.continuous
+            ? allMessages.slice(-1 * (configs.messagesCount ?? 4) - 1)
+            : input,
           temperature: configs.temperature ?? 1,
         }),
       });
