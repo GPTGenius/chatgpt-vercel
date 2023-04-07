@@ -184,6 +184,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
         const reader = stream.getReader();
         const decoder = new TextDecoder();
         let tempMessage = '';
+        // eslint-disable-next-line no-constant-condition
         while (true) {
           const { value, done } = await reader.read();
           if (value) {

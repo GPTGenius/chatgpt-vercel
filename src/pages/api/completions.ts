@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type { APIRoute } from 'astro';
 import type { ParsedEvent, ReconnectInterval } from 'eventsource-parser';
 import { createParser } from 'eventsource-parser';
@@ -82,7 +83,7 @@ export const post: APIRoute = async ({ request }) => {
         };
 
         const parser = createParser(streamParser);
-        // eslint-disable-next-line no-restricted-syntax
+        // eslint-disable-next-line no-restricted-syntax, @typescript-eslint/no-explicit-any
         for await (const chunk of res.body as any)
           parser.feed(decoder.decode(chunk));
       },

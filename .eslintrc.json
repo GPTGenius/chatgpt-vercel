@@ -39,6 +39,7 @@
         "ecmaVersion": 2021
       },
       "rules": {
+        "react-hooks/exhaustive-deps": 0,
         "react/no-unescaped-entities": 0,
         "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }]
       },
