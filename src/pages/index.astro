@@ -1,5 +1,5 @@
 ---
-import Main from '@components/Main';
+import Main from '@modules/Main';
 import type { Lang } from '@interfaces';
 import Layout from '@/layouts/Layout.astro';
 import 'katex/dist/katex.min.css';
@@ -10,27 +10,14 @@ const lang: Lang = import.meta.env.LANGUAGE || process.env.LANGUAGE || 'en';
 ---
 
 <Layout title="ChatGPT">
-  <main>
-    <div id="container">
-      <Main lang={lang} client:only="react" />
-    </div>
-  </main>
+  <div id="container">
+    <Main lang={lang} client:only="react" />
+  </div>
 </Layout>
 
 <style>
-  main {
-    margin: auto;
-    padding: var(--content-padding-top) 2rem var(--footer-height) 2rem;
-    max-width: var(--content-width);
-    width: 100%;
-    height: 100vh;
-  }
   #container {
-    margin-top: var(--header-height);
-    height: calc(100vh - var(--content-padding-top) - var(--header-height));
-    overflow-y: scroll;
-  }
-  #container::-webkit-scrollbar {
-    display: none;
+    width: 1200px;
+    height: 80vh;
   }
 </style>

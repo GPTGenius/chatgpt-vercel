@@ -1,0 +1,8 @@
+.sidebar-record-item:hover .sidebar-record-item-time,
+.sidebar-record-item:hover .sidebar-record-item-mode {
+  visibility: hidden;
+}
+
+.sidebar-record-item:hover .sidebar-record-item-delete {
+  display: block;
+}

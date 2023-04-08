@@ -1,4 +1,4 @@
-import { GlobalConfig } from '@interfaces';
+import { Conversation, GlobalConfig } from '@interfaces';
 
 export const globalConfigLocalKey = 'GLOBAL_CONFIG_LOCAL';
 export const localConversationKey = 'LOCAL_CONVERSATION';
@@ -22,6 +22,17 @@ export const supportedImgSizes = ['256x256', '512x512', '1024x1024'] as const;
 
 export type SupportedImgSize = (typeof supportedImgSizes)[number];
 
+export const supportedLanguages = [
+  {
+    label: '简体中文',
+    value: 'zh',
+  },
+  {
+    label: 'English',
+    value: 'en',
+  },
+];
+
 export const defaultGloablConfig: GlobalConfig = {
   openAIApiKey: '',
   model: defaultModel,
@@ -32,4 +43,11 @@ export const defaultGloablConfig: GlobalConfig = {
   imagesCount: 1,
   imageSize: '256x256',
   lang: 'en',
+};
+
+export const defaultConversation: Omit<Conversation, 'title'> = {
+  id: '1',
+  messages: [],
+  mode: 'text',
+  createdAt: Date.now(),
 };

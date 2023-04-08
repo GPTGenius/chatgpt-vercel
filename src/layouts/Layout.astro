@@ -26,18 +26,25 @@ const { title } = Astro.props;
     --content-padding-top: 4rem;
     --header-height: calc(112px + 1rem);
     --footer-height: calc(74px + 4rem);
-    --content-background: #f6f6f6;
-    --accent: 124, 58, 237;
-    --accent-gradient: linear-gradient(
+    --content-background: rgb(250, 251, 250);
+    --theme-purple: linear-gradient(
       45deg,
-      rgb(var(--accent)),
-      #da62c4 30%,
+      rgba(124, 58, 237, 0.8),
+      rgba(218, 98, 196, 0.8) 30%,
       white 60%
     );
+    --accent-gradient: var(--theme-purple);
   }
   html {
     font-family: system-ui, sans-serif;
     background-color: var(--content-background);
+    height: 100%;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
   }
   code {
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
@@ -94,6 +101,19 @@ const { title } = Astro.props;
   code.hljs:not(pre code.hljs)::after {
     /* remove extra `` */
     content: '';
+  }
+  /* common scrollbar */
+  .common-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .common-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #edeeee;
+    border-radius: 20px;
+  }
+
+  .common-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
   }
   /* 定义动画效果 */
   @keyframes fadeIn {

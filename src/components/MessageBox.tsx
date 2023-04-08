@@ -3,17 +3,24 @@ import throttle from 'lodash.throttle';
 import GlobalContext from '@contexts/global';
 import { ConversationMode, Message } from '@interfaces';
 import markdown from '@utils/markdown';
+import SystemAvatar from './Avatar/system';
 
-const MessageItem: FC<{ message: Message }> = ({ message }) => {
+const MessageItem: FC<{ message: Message; key?: number }> = ({
+  message,
+  key,
+}) => {
   const { i18n } = useContext(GlobalContext);
   const isExpired = message.expiredAt && message.expiredAt <= Date.now();
 
   return (
     <div
-      className={`msg-fade-in flex mb-[8px] ${
+      className={`msg-fade-in flex items-start ${key === 0 ? '' : 'mt-[8px]'} ${
         message.role === 'user' ? 'flex-row-reverse' : ''
       }`}
     >
+      {message.role === 'assistant' ? (
+        <SystemAvatar className="mt-[15px] mr-2" />
+      ) : null}
       <div
         dangerouslySetInnerHTML={{
           __html: isExpired
@@ -21,10 +28,8 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
             : markdown.render(message.content),
         }}
         className={`prose shadow-sm p-4 ${
-          message.role === 'user'
-            ? 'bg-gradient text-white rounded-br-none'
-            : 'rounded-bl-none bg-[#f1f2f6]'
-        } break-words overflow-hidden rounded-[20px]`}
+          message.role === 'user' ? 'bg-gradient text-white' : 'bg-[#ebeced]'
+        } break-words overflow-hidden rounded-[16px]`}
       />
     </div>
   );
@@ -34,7 +39,8 @@ const MessageBox: FC<{
   streamMessage: string;
   messages: Message[];
   mode: ConversationMode;
-}> = ({ streamMessage, messages, mode }) => {
+  loading: boolean;
+}> = ({ streamMessage, messages, mode, loading }) => {
   const { i18n } = useContext(GlobalContext);
 
   const handleAutoScroll = useCallback(
@@ -63,16 +69,10 @@ const MessageBox: FC<{
   }, [messages]);
 
   return (
-    <div
-      id="content"
-      className="pt-[2rem]"
-      style={{
-        paddingBottom: 'var(--footer-height)',
-      }}
-    >
+    <div id="content" className="pb-5">
       {messages.length === 0 ? (
         <div
-          className="text-gray-500 mb-[20px]"
+          className="prose text-gray-500 mb-[20px]"
           dangerouslySetInnerHTML={{
             __html: markdown.render(
               mode === 'image'
@@ -87,6 +87,11 @@ const MessageBox: FC<{
       ))}
       {streamMessage ? (
         <MessageItem message={{ role: 'assistant', content: streamMessage }} />
+      ) : null}
+      {loading ? (
+        <div className="loading text-center text-gray-400 mt-5 mb-5">
+          {i18n.status_loading}
+        </div>
       ) : null}
     </div>
   );
