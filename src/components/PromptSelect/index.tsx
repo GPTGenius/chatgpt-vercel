@@ -63,7 +63,7 @@ const PromptSelect: FC<{
 
   return (
     <Dropdown
-      overlayClassName="input-prompt"
+      overlayClassName="input-prompt common-scrollbar"
       menu={{ items }}
       placement="topLeft"
       open={items.length > 0 && showPrompt}

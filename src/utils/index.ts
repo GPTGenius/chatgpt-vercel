@@ -1,6 +1,6 @@
-import { TabsProps } from 'antd';
+import { RecordCardItem } from '@interfaces';
 
-export const getMaxTabIndex = (tabs: TabsProps['items']) => {
+export const getMaxIndex = (tabs: RecordCardItem[]) => {
   let max = tabs.length;
   tabs.forEach((tab) => {
     const index = Number(tab.key);

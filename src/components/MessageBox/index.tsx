@@ -1,31 +1,47 @@
 import { FC, useCallback, useContext, useEffect } from 'react';
-import throttle from 'lodash.throttle';
+import { throttle } from 'lodash-es';
 import GlobalContext from '@contexts/global';
 import { ConversationMode, Message } from '@interfaces';
 import markdown from '@utils/markdown';
+import { getRelativeTime } from '@utils/date';
+import SystemAvatar from '@components/Avatar/system';
+import './index.css';
 
-const MessageItem: FC<{ message: Message }> = ({ message }) => {
+const MessageItem: FC<{ message: Message; index?: number }> = ({
+  message,
+  index,
+}) => {
   const { i18n } = useContext(GlobalContext);
   const isExpired = message.expiredAt && message.expiredAt <= Date.now();
-
+  const createdAt = getRelativeTime(message.createdAt, true);
   return (
     <div
-      className={`msg-fade-in flex mb-[8px] ${
-        message.role === 'user' ? 'flex-row-reverse' : ''
-      }`}
+      className={`msg-fade-in flex items-start relative ${
+        index === 0 ? '' : 'mt-[24px]'
+      } ${message.role === 'user' ? 'flex-row-reverse' : ''}`}
     >
+      {message.role === 'assistant' ? (
+        <SystemAvatar className="mt-[14px] mr-2" />
+      ) : null}
       <div
         dangerouslySetInnerHTML={{
           __html: isExpired
             ? i18n.status_image_expired
             : markdown.render(message.content),
         }}
-        className={`prose shadow-sm p-4 ${
-          message.role === 'user'
-            ? 'bg-gradient text-white rounded-br-none'
-            : 'rounded-bl-none bg-[#f1f2f6]'
-        } break-words overflow-hidden rounded-[20px]`}
+        className={`prose message-box shadow-sm p-4 ${
+          message.role === 'user' ? 'bg-gradient text-white' : 'bg-[#ebeced]'
+        } break-words overflow-hidden rounded-[16px]`}
       />
+      {createdAt ? (
+        <div
+          className={`message-box-time invisible text-[#a1a7a8] text-sm absolute top-[-20px] ${
+            message.role === 'user' ? 'right-0' : 'left-[calc(32px+0.5rem)]'
+          }`}
+        >
+          {createdAt}
+        </div>
+      ) : null}
     </div>
   );
 };
@@ -34,7 +50,8 @@ const MessageBox: FC<{
   streamMessage: string;
   messages: Message[];
   mode: ConversationMode;
-}> = ({ streamMessage, messages, mode }) => {
+  loading: boolean;
+}> = ({ streamMessage, messages, mode, loading }) => {
   const { i18n } = useContext(GlobalContext);
 
   const handleAutoScroll = useCallback(
@@ -63,16 +80,10 @@ const MessageBox: FC<{
   }, [messages]);
 
   return (
-    <div
-      id="content"
-      className="pt-[2rem]"
-      style={{
-        paddingBottom: 'var(--footer-height)',
-      }}
-    >
+    <div id="content" className="pb-5">
       {messages.length === 0 ? (
         <div
-          className="text-gray-500 mb-[20px]"
+          className="prose text-gray-500 mb-[20px]"
           dangerouslySetInnerHTML={{
             __html: markdown.render(
               mode === 'image'
@@ -83,10 +94,15 @@ const MessageBox: FC<{
         />
       ) : null}
       {messages.map((message, index) => (
-        <MessageItem key={index} message={message} />
+        <MessageItem key={index} index={index} message={message} />
       ))}
       {streamMessage ? (
         <MessageItem message={{ role: 'assistant', content: streamMessage }} />
+      ) : null}
+      {loading ? (
+        <div className="loading text-center text-gray-400 mt-5 mb-5">
+          {i18n.status_loading}
+        </div>
       ) : null}
     </div>
   );

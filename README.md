@@ -3,6 +3,9 @@
 <h2 align="center">ChatGPT-Vercel</h2>
 
 <p align="center">
+  <a href="https://github.com/GPTGenius/chatgpt-vercel/tags">
+    <img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/tag/GPTGenius/chatgpt-vercel">
+  </a>
   <a href="https://github.com/GPTGenius/chatgpt-vercel/blob/main/LICENSE">
     <img alt="license" src="https://img.shields.io/github/license/GPTGenius/chatgpt-vercel">
   </a>
@@ -13,13 +16,13 @@ English | [简体中文](./README.zh-CN.md)
 ## Introduction
 Create a private ChatGPT website with one-click for free using Vercel, support muti text conversations/preset prompts/images generation. Powered by OpenAI API GPT-4/3.5 and Vercel.
 
-
 ## Features
-- [x] Text Conversation
-- [x] Images Generation Conversation
-- [x] Preset Prompts
-- [x] Multi-language Switch
-- [ ] Audio Conversation
+- ⚡ Deploy quickly and for free using Vercel
+- 💬 Text conversation with the ability to switch models and set context length
+- 🎨 Image generation conversation with options to adjust image size and count
+- 🌈 Multiple preset prompts added to customize AI behavior
+- 🌏 Switch between various languages, currently supporting Simplified Chinese and English
+- 💭 Local chat history saved with search functionality
 
 ## Live Demo
 - [chatgpt-vercel-sample](https://chatgpt-vercel-sample.vercel.app/)
@@ -31,10 +34,12 @@ You can access the online demo above or deploy it privately for experience.
 ### Conversation
 Click the icon at the top left to add a conversation, which has two types:
 - Text conversation:
+  - The model is switchable, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility)
   - By default, it is a continuous conversation, and each sending will carry the full context.
   - Supports adding preset prompts, type `/` or click the button at the bottom left to add.
   - Supports model configuration, click the settings icon at the top right to configure.
 - Image generation conversation:
+  - The model is fixed and based on the OpenAI DALL·E model
   - Does not support continuous conversation, and each sending will not carry the context.
   - Directly input the image effect you want, for example: `a cat`.
   - The valid access time of the image link is `2` hours. Please save it in time if necessary.
@@ -81,6 +86,7 @@ All global configurations will be stored locally
 | Configuration                         | Default Value | Description                                                                                                         |
 | ------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
 | OpenAI Api Key                        | -             | The same with the deployment configuration                                                                          |
+| Language                              | en            | The language of the website, including prompts. Supported languages: **zh**/**en**                                  |
 | Save all conversations                | false         | The conversation won't be lost after the page is refreshed                                                          |
 | Temperature                           | 1             | The larger the value, the more random the answer, with a range of 0-2                                               |
 | Model                                 | gpt-3.5-turbo | Model used in api request, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
@@ -88,6 +94,14 @@ All global configurations will be stored locally
 | Number of historical messages carried | 4             | For continuous conversations, the number of historical messages carried                                             |
 | Number of generated images            | 1             | The number of images generated in a single image generation conversation                                            |
 | Size of generated images              | 256x256       | The size of a single image in image generation conversation                                                         |
+
+### Planned Features
+- [ ] Export functionality to export as markdown and images
+- [ ] Theme color switching support, currently defaulting to gradient purple
+- [ ] Audio conversation support
+- [ ] Image generation using other models
+
+These are some of the planned features to be developed. Collaborations are welcome, and feel free to suggest other ideas by submitting issues.
 
 ## Development
 Requirements:

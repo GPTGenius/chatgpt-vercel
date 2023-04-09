@@ -11,7 +11,7 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/openai.webp" />
     <link href="/remixicon.css" rel="stylesheet" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
@@ -22,22 +22,25 @@ const { title } = Astro.props;
 </html>
 <style is:global>
   :root {
-    --content-width: 72ch;
-    --content-padding-top: 4rem;
-    --header-height: calc(112px + 1rem);
-    --footer-height: calc(74px + 4rem);
-    --content-background: #f6f6f6;
-    --accent: 124, 58, 237;
-    --accent-gradient: linear-gradient(
+    --content-background: rgb(250, 251, 250);
+    --theme-purple: linear-gradient(
       45deg,
-      rgb(var(--accent)),
-      #da62c4 30%,
+      rgba(124, 58, 237, 0.8),
+      rgba(218, 98, 196, 0.8) 30%,
       white 60%
     );
+    --accent-gradient: var(--theme-purple);
   }
   html {
     font-family: system-ui, sans-serif;
     background-color: var(--content-background);
+    height: 100%;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
   }
   code {
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
@@ -45,30 +48,6 @@ const { title } = Astro.props;
   }
   textarea::-webkit-scrollbar {
     display: none;
-  }
-  header,
-  footer {
-    position: fixed;
-    left: calc(50%);
-    transform: translateX(-50%);
-    padding: 2rem;
-    max-width: var(--content-width);
-    width: 100%;
-    z-index: 999;
-    background: var(--content-background);
-  }
-  header {
-    top: var(--content-padding-top);
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-  footer {
-    bottom: 0;
-  }
-  header .title {
-    font-size: 3rem;
-    font-weight: 800;
-    margin: 0;
   }
   .text-gradient {
     background-image: var(--accent-gradient);
@@ -94,6 +73,28 @@ const { title } = Astro.props;
   code.hljs:not(pre code.hljs)::after {
     /* remove extra `` */
     content: '';
+  }
+  /* common scrollbar */
+  .common-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .common-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #edeeee;
+    border-radius: 20px;
+  }
+  .common-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  /* dropdown */
+  .common-scrollbar .ant-dropdown-menu::-webkit-scrollbar {
+    width: 8px;
+  }
+  .common-scrollbar .ant-dropdown-menu::-webkit-scrollbar-thumb {
+    background-color: #edeeee;
+    border-radius: 20px;
+  }
+  .common-scrollbar .ant-dropdown-menu::-webkit-scrollbar-track {
+    background-color: transparent;
   }
   /* 定义动画效果 */
   @keyframes fadeIn {
@@ -158,19 +159,8 @@ const { title } = Astro.props;
   }
   /* mobile style */
   @media screen and (max-width: 768px) {
-    :root {
-      --header-height: calc(82px + 1rem);
-      --footer-height: calc(70px + 3rem);
-      --content-padding-top: 2rem;
-    }
     html {
       font-size: 14px;
-    }
-    footer {
-      padding-bottom: 1rem;
-    }
-    header .title {
-      font-size: 2rem;
     }
   }
 </style>
