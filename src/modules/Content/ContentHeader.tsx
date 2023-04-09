@@ -17,10 +17,16 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   setShowPrompt,
   setText,
 }) => {
-  const { i18n } = useContext(GlobalContext);
+  const { i18n, isMobile, setCurrentId } = useContext(GlobalContext);
   return (
     <div className="h-[60px] flex items-center justify-between pl-5 pr-5 border-b border-b-[#edeeee]">
       <div className="flex items-center">
+        {isMobile ? (
+          <i
+            className="ri-arrow-left-line p-2 mr-1 pl-0 cursor-pointer"
+            onClick={() => setCurrentId('')}
+          />
+        ) : null}
         <div className="text-[#232629]">{conversation.title}</div>
       </div>
       <div>

@@ -17,7 +17,15 @@ const lang: Lang = import.meta.env.LANGUAGE || process.env.LANGUAGE || 'en';
 
 <style>
   #container {
-    width: 1200px;
+    max-width: 1200px;
+    width: 80vw;
     height: 80vh;
+  }
+  /* mobile style */
+  @media screen and (max-width: 768px) {
+    #container {
+      width: 100vw;
+      height: 100vh;
+    }
   }
 </style>

@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react';
 import GlobalContext from '@contexts/global';
 import ConfigIcon from '@components/ConfigIcon';
-import { Conversation, GlobalConfig, ReactSetState } from '@interfaces';
+import { GlobalConfig, ReactSetState } from '@interfaces';
 import { Divider, Input, Select, Slider, Switch, Tooltip } from 'antd';
 import {
   defaultConversation,
@@ -14,15 +14,13 @@ import {
 interface ConfigurationProps {
   setActiveSetting: ReactSetState<boolean>;
   setConfigs: ReactSetState<Partial<GlobalConfig>>;
-  setConversations: ReactSetState<Record<string, Conversation>>;
 }
 
 const Configuration: FC<ConfigurationProps> = ({
   setActiveSetting,
   setConfigs,
-  setConversations,
 }) => {
-  const { i18n, configs } = useContext(GlobalContext);
+  const { i18n, configs, setConversations } = useContext(GlobalContext);
 
   const updateConfigsAndStorages = (updates: Partial<GlobalConfig>) => {
     const newConfigs = { ...configs, ...updates };
@@ -31,7 +29,7 @@ const Configuration: FC<ConfigurationProps> = ({
   };
 
   return (
-    <div className="w-2/5 border-l border-l-[#edeeee]">
+    <div className="border-l border-l-[#edeeee] h-full flex flex-col">
       <div className="h-[60px] border-b border-b-[#edeeee] pl-5 pr-5 flex justify-between items-center text-[#232629]">
         <div>{i18n.configuration}</div>
         <div>
@@ -54,8 +52,8 @@ const Configuration: FC<ConfigurationProps> = ({
           />
         </div>
       </div>
-      <div className="pl-5 pr-5 pt-4 pb-4 text-sm ">
-        <div className="mb-2">
+      <div className="pl-5 pr-5 pt-4 pb-4 text-sm flex flex-1 flex-col">
+        <div className="mb-6">
           <div className="mb-2">OpenAI Api Key:</div>
           <Input
             className="w-full"
@@ -67,7 +65,7 @@ const Configuration: FC<ConfigurationProps> = ({
             }
           />
         </div>
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-6">
           <div>{i18n.config_language}</div>
           <Select
             className="w-1/2"
@@ -88,10 +86,10 @@ const Configuration: FC<ConfigurationProps> = ({
             onChange={(save) => updateConfigsAndStorages({ save })}
           />
         </div>
-        <Divider orientation="left" plain>
+        <Divider className="!mt-6 !mb-6" orientation="left" plain>
           {i18n.chat_mode_text}
         </Divider>
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-6">
           <div>{i18n.config_model}</div>
           <Select
             className="w-1/2"
@@ -103,7 +101,7 @@ const Configuration: FC<ConfigurationProps> = ({
             onChange={(model) => updateConfigsAndStorages({ model })}
           />
         </div>
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-6">
           <div>{i18n.config_continuous}</div>
           <Switch
             className={
@@ -116,10 +114,9 @@ const Configuration: FC<ConfigurationProps> = ({
             onChange={(continuous) => updateConfigsAndStorages({ continuous })}
           />
         </div>
-        <div className="mb-3">
-          <div className="mb-3">{i18n.config_messages_count}</div>
+        <div className="mb-6">
+          <div className="mb-2">{i18n.config_messages_count}</div>
           <Slider
-            // className={isMobile ? 'w-1/2' : 'w-1/4'}
             className="w-full"
             min={2}
             max={24}
@@ -132,10 +129,9 @@ const Configuration: FC<ConfigurationProps> = ({
             }
           />
         </div>
-        <div className="mb-3">
-          <div className="mb-3">{i18n.config_temperature}</div>
+        <div>
+          <div className="mb-2">{i18n.config_temperature}</div>
           <Slider
-            // className={isMobile ? 'w-1/2' : 'w-1/4'}
             className="w-full"
             min={0}
             max={2}
@@ -147,13 +143,12 @@ const Configuration: FC<ConfigurationProps> = ({
             }
           />
         </div>
-        <Divider orientation="left" plain>
+        <Divider className="!mt-6 !mb-6" orientation="left" plain>
           {i18n.chat_mode_image}
         </Divider>
-        <div className="mb-3">
-          <div className="mb-3">{i18n.config_images_count}</div>
+        <div className="mb-6">
+          <div className="mb-2">{i18n.config_images_count}</div>
           <Slider
-            // className={isMobile ? 'w-1/2' : 'w-1/4'}
             className="w-full"
             min={1}
             max={10}

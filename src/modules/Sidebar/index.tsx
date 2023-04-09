@@ -3,24 +3,16 @@ import { Dropdown, Input, MenuProps } from 'antd';
 import { omit, sortBy } from 'lodash-es';
 import GlobalContext from '@contexts/global';
 import { getMaxIndex } from '@utils';
-import {
-  Conversation,
-  ConversationMode,
-  ReactSetState,
-  RecordCardItem,
-} from '@interfaces';
+import { ConversationMode, RecordCardItem } from '@interfaces';
 import './index.css';
 import RecordCard from './RecordCard';
 
 const Sidebar: FC<{
   data: RecordCardItem[];
-  conversations: Record<string, Conversation>;
-  setConversations: ReactSetState<Record<string, Conversation>>;
-  currentTab: string;
-  setCurrentTab: (tab: string) => void;
-}> = ({ data, conversations, setConversations, currentTab, setCurrentTab }) => {
+}> = ({ data }) => {
   const [keyword, setKeyword] = useState('');
-  const { i18n } = useContext(GlobalContext);
+  const { i18n, currentId, setCurrentId, conversations, setConversations } =
+    useContext(GlobalContext);
 
   const onAdd = (mode: ConversationMode = 'text') => {
     const id = getMaxIndex(data).toString();
@@ -34,14 +26,14 @@ const Sidebar: FC<{
         createdAt: Date.now(),
       },
     }));
-    setCurrentTab(id);
+    setCurrentId(id);
   };
 
   const onDelete = (key: string) => {
     setConversations((items) => omit(items, [key]));
     // delete other conversation doesnt need to update currentTab
-    if (currentTab === key) {
-      setCurrentTab(data.filter((tab) => tab.key !== key)[0]?.key);
+    if (currentId === key) {
+      setCurrentId(data.filter((tab) => tab.key !== key)[0]?.key);
     }
   };
 
@@ -75,7 +67,7 @@ const Sidebar: FC<{
   );
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-white">
       <div className="p-4 mt-2 flex items-baseline justify-between">
         <span className="text-3xl text-gradient font-[800]">ChatGPT</span>
         <a
@@ -117,8 +109,8 @@ const Sidebar: FC<{
               ) : null}
               <RecordCard
                 data={conversation}
-                selected={conversation.key === currentTab}
-                onSelect={() => setCurrentTab(conversation.key)}
+                selected={conversation.key === currentId}
+                onSelect={() => setCurrentId(conversation.key)}
                 onDelete={
                   data.length > 1 ? () => onDelete(conversation.key) : null
                 }

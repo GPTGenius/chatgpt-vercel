@@ -1,23 +1,15 @@
 import { FC, useContext, useState } from 'react';
 import MessageBox from '@components/MessageBox';
-import { Conversation, Message, ReactSetState } from '@interfaces';
+import { Message, ReactSetState } from '@interfaces';
 import GlobalContext from '@contexts/global';
 import MessageInput from './MessageInput';
 import ContentHeader from './ContentHeader';
 
 interface ContentProps {
-  conversations: Record<string, Conversation>;
-  setConversations: ReactSetState<Record<string, Conversation>>;
   setActiveSetting: ReactSetState<boolean>;
-  currentId: string;
 }
 
-const Content: FC<ContentProps> = ({
-  conversations,
-  setConversations,
-  setActiveSetting,
-  currentId,
-}) => {
+const Content: FC<ContentProps> = ({ setActiveSetting }) => {
   // input text
   const [text, setText] = useState('');
   const [streamMessageMap, setStreamMessageMap] = useState<
@@ -28,7 +20,8 @@ const Content: FC<ContentProps> = ({
   // prompt
   const [showPrompt, setShowPrompt] = useState(false);
 
-  const { configs } = useContext(GlobalContext);
+  const { configs, currentId, conversations, setConversations } =
+    useContext(GlobalContext);
 
   const conversation = conversations[currentId];
   const messages = conversation?.messages ?? [];

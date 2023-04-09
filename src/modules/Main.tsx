@@ -19,7 +19,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
   const i18n = getI18n(configs.lang ?? 'en');
 
   // chat informations
-  const [currentTab, setCurrentTab] = useState<string>('1');
+  const [currentId, setCurrentId] = useState<string>('1');
   const [conversations, setConversations] = useState<
     Record<string, Conversation>
   >({
@@ -29,7 +29,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
     },
   });
 
-  const [activeSetting, setActiveSetting] = useState(true);
+  const [activeSetting, setActiveSetting] = useState(false);
 
   // media query
   const [isMobile, setIsMobile] = useState(false);
@@ -51,6 +51,9 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
     const media = window.matchMedia('(max-width: 768px)');
     if (media.matches) {
       setIsMobile(true);
+      setTimeout(() => {
+        setCurrentId('');
+      }, 0);
     }
   }, []);
 
@@ -85,7 +88,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
               });
             } else {
               setConversations(conversation);
-              setCurrentTab(
+              setCurrentId(
                 Object.keys(conversation)?.reverse()?.[0] ??
                   defaultConversation.id
               );
@@ -109,38 +112,60 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
     }
   }, [conversations, configs.save]);
 
+  const getSidebar = () => <Sidebar data={list} />;
+
+  const getContent = () => <Content setActiveSetting={setActiveSetting} />;
+
+  const getConfigration = () => (
+    <Configuration
+      setActiveSetting={setActiveSetting}
+      setConfigs={setConfigs}
+    />
+  );
+
   return (
-    <GlobalContext.Provider value={{ i18n, configs, isMobile }}>
+    <GlobalContext.Provider
+      value={{
+        i18n,
+        configs,
+        isMobile,
+        currentId,
+        setCurrentId,
+        conversations,
+        setConversations,
+      }}
+    >
       <div
-        className="w-[100%] h-[100%] flex rounded-2xl overflow-hidden"
+        className={`w-[100%] h-[100%] flex overflow-hidden ${
+          isMobile ? '' : 'rounded-2xl'
+        }`}
         style={{ boxShadow: '0 20px 68px rgba(0, 0, 0, 0.15)' }}
       >
-        <div className="w-1/3 bg-white">
-          <Sidebar
-            data={list}
-            conversations={conversations}
-            setConversations={setConversations}
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
-          />
-        </div>
-        <div className="w-2/3 flex">
-          <div className="h-full flex-1">
-            <Content
-              conversations={conversations}
-              setConversations={setConversations}
-              setActiveSetting={setActiveSetting}
-              currentId={currentTab}
-            />
-          </div>
-          {activeSetting ? (
-            <Configuration
-              setActiveSetting={setActiveSetting}
-              setConversations={setConversations}
-              setConfigs={setConfigs}
-            />
-          ) : null}
-        </div>
+        {isMobile ? (
+          <>
+            {currentId ? (
+              <div className="w-full flex">
+                {activeSetting ? (
+                  <div className="w-full">{getConfigration()}</div>
+                ) : (
+                  <div className="h-full w-full">{getContent()}</div>
+                )}
+              </div>
+            ) : (
+              <div className="w-full ">{getSidebar()}</div>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="w-1/3 ">{getSidebar()}</div>
+            <div className="w-2/3 flex">
+              <div className="h-full flex-1">{getContent()}</div>
+              {activeSetting ? (
+                <div className="w-2/5">{getConfigration()}</div>
+              ) : null}
+            </div>
+          </>
+        )}
       </div>
     </GlobalContext.Provider>
   );
