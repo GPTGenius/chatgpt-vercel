@@ -112,11 +112,12 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
           [current]: '',
         }));
       } else {
+        const { msg } = await res.json();
         updateMessages(
           allMessages.concat([
             {
               role: 'assistant',
-              content: `Error: ${res.statusText || 'Unknown'}`,
+              content: `Error: ${msg || res.statusText || 'Unknown'}`,
               createdAt: Date.now(),
             },
           ])

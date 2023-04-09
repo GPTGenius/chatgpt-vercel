@@ -55,7 +55,6 @@ export const post: APIRoute = async ({ request }) => {
     if (!res.ok) {
       return new Response(JSON.stringify(res.body), {
         status: res.status,
-        statusText: res.statusText,
       });
     }
 
