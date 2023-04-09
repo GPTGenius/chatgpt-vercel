@@ -52,7 +52,7 @@ const Configuration: FC<ConfigurationProps> = ({
           />
         </div>
       </div>
-      <div className="pl-5 pr-5 pt-4 pb-4 text-sm flex flex-1 flex-col">
+      <div className="pl-5 pr-5 pt-4 pb-4 text-sm flex flex-1 flex-col overflow-auto common-scrollbar">
         <div className="mb-6">
           <div className="mb-2">OpenAI Api Key:</div>
           <Input
