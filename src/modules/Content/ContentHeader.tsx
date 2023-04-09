@@ -1,8 +1,9 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 import { Conversation, ReactSetState } from '@interfaces';
 import ConfigIcon from '@components/ConfigIcon';
 import GlobalContext from '@contexts/global';
 import { Tooltip } from 'antd';
+import OutputConversationModal from '@components/OutputConversationModal';
 
 interface ContentHeaderProps {
   conversation: Conversation;
@@ -18,6 +19,10 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   setText,
 }) => {
   const { i18n, isMobile, setCurrentId } = useContext(GlobalContext);
+
+  // output conversation modal
+  const [visible, setVisible] = useState(false);
+
   return (
     <div className="w-full h-[60px] flex items-center justify-between pl-5 pr-5 border-b border-b-[#edeeee] overflow-hidden">
       <div className="flex items-center flex-1 overflow-hidden">
@@ -32,6 +37,14 @@ const ContentHeader: FC<ContentHeaderProps> = ({
         </div>
       </div>
       <div>
+        <Tooltip title={i18n.action_output}>
+          <ConfigIcon
+            name="ri-chat-download-line mr-2"
+            onClick={() => {
+              setVisible(true);
+            }}
+          />
+        </Tooltip>
         <Tooltip title={i18n.action_prompt}>
           <ConfigIcon
             name="ri-user-add-line mr-2"
@@ -46,6 +59,11 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           onClick={() => setActiveSetting((active) => !active)}
         />
       </div>
+      <OutputConversationModal
+        conversation={conversation}
+        open={visible}
+        onCancel={() => setVisible(false)}
+      />
     </div>
   );
 };
