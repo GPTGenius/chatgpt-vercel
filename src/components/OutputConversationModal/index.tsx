@@ -25,12 +25,13 @@ const OutputConversationModal: FC<IProps> = ({
       title={i18n.action_output}
       footer={null}
       width={isMobile ? '90vw' : '50vw'}
-      bodyStyle={{
-        maxHeight: isMobile ? '90vh' : '50vh',
-      }}
       {...restProps}
     >
-      <pre className="text-[12px] p-[8px] rounded-md bg-[#282c34] text-[#f0f6fc] break-words overflow-auto">
+      <pre
+        className={`${
+          isMobile ? 'max-h-[70vh]' : 'max-h-[50vh]'
+        } text-[12px] p-[8px] rounded-md bg-[#282c34] text-[#f0f6fc] break-all overflow-auto`}
+      >
         {markdown}
       </pre>
       <div className="mt-[12px] flex items-center flex-row-reverse">
