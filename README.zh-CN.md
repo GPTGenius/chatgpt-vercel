@@ -3,6 +3,9 @@
 <h2 align="center">ChatGPT-Vercel</h2>
 
 <p align="center">
+  <a href="https://github.com/GPTGenius/chatgpt-vercel/tags">
+    <img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/tag/GPTGenius/chatgpt-vercel">
+  </a>
   <a href="https://github.com/GPTGenius/chatgpt-vercel/blob/main/LICENSE">
     <img alt="license" src="https://img.shields.io/github/license/GPTGenius/chatgpt-vercel">
   </a>
@@ -11,15 +14,16 @@
 [English](./README.md) | 简体中文
 
 ## 简介
-通过 Vercel 一键免费创建私有的 ChatGPT 站点， 支持多组文本对话/预设提示/图像生成。由 OpenAI API GPT-4/3.5 和 Vercel 提供支持。
+通过 Vercel 一键免费创建私有的 ChatGPT 站点， 支持多组 **文本**、**图像生成** 对话。由 OpenAI API 和 Vercel 提供支持。
 
 
 ## 主要功能
-- [x] 文本对话
-- [x] 图像生成对话
-- [x] 预设提示
-- [x] 多语言切换
-- [ ] 音频对话
+- ⚡通过 Vercel 一键免费部署，添加自己的域名即可无障碍访问
+- 💬文本对话，可以自由切换模型，设置上下文长度
+- 🎨图像生成对话，支持调整图片大小和图片数量
+- 🌈添加多种预设提示，定制 AI 行为
+- 🌏切换多种语言，目前支持 简体中文、英语
+- 💭聊天记录本地保存，支持搜索
 
 ## 在线示例
 - [chatgpt-vercel-zh-sample](https://chatgpt-vercel-zh-sample.vercel.app/)
@@ -31,10 +35,12 @@
 ### 对话
 点击左上角可以添加对话，有两种类型：
 - 文本对话：
+  - 模型可选，[支持的所有模型](https://platform.openai.com/docs/models/model-endpoint-compatibility)
   - 默认为连续对话，每次发送会携带全量上下文
   - 支持添加预设提示，输入`/`或者点击左下角按钮添加
   - 支持模型配置，点击右上角设置图标进行配置
 - 图像生成对话：
+  - 模型固定，基于 OpenAI DALL·E 模型
   - 不支持连续对话，每次发送不会携带上下文
   - 直接输入你想要的图片效果，例如：`一只猫`
   - 图片链接的有效访问时间为 `2` 小时，如有需要请及时保存
@@ -91,6 +97,7 @@
 | 配置项           | 默认值        | 描述                                                                                                      |
 | --------------- | ------------- | --------------------------------------------------------------------------------------------------------- |
 | OpenAI Api Key  | -             | 和部署配置中的含义一样                                                                                      |
+| 语言            | en            | 站点的语言，包含预设提示，支持的语言： **zh**/**en**                                                          |
 | 保留所有会话     | false         | 页面刷新会话不会丢失                                                                                        |
 | 发散程度         | 1             | 数值越大，回答越随机，范围是 0-2                                                                            |
 | 模型            | gpt-3.5-turbo | Api 请求中使用的模型，[支持的所有模型](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
@@ -98,6 +105,14 @@
 | 携带历史消息数   | 4             | 连续对话时，携带的历史消息数                                                                                 |
 | 生成图片数       | 1             | 图像生成对话时，单次对话生成的图片数                                                                         |
 | 生成图片尺寸     | 256x256       | 图像生成对话时，单个图片的尺寸大小                                                                           |
+
+## 计划中的功能
+- [ ] 支持导出功能，导出 markdown & 图片
+- [ ] 支持主题色切换，目前默认为渐变紫色
+- [ ] 支持音频对话
+- [ ] 支持通过其他模型生成图片
+
+以上是计划开发的一些功能，欢迎共建，有其他想法也可以提相关 issue
 
 ## 本地开发
 需要：
