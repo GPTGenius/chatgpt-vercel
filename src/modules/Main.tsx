@@ -159,7 +159,13 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
           <>
             <div className="w-1/3 ">{getSidebar()}</div>
             <div className="w-2/3 flex">
-              <div className="h-full w-full flex-1">{getContent()}</div>
+              <div
+                className={`h-full ${
+                  activeSetting ? 'w-3/5' : 'w-full'
+                }  flex-1`}
+              >
+                {getContent()}
+              </div>
               {activeSetting ? (
                 <div className="w-2/5">{getConfigration()}</div>
               ) : null}
