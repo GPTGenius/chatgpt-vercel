@@ -19,15 +19,17 @@ const ContentHeader: FC<ContentHeaderProps> = ({
 }) => {
   const { i18n, isMobile, setCurrentId } = useContext(GlobalContext);
   return (
-    <div className="h-[60px] flex items-center justify-between pl-5 pr-5 border-b border-b-[#edeeee]">
-      <div className="flex items-center">
+    <div className="w-full h-[60px] flex items-center justify-between pl-5 pr-5 border-b border-b-[#edeeee] overflow-hidden">
+      <div className="flex items-center flex-1 overflow-hidden">
         {isMobile ? (
           <i
             className="ri-arrow-left-line p-2 mr-1 pl-0 cursor-pointer"
             onClick={() => setCurrentId('')}
           />
         ) : null}
-        <div className="text-[#232629]">{conversation.title}</div>
+        <div className="text-[#232629] flex-1 truncate mr-2">
+          {conversation.title}
+        </div>
       </div>
       <div>
         <Tooltip title={i18n.action_prompt}>

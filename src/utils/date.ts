@@ -5,5 +5,5 @@ export const getRelativeTime = (time: number, exact = false) => {
   if (dayjsTime.isSame(dayjs(), 'date')) {
     return dayjsTime.format('HH:mm');
   }
-  return dayjsTime.format(exact ? 'MM-DD' : 'MM-DD HH:mm');
+  return dayjsTime.format(exact ? 'MM-DD HH:mm' : 'MM-DD');
 };

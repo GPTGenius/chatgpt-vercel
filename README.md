@@ -95,7 +95,7 @@ All global configurations will be stored locally
 | Number of generated images            | 1             | The number of images generated in a single image generation conversation                                            |
 | Size of generated images              | 256x256       | The size of a single image in image generation conversation                                                         |
 
-### Planned Features
+## Planned Features
 - [ ] Export functionality to export as markdown and images
 - [ ] Theme color switching support, currently defaulting to gradient purple
 - [ ] Audio conversation support
