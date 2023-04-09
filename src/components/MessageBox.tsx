@@ -1,5 +1,5 @@
 import { FC, useCallback, useContext, useEffect } from 'react';
-import throttle from 'lodash.throttle';
+import { throttle } from 'lodash-es';
 import GlobalContext from '@contexts/global';
 import { ConversationMode, Message } from '@interfaces';
 import markdown from '@utils/markdown';

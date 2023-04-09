@@ -118,6 +118,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
         <div className="w-1/3 bg-white">
           <Sidebar
             data={list}
+            conversations={conversations}
             setConversations={setConversations}
             currentTab={currentTab}
             setCurrentTab={setCurrentTab}

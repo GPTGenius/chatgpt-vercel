@@ -1,6 +1,6 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 import { Dropdown, Input, MenuProps } from 'antd';
-import omit from 'lodash.omit';
+import { omit, sortBy } from 'lodash-es';
 import GlobalContext from '@contexts/global';
 import { getMaxIndex } from '@utils';
 import {
@@ -14,10 +14,12 @@ import RecordCard from './RecordCard';
 
 const Sidebar: FC<{
   data: RecordCardItem[];
+  conversations: Record<string, Conversation>;
   setConversations: ReactSetState<Record<string, Conversation>>;
   currentTab: string;
   setCurrentTab: (tab: string) => void;
-}> = ({ data, setConversations, currentTab, setCurrentTab }) => {
+}> = ({ data, conversations, setConversations, currentTab, setCurrentTab }) => {
+  const [keyword, setKeyword] = useState('');
   const { i18n } = useContext(GlobalContext);
 
   const onAdd = (mode: ConversationMode = 'text') => {
@@ -64,11 +66,18 @@ const Sidebar: FC<{
     },
   ];
 
+  const filterData = data.filter(
+    (item) =>
+      item.title.includes(keyword) ||
+      conversations[item.key]?.messages?.some((message) =>
+        message.content.includes(keyword)
+      )
+  );
+
   return (
     <div className="flex flex-col h-full">
       <div className="p-4 mt-2 flex items-baseline justify-between">
         <span className="text-3xl text-gradient font-[800]">ChatGPT</span>
-        {/* <div className="text-sm ml-2">Powered by OpenAI and Vercel</div> */}
         <a
           href="https://github.com/GPTGenius/chatgpt-vercel"
           target="_blank"
@@ -81,6 +90,8 @@ const Sidebar: FC<{
         <div className="rounded-xl h-10 border flex-1">
           <Input
             className="h-[100%]"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
             prefix={<i className="ri-search-2-line" />}
             placeholder={i18n.search_placeholder}
             bordered={false}
@@ -97,21 +108,23 @@ const Sidebar: FC<{
         </Dropdown>
       </div>
       <div className="common-scrollbar flex-1 p-2 pt-0 overflow-auto">
-        {data.map((conversation, index) => (
-          <div key={conversation.key}>
-            {index !== 0 ? (
-              <div className="h-[1px] bg-[#edeeee] ml-2 mr-2" />
-            ) : null}
-            <RecordCard
-              data={conversation}
-              selected={conversation.key === currentTab}
-              onSelect={() => setCurrentTab(conversation.key)}
-              onDelete={
-                data.length > 1 ? () => onDelete(conversation.key) : null
-              }
-            />
-          </div>
-        ))}
+        {sortBy(filterData, ['time'])
+          .reverse()
+          .map((conversation, index) => (
+            <div key={conversation.key}>
+              {index !== 0 ? (
+                <div className="h-[1px] bg-[#edeeee] ml-2 mr-2" />
+              ) : null}
+              <RecordCard
+                data={conversation}
+                selected={conversation.key === currentTab}
+                onSelect={() => setCurrentTab(conversation.key)}
+                onDelete={
+                  data.length > 1 ? () => onDelete(conversation.key) : null
+                }
+              />
+            </div>
+          ))}
       </div>
     </div>
   );

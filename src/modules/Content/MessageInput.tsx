@@ -70,7 +70,7 @@ const MessageInput: FC<{
         showPrompt={showPrompt}
         onSelect={onPromptSelect}
       >
-        <div className="flex-1 border border-[#dfdfdf] rounded-lg ">
+        <div className="flex-1 border border-[#dfdfdf] rounded-lg relative">
           <Input.TextArea
             ref={ref}
             placeholder={i18n.chat_placeholder}

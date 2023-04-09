@@ -2,7 +2,7 @@ import { FC, useContext } from 'react';
 import GlobalContext from '@contexts/global';
 import ConfigIcon from '@components/ConfigIcon';
 import { Conversation, GlobalConfig, ReactSetState } from '@interfaces';
-import { Divider, Input, Select, Slider, Switch } from 'antd';
+import { Divider, Input, Select, Slider, Switch, Tooltip } from 'antd';
 import {
   defaultConversation,
   globalConfigLocalKey,
@@ -35,17 +35,19 @@ const Configuration: FC<ConfigurationProps> = ({
       <div className="h-[60px] border-b border-b-[#edeeee] pl-5 pr-5 flex justify-between items-center text-[#232629]">
         <div>{i18n.configuration}</div>
         <div>
-          <ConfigIcon
-            name="ri-delete-bin-line mr-2"
-            onClick={() =>
-              setConversations({
-                [defaultConversation.id]: {
-                  ...defaultConversation,
-                  title: i18n.status_empty,
-                },
-              })
-            }
-          />
+          <Tooltip title={i18n.action_clear}>
+            <ConfigIcon
+              name="ri-delete-bin-line mr-2"
+              onClick={() =>
+                setConversations({
+                  [defaultConversation.id]: {
+                    ...defaultConversation,
+                    title: i18n.status_empty,
+                  },
+                })
+              }
+            />
+          </Tooltip>
           <ConfigIcon
             name="ri-close-line"
             onClick={() => setActiveSetting(false)}
