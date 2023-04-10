@@ -5,7 +5,7 @@
   "search_placeholder": "Search",
   "action_clear": "Clear all conversations",
   "action_prompt": "Add a prompt",
-  "action_output": "Output the current conversation",
+  "action_output": "Export the current conversation",
   "action_copy": "Copy",
   "action_download": "Download",
   "configuration": "Configurations",

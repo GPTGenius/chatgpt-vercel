@@ -29,21 +29,23 @@ const OutputConversationModal: FC<IProps> = ({
     >
       <pre
         className={`${
-          isMobile ? 'max-h-[70vh]' : 'max-h-[50vh]'
-        } text-[12px] p-[8px] rounded-md bg-[#282c34] text-[#f0f6fc] break-all overflow-auto`}
+          isMobile ? 'max-h-[60vh]' : 'max-h-[50vh]'
+        } text-[12px] p-[8px] rounded-md bg-[#282c34] text-[#f0f6fc] break-all overflow-auto whitespace-pre-wrap common-scrollbar`}
       >
         {markdown}
       </pre>
       <div className="mt-[12px] flex items-center flex-row-reverse">
         <Space>
           <Button
-            icon={<i className="ri-file-copy-line" />}
+            className="flex items-center"
+            icon={<i className="ri-file-copy-line mr-1" />}
             onClick={() => copyToClipboard(markdown)}
           >
             {i18n.action_copy}
           </Button>
           <Button
-            icon={<i className="ri-file-download-line" />}
+            className="flex items-center"
+            icon={<i className="ri-file-download-line mr-1" />}
             onClick={() => downloadAs(markdown, `${conversation.title}.md`)}
           >
             {i18n.action_download}

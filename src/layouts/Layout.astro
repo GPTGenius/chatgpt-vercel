@@ -23,6 +23,7 @@ const { title } = Astro.props;
 <style is:global>
   :root {
     --content-background: rgb(250, 251, 250);
+    --scrollbar-background-rgb: 237, 238, 238;
     --theme-purple: linear-gradient(
       45deg,
       rgba(124, 58, 237, 0.8),
@@ -79,19 +80,22 @@ const { title } = Astro.props;
     width: 8px;
   }
   .common-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #edeeee;
-    border-radius: 20px;
+    background-color: rgb(var(--scrollbar-background-rgb));
+    border-radius: 10px;
   }
   .common-scrollbar::-webkit-scrollbar-track {
     background-color: transparent;
+  }
+  pre.common-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(var(--scrollbar-background-rgb), 0.2);
   }
   /* dropdown */
   .common-scrollbar .ant-dropdown-menu::-webkit-scrollbar {
     width: 8px;
   }
   .common-scrollbar .ant-dropdown-menu::-webkit-scrollbar-thumb {
-    background-color: #edeeee;
-    border-radius: 20px;
+    background-color: rgb(var(--scrollbar-background-rgb));
+    border-radius: 10px;
   }
   .common-scrollbar .ant-dropdown-menu::-webkit-scrollbar-track {
     background-color: transparent;

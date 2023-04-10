@@ -24,11 +24,15 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   const [visible, setVisible] = useState(false);
 
   return (
-    <div className="w-full h-[60px] flex items-center justify-between pl-5 pr-5 border-b border-b-[#edeeee] overflow-hidden">
+    <div
+      className={`w-full h-[60px] flex items-center justify-between ${
+        isMobile ? '' : 'pl-5'
+      } pr-5 border-b border-b-[#edeeee] overflow-hidden`}
+    >
       <div className="flex items-center flex-1 overflow-hidden">
         {isMobile ? (
           <i
-            className="ri-arrow-left-line p-2 mr-1 pl-0 cursor-pointer"
+            className="ri-arrow-left-line p-3 ml-2 cursor-pointer"
             onClick={() => setCurrentId('')}
           />
         ) : null}
