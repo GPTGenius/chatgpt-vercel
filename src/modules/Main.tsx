@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import GlobalContext from '@contexts/global';
 import {
   defaultConversation,
@@ -8,8 +8,10 @@ import {
 } from '@configs';
 import type { Conversation, GlobalConfig, Lang } from '@interfaces';
 import { getI18n } from '@utils/i18n';
+import { debounce } from 'lodash-es';
 import Sidebar from './Sidebar';
 import Content from './Content';
+import Empty from './Empty';
 import Configuration from './Configuration';
 
 const Main: FC<{ lang: Lang }> = ({ lang }) => {
@@ -32,7 +34,9 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
   const [activeSetting, setActiveSetting] = useState(false);
 
   // media query
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    window.matchMedia('(max-width: 768px)').matches
+  );
 
   const list = Object.values(conversations)
     .reverse()
@@ -46,15 +50,14 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
         conversation.createdAt,
     }));
 
-  // media query
-  useEffect(() => {
+  // debounce resize
+  const handleDebounceResize = debounce(() => {
     const media = window.matchMedia('(max-width: 768px)');
-    if (media.matches) {
-      setIsMobile(true);
-      setTimeout(() => {
-        setCurrentId('');
-      }, 0);
-    }
+    setIsMobile(media.matches);
+  }, 300);
+
+  useLayoutEffect(() => {
+    window.addEventListener('resize', handleDebounceResize);
   }, []);
 
   useEffect(() => {
@@ -116,6 +119,8 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
 
   const getContent = () => <Content setActiveSetting={setActiveSetting} />;
 
+  const getEmpty = () => <Empty />;
+
   const getConfigration = () => (
     <Configuration
       setActiveSetting={setActiveSetting}
@@ -164,7 +169,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
                   activeSetting ? 'w-3/5' : 'w-full'
                 }  flex-1`}
               >
-                {getContent()}
+                {currentId ? getContent() : getEmpty()}
               </div>
               {activeSetting ? (
                 <div className="w-2/5">{getConfigration()}</div>
