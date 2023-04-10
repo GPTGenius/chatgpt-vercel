@@ -40,3 +40,6 @@ export function downloadAs(text: string, filename: string) {
 
   document.body.removeChild(element);
 }
+
+export const isMatchMobile = () =>
+  window.matchMedia('(max-width: 768px)').matches;

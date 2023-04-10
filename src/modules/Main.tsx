@@ -9,6 +9,7 @@ import {
 import type { Conversation, GlobalConfig, Lang } from '@interfaces';
 import { getI18n } from '@utils/i18n';
 import { debounce } from 'lodash-es';
+import { isMatchMobile } from '@utils';
 import Sidebar from './Sidebar';
 import Content from './Content';
 import Empty from './Empty';
@@ -34,9 +35,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
   const [activeSetting, setActiveSetting] = useState(false);
 
   // media query
-  const [isMobile, setIsMobile] = useState(
-    window.matchMedia('(max-width: 768px)').matches
-  );
+  const [isMobile, setIsMobile] = useState(isMatchMobile());
 
   const list = Object.values(conversations)
     .reverse()
@@ -52,8 +51,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
 
   // debounce resize
   const handleDebounceResize = debounce(() => {
-    const media = window.matchMedia('(max-width: 768px)');
-    setIsMobile(media.matches);
+    setIsMobile(isMatchMobile());
   }, 300);
 
   useLayoutEffect(() => {
