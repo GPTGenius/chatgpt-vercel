@@ -4,7 +4,9 @@ import type { ParsedEvent, ReconnectInterval } from 'eventsource-parser';
 import { createParser } from 'eventsource-parser';
 import { defaultModel, supportedModels } from '@configs';
 import { Message } from '@interfaces';
-import { apiKey, baseURL } from '.';
+import { apiKey, baseURL, config } from '.';
+
+export { config };
 
 export const post: APIRoute = async ({ request }) => {
   if (!baseURL) {

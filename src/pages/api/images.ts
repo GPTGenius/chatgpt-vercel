@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import type { APIRoute } from 'astro';
-import { apiKey, baseURL } from '.';
+import { apiKey, baseURL, config } from '.';
+
+export { config };
 
 export const post: APIRoute = async ({ request }) => {
   if (!baseURL) {
