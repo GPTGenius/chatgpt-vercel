@@ -43,3 +43,6 @@ export function downloadAs(text: string, filename: string) {
 
 export const isMatchMobile = () =>
   window.matchMedia('(max-width: 768px)').matches;
+
+// surrounded by $$ or $
+export const hasMath = (str: string) => /\$\$(.*?)\$\$|\$(.*?)\$/.test(str);

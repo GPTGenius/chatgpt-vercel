@@ -1,7 +1,9 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import MessageBox from '@components/MessageBox';
 import { Message, ReactSetState } from '@interfaces';
 import GlobalContext from '@contexts/global';
+import { initMathJax, renderMaxJax } from '@utils/markdown';
+import { hasMath } from '@utils';
 import MessageInput from './MessageInput';
 import ContentHeader from './ContentHeader';
 
@@ -28,6 +30,17 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
   const mode = conversation?.mode ?? 'text';
   const stremMessage = streamMessageMap[currentId] ?? '';
   const loading = loadingMap[currentId];
+
+  useEffect(() => {
+    const renderMaxJaxFn = async () => {
+      // lazyload, init mathJax when hasMath
+      if (messages.some((message) => hasMath(message.content))) {
+        await initMathJax();
+        await renderMaxJax();
+      }
+    };
+    renderMaxJaxFn();
+  }, [messages]);
 
   const updateMessages = (msgs: Message[]) => {
     setConversations((msg) => ({

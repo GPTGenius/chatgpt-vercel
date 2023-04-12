@@ -33,7 +33,6 @@ specifiers:
   lodash-es: ^4.17.21
   markdown-it: ^13.0.1
   markdown-it-highlightjs: ^4.0.1
-  markdown-it-katex: ^2.0.3
   markdown-it-kbd: ^2.2.2
   prettier: ^2.8.4
   prettier-plugin-astro: ^0.8.0
@@ -60,7 +59,6 @@ dependencies:
   lodash-es: 4.17.21
   markdown-it: 13.0.1
   markdown-it-highlightjs: 4.0.1
-  markdown-it-katex: 2.0.3
   markdown-it-kbd: 2.2.2
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -3377,13 +3375,6 @@ packages:
       commander: 8.3.0
     dev: false
 
-  /katex/0.6.0:
-    resolution: {integrity: sha512-rS4mY3SvHYg5LtQV6RBcK0if7ur6plyEukAOV+jGGPqFImuzu8fHL6M752iBmRGoUyF0bhZbAPoezehn7xYksA==}
-    hasBin: true
-    dependencies:
-      match-at: 0.1.1
-    dev: false
-
   /kind-of/6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
     engines: {node: '>=0.10.0'}
@@ -3566,12 +3557,6 @@ packages:
       highlight.js: 11.7.0
     dev: false
 
-  /markdown-it-katex/2.0.3:
-    resolution: {integrity: sha512-nUkkMtRWeg7OpdflamflE/Ho/pWl64Lk9wNBKOmaj33XkQdumhXAIYhI0WO03GeiycPCsxbmX536V5NEXpC3Ng==}
-    dependencies:
-      katex: 0.6.0
-    dev: false
-
   /markdown-it-kbd/2.2.2:
     resolution: {integrity: sha512-J5qVHtLuxh1HTJcl5xhopiFpf6fnHIBY0OO1akGHf2KW0VwQLYhsip/bkiTJFoEZqhssxQuUBY1LO5/SbCrB6g==}
     engines: {node: '>=6.0.0'}
@@ -3590,10 +3575,6 @@ packages:
 
   /markdown-table/3.0.3:
     resolution: {integrity: sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==}
-    dev: false
-
-  /match-at/0.1.1:
-    resolution: {integrity: sha512-h4Yd392z9mST+dzc+yjuybOGFNOZjmXIPKWjxBd1Bb23r4SmDOsk2NYCU2BMUBGbSpZqwVsZYNq26QS3xfaT3Q==}
     dev: false
 
   /mdast-util-definitions/5.1.2:
