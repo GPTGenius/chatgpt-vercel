@@ -8,11 +8,16 @@ export const disableProxy = import.meta.env.DISABLE_LOCAL_PROXY === 'true';
 // read localProxy from env
 export const localProxy = import.meta.env.LOCAL_PROXY;
 
+export const apiBaseUrl =
+  import.meta.env.OPENAI_API_BASE_URL ||
+  process.env.OPENAI_API_BASE_URL ||
+  'api.openai.com';
+
 // use proxy in local env
 export const baseURL =
   process.env.NODE_ENV === 'development' && !disableProxy
     ? localProxy?.replace(/^https?:\/\//i, '')
-    : 'api.openai.com';
+    : apiBaseUrl;
 
 /**
  * https://vercel.com/docs/concepts/edge-network/regions#region-list
