@@ -14,10 +14,11 @@ export const apiBaseUrl =
   'api.openai.com';
 
 // use proxy in local env
-export const baseURL =
+export const baseURL = (
   process.env.NODE_ENV === 'development' && !disableProxy
-    ? localProxy?.replace(/^https?:\/\//i, '')
-    : apiBaseUrl;
+    ? localProxy
+    : apiBaseUrl
+)?.replace(/^https?:\/\//i, '');
 
 /**
  * https://vercel.com/docs/concepts/edge-network/regions#region-list
