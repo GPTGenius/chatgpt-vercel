@@ -22,6 +22,9 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
   // prompt
   const [showPrompt, setShowPrompt] = useState(false);
 
+  // controller
+  const [controller, setController] = useState<AbortController>(null);
+
   const { configs, currentId, conversations, setConversations } =
     useContext(GlobalContext);
 
@@ -59,6 +62,8 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
 
   const sendTextChatMessages = async (content: string) => {
     const current = currentId;
+    // temp stream message
+    let tempMessage = '';
     const input: Message[] = [
       {
         role: 'user',
@@ -74,6 +79,8 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
       [current]: true,
     }));
     try {
+      const abortController = new AbortController();
+      setController(abortController);
       const res = await fetch('/api/completions', {
         method: 'POST',
         body: JSON.stringify({
@@ -84,12 +91,12 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
             : input,
           temperature: configs.temperature ?? 1,
         }),
+        signal: abortController.signal,
       });
       if (res.status < 400 && res.ok) {
         const stream = res.body;
         const reader = stream.getReader();
         const decoder = new TextDecoder();
-        let tempMessage = '';
         // eslint-disable-next-line no-constant-condition
         while (true) {
           const { value, done } = await reader.read();
@@ -124,6 +131,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
           ...map,
           [current]: '',
         }));
+        tempMessage = '';
       } else {
         const { msg } = await res.json();
         updateMessages(
@@ -137,20 +145,44 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
         );
       }
     } catch (e) {
+      // abort manually or not
+      if (!tempMessage) {
+        updateMessages(
+          allMessages.concat([
+            {
+              role: 'assistant',
+              content: `Error: ${e.message || e.stack || e}`,
+              createdAt: Date.now(),
+            },
+          ])
+        );
+      }
+    } finally {
+      setController(null);
+      setLoadingMap((map) => ({
+        ...map,
+        [current]: false,
+      }));
+    }
+  };
+
+  const stopGenerate = () => {
+    controller?.abort?.();
+    if (stremMessage) {
       updateMessages(
-        allMessages.concat([
+        messages.concat([
           {
             role: 'assistant',
-            content: `Error: ${e.message || e.stack || e}`,
+            content: stremMessage,
             createdAt: Date.now(),
           },
         ])
       );
+      setStreamMessageMap((map) => ({
+        ...map,
+        [currentId]: '',
+      }));
     }
-    setLoadingMap((map) => ({
-      ...map,
-      [current]: false,
-    }));
   };
 
   const sendImageChatMessages = async (content: string) => {
@@ -240,7 +272,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
       <MessageInput
         text={text}
         setText={setText}
-        currentId={currentId}
+        streamMessage={stremMessage}
         showPrompt={showPrompt && mode !== 'image'}
         setShowPrompt={setShowPrompt}
         onSubmit={async (message: string) => {
@@ -250,31 +282,9 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
             sendTextChatMessages(message);
           }
         }}
+        onCancel={stopGenerate}
         loading={loading}
       />
-      {/* <div className="flex items-center justify-between pr-8">
-        <Tooltip title={i18n.action_prompt}>
-          <div
-            className="flex items-center cursor-pointer p-1 text-gray-500"
-            onClick={() => {
-              setText('/');
-              setShowPrompt(true);
-            }}
-          >
-            <i className="ri-user-add-line" />
-          </div>
-        </Tooltip>
-        <ClearMessages
-          onClear={() =>
-            setConversations({
-              [defaultConversation.id]: {
-                ...defaultConversation,
-                title: i18n.status_empty,
-              },
-            })
-          }
-        />
-      </div> */}
     </div>
   );
 };

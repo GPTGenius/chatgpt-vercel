@@ -6,28 +6,30 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Input } from 'antd';
+import { Button, Input } from 'antd';
 import GlobalContext from '@contexts/global';
 import PromptSelect from '@components/PromptSelect';
 
 const MessageInput: FC<{
   text: string;
   setText: (text: string) => void;
-  currentId: string; // current conversation id
+  streamMessage: string;
   showPrompt: boolean;
   setShowPrompt: (showPrompt: boolean) => void;
   onSubmit: (message: string) => Promise<void>;
+  onCancel: () => void;
   loading: boolean;
 }> = ({
   text,
   setText,
-  currentId,
+  streamMessage,
   showPrompt,
   setShowPrompt,
   onSubmit,
+  onCancel,
   loading,
 }) => {
-  const { i18n } = useContext(GlobalContext);
+  const { i18n, currentId } = useContext(GlobalContext);
   const [promptKeyword, setPromptKeyword] = useState('');
   const [isInputComposition, setIsInputComposition] = useState(false);
 
@@ -64,7 +66,7 @@ const MessageInput: FC<{
   }, [currentId]);
 
   return (
-    <div className="flex items-center p-5 pt-0">
+    <div className="flex items-center p-5 pt-5">
       <PromptSelect
         keyword={promptKeyword}
         showPrompt={showPrompt}
@@ -75,6 +77,7 @@ const MessageInput: FC<{
             ref={ref}
             placeholder={i18n.chat_placeholder}
             value={text}
+            disabled={loading}
             autoFocus
             bordered={false}
             onChange={(event) => {
@@ -100,9 +103,18 @@ const MessageInput: FC<{
             autoSize={{ minRows: 1, maxRows: 5 }}
             allowClear
           />
+          {streamMessage && loading ? (
+            <Button
+              className="absolute left-1/2 translate-x-[-50%] top-1/2  translate-y-[-50%] z-50"
+              size="small"
+              type="dashed"
+              onClick={onCancel}
+            >
+              {i18n.action_stop}
+            </Button>
+          ) : null}
         </div>
       </PromptSelect>
-
       <i
         className={`${
           disabled ? 'cursor-not-allowed' : 'cursor-pointer'

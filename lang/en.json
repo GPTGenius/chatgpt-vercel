@@ -9,6 +9,7 @@
   "action_output": "Export the current conversation",
   "action_copy": "Copy",
   "action_download": "Download",
+  "action_stop": "Stop generating",
   "configuration": "Configurations",
   "config_model": "Model:",
   "config_save": "Save all conversations:",

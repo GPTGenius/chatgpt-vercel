@@ -80,7 +80,7 @@ const MessageBox: FC<{
   }, [messages]);
 
   return (
-    <div id="content" className="pb-5">
+    <div id="content">
       {messages.length === 0 ? (
         <div
           className="prose text-gray-500 mb-[20px]"
