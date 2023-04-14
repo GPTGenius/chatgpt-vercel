@@ -70,6 +70,9 @@ There are three ways to set your OpenAI API Key:
 
 > Attention: For Vercel, all environment variables need to be redeployed to take effect.
 
+## Other deployment methods
+Run `pnpm build` and `pnpm server`. Refer: [astro-node](https://docs.astro.build/en/guides/integrations-guide/node/#standalone)
+
 ## Configurations
 ### Deployment Configurations
 All deployment configurations could be configured in the `.env` file or in **Environment Variables** of Vercel
