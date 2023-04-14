@@ -81,6 +81,9 @@
 
 > vercel.app 域名受限，但 vercel 本身并未受限
 
+## 其他部署方式
+运行 `pnpm run build` 和 `pnpm run server`，参考：[astro-node](https://docs.astro.build/en/guides/integrations-guide/node/#standalone)
+
 ## 配置
 ### 部署配置
 所有部署配置都可以在 `.env` 文件或者 Vercel 的环境变量中配置

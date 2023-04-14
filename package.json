@@ -15,11 +15,13 @@
     "dev": "cross-env NODE_ENV=development astro dev",
     "start": "cross-env NODE_ENV=development astro dev --host",
     "build": "astro build",
+    "server": "cross-env HOST=0.0.0.0 PORT=3000 node ./dist/server/entry.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint --fix --quiet --ext .js,.ts,.tsx,.astro ."
   },
   "dependencies": {
+    "@astrojs/node": "^5.1.1",
     "@astrojs/react": "^2.1.0",
     "@astrojs/solid-js": "^2.1.0",
     "@astrojs/tailwind": "^3.1.1",
