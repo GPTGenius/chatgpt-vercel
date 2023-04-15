@@ -142,7 +142,9 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
           allMessages.concat([
             {
               role: 'assistant',
-              content: `Error: ${msg || res.statusText || 'Unknown'}`,
+              content: `[${res.status}]Error: ${
+                msg || res.statusText || 'Unknown'
+              }`,
               createdAt: Date.now(),
             },
           ])
@@ -234,7 +236,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
           allMessages.concat([
             {
               role: 'assistant',
-              content: `Error: ${msg || 'Unknown'}`,
+              content: `[${res.status}]Error: ${msg || 'Unknown'}`,
               createdAt: Date.now(),
             },
           ])
