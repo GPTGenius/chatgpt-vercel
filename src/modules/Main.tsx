@@ -19,10 +19,10 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
   // gloabl configs
   const [configs, setConfigs] = useState<Partial<GlobalConfig>>({});
 
-  const i18n = getI18n(configs.lang ?? 'en');
+  const i18n = getI18n(configs.lang ?? lang ?? 'en');
 
   // chat informations
-  const [currentId, setCurrentId] = useState<string>('1');
+  const [currentId, setCurrentId] = useState<string>(defaultConversation.id);
   const [conversations, setConversations] = useState<
     Record<string, Conversation>
   >({
