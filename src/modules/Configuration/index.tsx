@@ -20,7 +20,8 @@ const Configuration: FC<ConfigurationProps> = ({
   setActiveSetting,
   setConfigs,
 }) => {
-  const { i18n, configs, setConversations } = useContext(GlobalContext);
+  const { i18n, configs, setConversations, setCurrentId } =
+    useContext(GlobalContext);
 
   const updateConfigsAndStorages = (updates: Partial<GlobalConfig>) => {
     const newConfigs = { ...configs, ...updates };
@@ -36,14 +37,15 @@ const Configuration: FC<ConfigurationProps> = ({
           <Tooltip title={i18n.action_clear}>
             <ConfigIcon
               name="ri-delete-bin-line mr-2"
-              onClick={() =>
+              onClick={() => {
                 setConversations({
                   [defaultConversation.id]: {
                     ...defaultConversation,
                     title: i18n.status_empty,
                   },
-                })
-              }
+                });
+                setCurrentId(defaultConversation.id);
+              }}
             />
           </Tooltip>
           <ConfigIcon
