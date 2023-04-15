@@ -13,8 +13,10 @@ const markdown = MarkdownIt({
 
 export default markdown;
 
-export const initMathJax = (callback?: () => void) => {
-  if (window.MathJax) return null;
+export const hasMathJax = () => !!window.MathJax;
+
+export const initMathJax: () => Promise<void> = (callback?: () => void) => {
+  if (hasMathJax()) return Promise.resolve(null);
   return new Promise((res) => {
     window.MathJax = {
       tex: {
