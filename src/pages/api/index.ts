@@ -1,6 +1,9 @@
+import { StrategyMode } from '@interfaces';
+
 // read apiKey from env/process.env
-export const apiKey =
-  import.meta.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY;
+export const apiKeys =
+  (import.meta.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY)?.split(',') ??
+  [];
 
 // read disableProxy from env
 export const disableProxy = import.meta.env.DISABLE_LOCAL_PROXY === 'true';
@@ -19,6 +22,9 @@ export const baseURL = (
     ? localProxy
     : apiBaseUrl
 )?.replace(/^https?:\/\//i, '');
+
+export const apiKeyStrategy: StrategyMode =
+  import.meta.env.API_KEY_STRATEGY || process.env.API_KEY_STRATEGY || 'random';
 
 /**
  * https://vercel.com/docs/concepts/edge-network/regions#region-list

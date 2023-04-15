@@ -9,6 +9,8 @@ export interface Message {
 
 export type ConversationMode = 'text' | 'image';
 
+export type StrategyMode = 'polling' | 'random';
+
 export type Lang = 'zh' | 'en';
 
 export interface Conversation {

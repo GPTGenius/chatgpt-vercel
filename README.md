@@ -77,27 +77,28 @@ Run `pnpm build` and `pnpm server`. Refer: [astro-node](https://docs.astro.build
 ### Deployment Configurations
 All deployment configurations could be configured in the `.env` file or in **Environment Variables** of Vercel
 
-| Configuration       | Default Value  | Description                                                                                | 
-| ------------------- | -------------- | ------------------------------------------------------------------------------------------ |
-| OPENAI_API_KEY      | -              | Key for API request, [how to generate](https://platform.openai.com/account/api-keys)       |
-| LANGUAGE            | en             | The default language of the website, including prompts. Supported languages: **zh**/**en** |
-| OPENAI_API_BASE_URL | api.openai.com | The default address of the requested api                                                   |
+| Configuration       | Default Value  | Description                                                                                                                           | 
+| ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| OPENAI_API_KEY      | -              | Key for API request, multiple keys are supported, separated by commas, [how to generate](https://platform.openai.com/account/api-keys)|
+| LANGUAGE            | en             | The default language of the website, including prompts. Supported languages: **zh**/**en**                                            |
+| API_KEY_STRATEGY    | random         | The scheduling strategy mode for multiple keys: **polling**/**random**                                                                |
+| OPENAI_API_BASE_URL | api.openai.com | The default address of the requested api                                                                                              |
 
 
 ### Global Configurations
 All global configurations will be stored locally
 
-| Configuration                         | Default Value | Description                                                                                                         |
-| ------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------- |
-| OpenAI Api Key                        | -             | The same with the deployment configuration                                                                          |
-| Language                              | en            | The language of the website, including prompts. Supported languages: **zh**/**en**                                  |
-| Save all conversations                | false         | The conversation won't be lost after the page is refreshed                                                          |
-| Temperature                           | 1             | The larger the value, the more random the answer, with a range of 0-2                                               |
-| Model                                 | gpt-3.5-turbo | Model used in api request, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
-| Continuous conversations              | true          | Carry the context for the conversations                                                                             |
-| Number of historical messages carried | 4             | For continuous conversations, the number of historical messages carried                                             |
-| Number of generated images            | 1             | The number of images generated in a single image generation conversation                                            |
-| Size of generated images              | 256x256       | The size of a single image in image generation conversation                                                         |
+| Configuration                         | Default Value | Description                                                                                                           |
+| ------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------- |
+| OpenAI Api Key                        | -             | Only a single key is supported. If it is configured on the page, the key in the environment variable will not be used |
+| Language                              | en            | The language of the website, including prompts. Supported languages: **zh**/**en**                                    |
+| Save all conversations                | false         | The conversation won't be lost after the page is refreshed                                                            |
+| Temperature                           | 1             | The larger the value, the more random the answer, with a range of 0-2                                                 |
+| Model                                 | gpt-3.5-turbo | Model used in api request, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility)   |
+| Continuous conversations              | true          | Carry the context for the conversations                                                                               |
+| Number of historical messages carried | 4             | For continuous conversations, the number of historical messages carried                                               |
+| Number of generated images            | 1             | The number of images generated in a single image generation conversation                                              |
+| Size of generated images              | 256x256       | The size of a single image in image generation conversation                                                           |
 
 ## Planned Features
 - [ ] Export functionality to export as markdown and images

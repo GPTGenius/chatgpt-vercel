@@ -4,7 +4,8 @@ import type { ParsedEvent, ReconnectInterval } from 'eventsource-parser';
 import { createParser } from 'eventsource-parser';
 import { defaultModel, supportedModels } from '@configs';
 import { Message } from '@interfaces';
-import { apiKey, baseURL, config } from '.';
+import { loadBalancer } from '@utils/server';
+import { apiKeyStrategy, apiKeys, baseURL, config } from '.';
 
 export { config };
 
@@ -19,7 +20,11 @@ export const post: APIRoute = async ({ request }) => {
   const { messages, temperature = 1 } = body;
   let { key, model } = body;
 
-  key = key || apiKey;
+  if (!key) {
+    const next = loadBalancer(apiKeys, apiKeyStrategy);
+    key = next();
+  }
+
   model = model || defaultModel;
 
   if (!key) {

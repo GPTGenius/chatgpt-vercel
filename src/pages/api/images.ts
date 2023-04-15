@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import type { APIRoute } from 'astro';
-import { apiKey, baseURL, config } from '.';
+import { loadBalancer } from '@utils/server';
+import { apiKeyStrategy, apiKeys, baseURL, config } from '.';
 
 export { config };
 
@@ -15,7 +16,10 @@ export const post: APIRoute = async ({ request }) => {
   const { prompt, size = '256x256', n = 1 } = body;
   let { key } = body;
 
-  key = key || apiKey;
+  if (!key) {
+    const next = loadBalancer(apiKeys, apiKeyStrategy);
+    key = next();
+  }
 
   if (!key) {
     return new Response(JSON.stringify({ msg: 'No API key provided' }), {
