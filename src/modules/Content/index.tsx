@@ -31,7 +31,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
   const conversation = conversations[currentId];
   const messages = conversation?.messages ?? [];
   const mode = conversation?.mode ?? 'text';
-  const stremMessage = streamMessageMap[currentId] ?? '';
+  const streamMessage = streamMessageMap[currentId] ?? '';
   const loading = loadingMap[currentId];
 
   useEffect(() => {
@@ -44,10 +44,10 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
   // pre initialization
   useEffect(() => {
     if (hasMathJax()) return;
-    if (hasMath(stremMessage)) {
+    if (hasMath(streamMessage)) {
       initMathJax();
     }
-  }, [stremMessage]);
+  }, [streamMessage]);
 
   const updateMessages = (msgs: Message[]) => {
     setConversations((msg) => ({
@@ -172,12 +172,12 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
 
   const stopGenerate = () => {
     controller?.abort?.();
-    if (stremMessage) {
+    if (streamMessage) {
       updateMessages(
         messages.concat([
           {
             role: 'assistant',
-            content: stremMessage,
+            content: streamMessage,
             createdAt: Date.now(),
           },
         ])
@@ -267,7 +267,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
       />
       <div className="flex-1 overflow-auto common-scrollbar p-5 pb-0">
         <MessageBox
-          streamMessage={stremMessage}
+          streamMessage={streamMessage}
           messages={messages}
           mode={mode}
           loading={loading}
@@ -276,7 +276,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
       <MessageInput
         text={text}
         setText={setText}
-        streamMessage={stremMessage}
+        streamMessage={streamMessage}
         showPrompt={showPrompt && mode !== 'image'}
         setShowPrompt={setShowPrompt}
         onSubmit={async (message: string) => {
