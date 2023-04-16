@@ -36,7 +36,7 @@ export const supportedLanguages = [
 export const defaultGloablConfig: GlobalConfig = {
   openAIApiKey: '',
   model: defaultModel,
-  save: false,
+  save: true,
   continuous: true,
   messagesCount: 4,
   temperature: 1,

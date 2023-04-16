@@ -23,5 +23,6 @@
   "status_empty": "新的对话",
   "status_image_expired": "图片已过期",
   "chat_mode_text": "文本对话",
-  "chat_mode_image": "图像生成对话"
+  "chat_mode_image": "图像生成对话",
+  "success_copy": "复制成功"
 }

@@ -1,5 +1,5 @@
 import { FC, useContext, useMemo } from 'react';
-import { Button, Modal, ModalProps, Space } from 'antd';
+import { Button, Modal, ModalProps, Space, message as Message } from 'antd';
 import GlobalContext from '@contexts/global';
 import { Conversation } from '@interfaces';
 import { copyToClipboard, downloadAs } from '@utils';
@@ -39,7 +39,10 @@ const OutputConversationModal: FC<IProps> = ({
           <Button
             className="flex items-center"
             icon={<i className="ri-file-copy-line mr-1" />}
-            onClick={() => copyToClipboard(markdown)}
+            onClick={() => {
+              copyToClipboard(markdown);
+              Message.success(i18n.success_copy);
+            }}
           >
             {i18n.action_copy}
           </Button>

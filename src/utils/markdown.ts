@@ -2,6 +2,24 @@ import MarkdownIt from 'markdown-it';
 import mdHighlight from 'markdown-it-highlightjs';
 import mdKbd from 'markdown-it-kbd';
 
+const preCopyPlugin = (md: MarkdownIt) => {
+  // Override the default renderer for code blocks
+  const defaultRender = md.renderer.rules.fence;
+  // eslint-disable-next-line no-param-reassign
+  md.renderer.rules.fence = (...args) => {
+    // Get the original code block HTML
+    const codeBlockHtml = defaultRender(...args);
+
+    const copyButtonHtml = `<button class="copy-code w-9 h-9 absolute top-0 right-0"><i class="ri-file-copy-line"></i></button>`;
+
+    // Return the modified HTML
+    return codeBlockHtml.replace(
+      '<pre>',
+      `<pre class="relative">${copyButtonHtml}`
+    );
+  };
+};
+
 const markdown = MarkdownIt({
   linkify: true,
   breaks: true,
@@ -9,7 +27,8 @@ const markdown = MarkdownIt({
   .use(mdHighlight, {
     inline: true,
   })
-  .use(mdKbd);
+  .use(mdKbd)
+  .use(preCopyPlugin);
 
 export default markdown;
 
