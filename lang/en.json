@@ -23,5 +23,6 @@
   "status_empty": "New Conversation",
   "status_image_expired": "Image has expired",
   "chat_mode_text": "Text conversation",
-  "chat_mode_image": "Image generation conversation"
+  "chat_mode_image": "Image generation conversation",
+  "success_copy": "Copy successfully"
 }

@@ -92,7 +92,7 @@ All global configurations will be stored locally
 | ------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------- |
 | OpenAI Api Key                        | -             | Only a single key is supported. If it is configured on the page, the key in the environment variable will not be used |
 | Language                              | en            | The language of the website, including prompts. Supported languages: **zh**/**en**                                    |
-| Save all conversations                | false         | The conversation won't be lost after the page is refreshed                                                            |
+| Save all conversations                | true          | The conversation won't be lost after the page is refreshed                                                            |
 | Temperature                           | 1             | The larger the value, the more random the answer, with a range of 0-2                                                 |
 | Model                                 | gpt-3.5-turbo | Model used in api request, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility)   |
 | Continuous conversations              | true          | Carry the context for the conversations                                                                               |

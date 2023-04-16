@@ -5,6 +5,7 @@ import { ConversationMode, Message } from '@interfaces';
 import markdown from '@utils/markdown';
 import { getRelativeTime } from '@utils/date';
 import SystemAvatar from '@components/Avatar/system';
+import useCopyCode from '@hooks/useCopyCode';
 import './index.css';
 
 const MessageItem: FC<{ message: Message; index?: number }> = ({
@@ -35,7 +36,7 @@ const MessageItem: FC<{ message: Message; index?: number }> = ({
       />
       {createdAt ? (
         <div
-          className={`message-box-time invisible text-[#a1a7a8] text-sm absolute top-[-20px] ${
+          className={`message-box-time hover:visible invisible text-[#a1a7a8] text-sm absolute top-[-20px] ${
             message.role === 'user' ? 'right-0' : 'left-[calc(32px+0.5rem)]'
           }`}
         >
@@ -53,6 +54,8 @@ const MessageBox: FC<{
   loading: boolean;
 }> = ({ streamMessage, messages, mode, loading }) => {
   const { i18n } = useContext(GlobalContext);
+
+  useCopyCode(i18n.success_copy);
 
   const handleAutoScroll = useCallback(
     throttle(() => {
