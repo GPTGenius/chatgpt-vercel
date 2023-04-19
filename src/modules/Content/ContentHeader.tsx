@@ -4,6 +4,7 @@ import ConfigIcon from '@components/ConfigIcon';
 import GlobalContext from '@contexts/global';
 import { Tooltip } from 'antd';
 import OutputConversationModal from '@components/OutputConversationModal';
+import EditModal from '@components/EditModal';
 
 interface ContentHeaderProps {
   conversation: Conversation;
@@ -18,10 +19,15 @@ const ContentHeader: FC<ContentHeaderProps> = ({
   setShowPrompt,
   setText,
 }) => {
-  const { i18n, isMobile, setCurrentId } = useContext(GlobalContext);
+  const { i18n, isMobile, currentId, setCurrentId, setConversations } =
+    useContext(GlobalContext);
 
   // output conversation modal
   const [visible, setVisible] = useState(false);
+
+  // edit title modal
+  const [titleText, setTitleText] = useState('');
+  const [titleVisible, setTitleVisible] = useState(false);
 
   return (
     <div
@@ -29,15 +35,24 @@ const ContentHeader: FC<ContentHeaderProps> = ({
         isMobile ? '' : 'pl-5'
       } pr-5 border-b border-b-[#edeeee] overflow-hidden`}
     >
-      <div className="flex items-center flex-1 overflow-hidden">
+      <div className="flex items-center flex-1 overflow-hidden mr-2">
         {isMobile ? (
           <i
             className="ri-arrow-left-line p-3 ml-2 cursor-pointer"
             onClick={() => setCurrentId('')}
           />
         ) : null}
-        <div className="text-[#232629] flex-1 truncate mr-2">
-          {conversation.title}
+        <div className="text-[#232629] flex-1 flex overflow-hidden">
+          <div className="truncate">{conversation.title}</div>
+          <div className="ml-1">
+            <ConfigIcon
+              name="ri-edit-2-line"
+              onClick={() => {
+                setTitleText(conversation.title);
+                setTitleVisible(true);
+              }}
+            />
+          </div>
         </div>
       </div>
       <div>
@@ -67,6 +82,22 @@ const ContentHeader: FC<ContentHeaderProps> = ({
         conversation={conversation}
         open={visible}
         onCancel={() => setVisible(false)}
+      />
+      <EditModal
+        value={titleText}
+        setValue={setTitleText}
+        open={titleVisible}
+        onCancel={() => setTitleVisible(false)}
+        onOk={() => {
+          setConversations((conversations) => ({
+            ...conversations,
+            [currentId]: {
+              ...conversations[currentId],
+              title: titleText,
+            },
+          }));
+          setTitleVisible(false);
+        }}
       />
     </div>
   );
