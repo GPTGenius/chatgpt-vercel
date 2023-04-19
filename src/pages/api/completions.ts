@@ -5,7 +5,7 @@ import { createParser } from 'eventsource-parser';
 import { defaultModel, supportedModels } from '@configs';
 import { Message } from '@interfaces';
 import { loadBalancer } from '@utils/server';
-import { apiKeyStrategy, apiKeys, baseURL, config } from '.';
+import { apiKeyStrategy, apiKeys, baseURL, config, password as pwd } from '.';
 
 export { config };
 
@@ -17,7 +17,7 @@ export const post: APIRoute = async ({ request }) => {
   }
 
   const body = await request.json();
-  const { messages, temperature = 1 } = body;
+  const { messages, temperature = 1, password } = body;
   let { key, model } = body;
 
   if (!key) {
@@ -26,6 +26,15 @@ export const post: APIRoute = async ({ request }) => {
   }
 
   model = model || defaultModel;
+
+  if (pwd && password !== pwd) {
+    return new Response(
+      JSON.stringify({ msg: 'No password or wrong password' }),
+      {
+        status: 401,
+      }
+    );
+  }
 
   if (!key) {
     return new Response(JSON.stringify({ msg: 'No API key provided' }), {

@@ -94,6 +94,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
             ? allMessages.slice(-1 * (configs.messagesCount ?? 4) - 1)
             : input,
           temperature: configs.temperature ?? 1,
+          password: configs.password,
         }),
         signal: abortController.signal,
       });
@@ -214,6 +215,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
           prompt: content,
           size: configs.imageSize || '256x256',
           n: configs.imagesCount || 1,
+          password: configs.password,
         }),
       });
       const { data = [], msg } = await res.json();

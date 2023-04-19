@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import type { APIRoute } from 'astro';
 import { loadBalancer } from '@utils/server';
-import { apiKeyStrategy, apiKeys, baseURL, config } from '.';
+import { apiKeyStrategy, apiKeys, baseURL, config, password as pwd } from '.';
 
 export { config };
 
@@ -13,12 +13,21 @@ export const post: APIRoute = async ({ request }) => {
   }
 
   const body = await request.json();
-  const { prompt, size = '256x256', n = 1 } = body;
+  const { prompt, size = '256x256', n = 1, password } = body;
   let { key } = body;
 
   if (!key) {
     const next = loadBalancer(apiKeys, apiKeyStrategy);
     key = next();
+  }
+
+  if (pwd && password !== pwd) {
+    return new Response(
+      JSON.stringify({ msg: 'No password or wrong password' }),
+      {
+        status: 401,
+      }
+    );
   }
 
   if (!key) {

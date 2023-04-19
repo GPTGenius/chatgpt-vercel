@@ -19,6 +19,7 @@
   "config_images_count": "生成图片数：",
   "config_images_size": "图片尺寸：",
   "config_language": "语言：",
+  "config_password": "访问密码：",
   "status_loading": "AI 正在思考...",
   "status_empty": "新的对话",
   "status_image_expired": "图片已过期",
