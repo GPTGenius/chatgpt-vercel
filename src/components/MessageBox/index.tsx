@@ -19,7 +19,7 @@ const MessageItem: FC<{ message: Message; index?: number }> = ({
     <div
       className={`msg-fade-in flex items-start relative ${
         index === 0 ? '' : 'mt-[24px]'
-      } ${message.role === 'user' ? 'flex-row-reverse' : ''}`}
+      } ${message.role === 'user' ? 'flex-row-reverse ml-16' : 'mr-6'}`}
     >
       {message.role === 'assistant' ? (
         <SystemAvatar className="mt-[14px] mr-2" />
