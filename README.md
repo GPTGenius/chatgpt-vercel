@@ -35,7 +35,7 @@ You can access the online demo above or deploy it privately for experience.
 Click the icon at the top left to add a conversation, which has two types:
 - Text conversation:
   - The model is switchable, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility)
-  - By default, it is a continuous conversation, and each sending will carry the full context.
+  - By default, it is a continuous conversation, and each sending will carry part of context.
   - Supports adding preset prompts, type `/` or click the button at the bottom left to add.
   - Supports model configuration, click the settings icon at the top right to configure.
 - Image generation conversation:
@@ -71,7 +71,7 @@ There are three ways to set your OpenAI API Key:
 > Attention: For Vercel, all environment variables need to be redeployed to take effect.
 
 ## Other deployment methods
-Run `pnpm build` and `pnpm server`. Refer: [astro-node](https://docs.astro.build/en/guides/integrations-guide/node/#standalone)
+Run `pnpm build` and `pnpm run server`. Refer: [astro-node](https://docs.astro.build/en/guides/integrations-guide/node/#standalone)
 
 ## Configurations
 ### Deployment Configurations
@@ -79,6 +79,7 @@ All deployment configurations could be configured in the `.env` file or in **Env
 
 | Configuration       | Default Value  | Description                                                                                                                           | 
 | ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| PASSWORD            | -              | Website access password                                                                                                               |
 | OPENAI_API_KEY      | -              | Key for API request, multiple keys are supported, separated by commas, [how to generate](https://platform.openai.com/account/api-keys)|
 | LANGUAGE            | en             | The default language of the website, including prompts. Supported languages: **zh**/**en**                                            |
 | API_KEY_STRATEGY    | random         | The scheduling strategy mode for multiple keys: **polling**/**random**                                                                |
@@ -129,7 +130,7 @@ Any contributions are highly appreciated. Here are some tips:
 - To improve the translation or add a new language, modify the `lang` directory. If adding a new language, you will also need to modify `src/utils/i18n.ts`.
 - To improve or add new preset prompts, modify the `prompts` directory.
 - To optimize the API, modify the `src/pages/api` directory.
-- To optimize page interactions, modify the `src/components` directory.
+- To optimize page interactions, modify the `src/modules` directory.
 - For new feature support, please open an issue directly.
 
 ## Credits

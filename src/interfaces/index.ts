@@ -23,6 +23,7 @@ export interface Conversation {
 }
 
 export interface GlobalConfig {
+  password: string;
   openAIApiKey: string;
   model: SupportedModel;
   save: boolean;

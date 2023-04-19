@@ -26,6 +26,8 @@ export const baseURL = (
 export const apiKeyStrategy: StrategyMode =
   import.meta.env.API_KEY_STRATEGY || process.env.API_KEY_STRATEGY || 'random';
 
+export const password = import.meta.env.PASSWORD || process.env.PASSWORD;
+
 /**
  * https://vercel.com/docs/concepts/edge-network/regions#region-list
  * disable hkg1 HongKong

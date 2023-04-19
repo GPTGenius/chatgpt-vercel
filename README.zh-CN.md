@@ -36,7 +36,7 @@
 点击左上角可以添加对话，有两种类型：
 - 文本对话：
   - 模型可选，[支持的所有模型](https://platform.openai.com/docs/models/model-endpoint-compatibility)
-  - 默认为连续对话，每次发送会携带全量上下文
+  - 默认为连续对话，每次发送会携带部分上下文
   - 支持添加预设提示，输入`/`或者点击左下角按钮添加
   - 支持模型配置，点击右上角设置图标进行配置
 - 图像生成对话：
@@ -82,7 +82,7 @@
 > vercel.app 域名受限，但 vercel 本身并未受限
 
 ## 其他部署方式
-运行 `pnpm run build` 和 `pnpm run server`，参考：[astro-node](https://docs.astro.build/en/guides/integrations-guide/node/#standalone)
+运行 `pnpm build` 和 `pnpm run server`，参考：[astro-node](https://docs.astro.build/en/guides/integrations-guide/node/#standalone)
 
 ## 配置
 ### 部署配置
@@ -90,6 +90,7 @@
 
 | 配置项               | 默认值         | 描述                                                                                                | 
 | ------------------- | -------------- | -------------------------------------------------------------------------------------------------- |
+| PASSWORD            | -              | 网站的访问密码                                                                                       |
 | OPENAI_API_KEY      | -              | Api 请求使用的 key, 支持多个 key，以逗号分隔，[如何生成](https://platform.openai.com/account/api-keys) |
 | LANGUAGE            | en             | 站点的默认语言，包含预设提示，支持的语言： **zh**/**en**                                               |
 | API_KEY_STRATEGY    | random         | 多个 key 时的调度策略模式：轮询（**polling**）、随机（**random**）                                     |
@@ -140,7 +141,7 @@
 - 改善翻译或者新增语言，修改 `lang` 目录，新增语言还需要修改 `src/utils/i18n.ts`
 - 改善或者新增预设提示，修改 `prompts` 目录
 - 优化 API，修改 `src/pages/api` 目录
-- 优化页面交互，修改 `src/components` 目录
+- 优化页面交互，修改 `src/modules` 目录
 - 新增功能支持，可以直接提 issue
 
 ## 致谢

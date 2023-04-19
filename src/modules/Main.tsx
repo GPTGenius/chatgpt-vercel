@@ -1,4 +1,4 @@
-import { FC, useEffect, useLayoutEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import GlobalContext from '@contexts/global';
 import {
   defaultConversation,
@@ -58,6 +58,33 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
     window.addEventListener('resize', handleDebounceResize);
   }, []);
 
+  const setConversationsFromLocal = useCallback(() => {
+    try {
+      const localConversation = localStorage.getItem(localConversationKey);
+      if (localConversation) {
+        const conversation = JSON.parse(localConversation);
+        // historical localstorage
+        if (Array.isArray(conversation) && conversation.length > 0) {
+          setConversations({
+            [defaultConversation.id]: {
+              title: conversation[0].content,
+              messages: conversation,
+              id: defaultConversation.id,
+              createdAt: Date.now(),
+            },
+          });
+        } else {
+          setConversations(conversation);
+          setCurrentId(
+            Object.keys(conversation)?.reverse()?.[0] ?? defaultConversation.id
+          );
+        }
+      }
+    } catch (e) {
+      //
+    }
+  }, []);
+
   useEffect(() => {
     const defaultConfigs = {
       ...defaultGloablConfig,
@@ -74,33 +101,16 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
           ...localConfigs,
         }));
         if (localConfigs.save) {
-          const localConversation = localStorage.getItem(localConversationKey);
-          if (localConversation) {
-            const conversation = JSON.parse(localConversation);
-            // historical localstorage
-            if (Array.isArray(conversation) && conversation.length > 0) {
-              setConversations({
-                [defaultConversation.id]: {
-                  title: conversation[0].content,
-                  messages: conversation,
-                  id: defaultConversation.id,
-                  createdAt: Date.now(),
-                },
-              });
-            } else {
-              setConversations(conversation);
-              setCurrentId(
-                Object.keys(conversation)?.reverse()?.[0] ??
-                  defaultConversation.id
-              );
-            }
-          }
+          setConversationsFromLocal();
         }
       } catch (e) {
         setConfigs(defaultConfigs);
       }
     } else {
       setConfigs(defaultConfigs);
+      if (defaultConfigs.save) {
+        setConversationsFromLocal();
+      }
     }
   }, []);
 
