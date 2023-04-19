@@ -10,10 +10,13 @@ import type { Conversation, GlobalConfig, Lang } from '@interfaces';
 import { getI18n } from '@utils/i18n';
 import { debounce } from 'lodash-es';
 import { isMatchMobile } from '@utils';
+import { ConfigProvider } from 'antd';
 import Sidebar from './Sidebar';
 import Content from './Content';
 import Empty from './Empty';
 import Configuration from './Configuration';
+
+const styles = getComputedStyle(document.documentElement);
 
 const Main: FC<{ lang: Lang }> = ({ lang }) => {
   // gloabl configs
@@ -148,44 +151,54 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
         setConversations,
       }}
     >
-      <div
-        className={`w-[100%] h-[100%] flex overflow-hidden ${
-          isMobile ? '' : 'rounded-2xl'
-        }`}
-        style={{ boxShadow: '0 20px 68px rgba(0, 0, 0, 0.15)' }}
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: styles.getPropertyValue('--theme-antd'),
+          },
+        }}
       >
-        {isMobile ? (
-          <>
-            {currentId ? (
-              <div className="w-full flex">
+        <div
+          className={`w-[100%] h-[100%] flex overflow-hidden ${
+            isMobile ? '' : 'rounded-2xl'
+          }`}
+          style={{ boxShadow: '0 20px 68px rgba(0, 0, 0, 0.15)' }}
+        >
+          {isMobile ? (
+            <>
+              {currentId ? (
+                <div className="w-full flex">
+                  {activeSetting ? (
+                    <div className="w-full">{getConfigration()}</div>
+                  ) : (
+                    <div className="h-full w-full">{getContent()}</div>
+                  )}
+                </div>
+              ) : (
+                <div className="w-full ">{getSidebar()}</div>
+              )}
+            </>
+          ) : (
+            <>
+              <div className={activeSetting ? 'w-1/4' : 'w-1/3'}>
+                {getSidebar()}
+              </div>
+              <div className={`${activeSetting ? 'w-3/4' : 'w-2/3'} flex`}>
+                <div
+                  className={`h-full ${
+                    activeSetting ? 'w-2/3' : 'w-full'
+                  }  flex-1`}
+                >
+                  {currentId ? getContent() : getEmpty()}
+                </div>
                 {activeSetting ? (
-                  <div className="w-full">{getConfigration()}</div>
-                ) : (
-                  <div className="h-full w-full">{getContent()}</div>
-                )}
+                  <div className="w-1/3">{getConfigration()}</div>
+                ) : null}
               </div>
-            ) : (
-              <div className="w-full ">{getSidebar()}</div>
-            )}
-          </>
-        ) : (
-          <>
-            <div className="w-1/3 ">{getSidebar()}</div>
-            <div className="w-2/3 flex">
-              <div
-                className={`h-full ${
-                  activeSetting ? 'w-3/5' : 'w-full'
-                }  flex-1`}
-              >
-                {currentId ? getContent() : getEmpty()}
-              </div>
-              {activeSetting ? (
-                <div className="w-2/5">{getConfigration()}</div>
-              ) : null}
-            </div>
-          </>
-        )}
-      </div>
+            </>
+          )}
+        </div>
+      </ConfigProvider>
     </GlobalContext.Provider>
   );
 };
