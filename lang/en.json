@@ -10,6 +10,8 @@
   "action_copy": "Copy",
   "action_download": "Download",
   "action_stop": "Stop generating",
+  "action_edit_title": "Edit title",
+  "action_ok": "OK",
   "configuration": "Configurations",
   "config_model": "Model:",
   "config_save": "Save all conversations:",
