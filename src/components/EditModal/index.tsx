@@ -26,7 +26,9 @@ const EditModal: FC<EditModalProps & Omit<ModalProps, 'onOk'>> = ({
       <Input value={value} onChange={(e) => setValue(e.target.value)} />
       <div className="mt-[12px] flex items-center flex-row-reverse">
         <Space>
-          <Button onClick={onOk} disabled={!value}>{i18n.action_ok}</Button>
+          <Button onClick={onOk} disabled={!value}>
+            {i18n.action_ok}
+          </Button>
         </Space>
       </div>
     </Modal>
