@@ -21,6 +21,7 @@ const EditModal: FC<EditModalProps & Omit<ModalProps, 'onOk'>> = ({
       title={i18n.action_edit_title}
       footer={null}
       width={isMobile ? '90vw' : '50vw'}
+      style={{ maxWidth: 600 }}
       {...rest}
     >
       <Input value={value} onChange={(e) => setValue(e.target.value)} />

@@ -7,7 +7,7 @@ import { copyToClipboard, downloadAs } from '@utils';
 interface IProps extends ModalProps {
   conversation: Conversation;
 }
-const OutputConversationModal: FC<IProps> = ({
+const ExportConversationModal: FC<IProps> = ({
   conversation,
   ...restProps
 }) => {
@@ -59,4 +59,4 @@ const OutputConversationModal: FC<IProps> = ({
   );
 };
 
-export default OutputConversationModal;
+export default ExportConversationModal;
