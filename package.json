@@ -18,7 +18,9 @@
     "server": "cross-env HOST=0.0.0.0 PORT=3000 node ./dist/server/entry.mjs",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "eslint --fix --quiet --ext .js,.ts,.tsx,.astro ."
+    "lint": "eslint --fix --quiet --ext .js,.ts,.tsx,.astro .",
+    "lintcheck": "eslint --quiet --ext .js,.ts,.tsx,.astro .",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@astrojs/node": "^5.1.1",

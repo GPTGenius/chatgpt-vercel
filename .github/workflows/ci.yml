@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+
+  pull_request:
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  lintcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+
+      - name: Set node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install
+        run: pnpm install --ignore-scripts
+
+      - name: Lint
+        run: pnpm run lintcheck
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+
+      - name: Set node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install
+        run: pnpm install --ignore-scripts
+
+      - name: Typecheck
+        run: pnpm run typecheck

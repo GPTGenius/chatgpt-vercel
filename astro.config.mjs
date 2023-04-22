@@ -18,7 +18,6 @@ export default defineConfig({
       checker({
         typescript: true,
         eslint: {
-          // for example, lint .ts and .tsx
           lintCommand: 'eslint --quiet --ext .js,.ts,.tsx,.astro .',
         },
       }),
