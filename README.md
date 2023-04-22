@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/GPTGenius/chatgpt-vercel/tags">
-    <img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/tag/GPTGenius/chatgpt-vercel">
+    <img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/release/GPTGenius/chatgpt-vercel">
   </a>
   <a href="https://github.com/GPTGenius/chatgpt-vercel/blob/main/LICENSE">
     <img alt="license" src="https://img.shields.io/github/license/GPTGenius/chatgpt-vercel">
@@ -22,7 +22,7 @@ Create a private ChatGPT website with one-click for free using Vercel, support m
 - 🎨 Image generation conversation with options to adjust image size and count
 - 🌈 Multiple preset prompts added to customize AI behavior
 - 🌏 Switch between various languages, currently supporting Simplified Chinese and English
-- 💭 Local chat history saved with search functionality
+- 💭 Local chat history saved with search and import functionality
 
 ## Live Demo
 - [chatgpt-vercel-sample](https://chatgpt-vercel-sample.vercel.app/)

@@ -3,7 +3,7 @@ import { Conversation, ReactSetState } from '@interfaces';
 import ConfigIcon from '@components/ConfigIcon';
 import GlobalContext from '@contexts/global';
 import { Tooltip } from 'antd';
-import OutputConversationModal from '@components/OutputConversationModal';
+import ExportConversationModal from '@components/ConversationModal/export';
 import EditModal from '@components/EditModal';
 
 interface ContentHeaderProps {
@@ -78,7 +78,7 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           onClick={() => setActiveSetting((active) => !active)}
         />
       </div>
-      <OutputConversationModal
+      <ExportConversationModal
         conversation={conversation}
         open={visible}
         onCancel={() => setVisible(false)}

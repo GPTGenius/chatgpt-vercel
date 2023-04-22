@@ -12,6 +12,9 @@
   "action_stop": "Stop generating",
   "action_edit_title": "Edit title",
   "action_ok": "OK",
+  "action_add_text": "Create a text conversation",
+  "action_add_image": "Create a image generation conversation",
+  "action_import": "Import a conversation",
   "configuration": "Configurations",
   "config_model": "Model:",
   "config_save": "Save all conversations:",
@@ -27,5 +30,6 @@
   "status_image_expired": "Image has expired",
   "chat_mode_text": "Text conversation",
   "chat_mode_image": "Image generation conversation",
-  "success_copy": "Copy successfully"
+  "success_copy": "Copy successfully",
+  "success_import": "Import successfully"
 }

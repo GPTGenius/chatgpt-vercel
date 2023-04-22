@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/GPTGenius/chatgpt-vercel/tags">
-    <img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/tag/GPTGenius/chatgpt-vercel">
+    <img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/release/GPTGenius/chatgpt-vercel">
   </a>
   <a href="https://github.com/GPTGenius/chatgpt-vercel/blob/main/LICENSE">
     <img alt="license" src="https://img.shields.io/github/license/GPTGenius/chatgpt-vercel">
@@ -23,7 +23,7 @@
 - 🎨 图像生成对话，支持调整图片大小和图片数量
 - 🌈 添加多种预设提示，定制 AI 行为
 - 🌏 切换多种语言，目前支持 简体中文、英语
-- 💭 聊天记录本地保存，支持搜索
+- 💭 聊天记录本地保存，支持搜索、导入
 
 ## 在线示例
 - [chatgpt-vercel-zh-sample](https://chatgpt-vercel-zh-sample.vercel.app/)
