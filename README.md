@@ -22,7 +22,7 @@ Create a private ChatGPT website with one-click for free using Vercel, support m
 - 🎨 Image generation conversation with options to adjust image size and count
 - 🌈 Multiple preset prompts added to customize AI behavior
 - 🌏 Switch between various languages, currently supporting Simplified Chinese and English
-- 💭 Local chat history saved with search and import functionality
+- 💭 Local chat history saved with search, import and export functionality
 
 ## Live Demo
 - [chatgpt-vercel-sample](https://chatgpt-vercel-sample.vercel.app/)
