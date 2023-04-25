@@ -138,13 +138,13 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
         }));
         tempMessage = '';
       } else {
-        const { msg } = await res.json();
+        const { msg, error } = await res.json();
         updateMessages(
           allMessages.concat([
             {
               role: 'assistant',
               content: `[${res.status}]Error: ${
-                msg || res.statusText || 'Unknown'
+                msg || error?.message || res.statusText || 'Unknown'
               }`,
               createdAt: Date.now(),
             },

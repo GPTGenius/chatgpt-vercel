@@ -69,7 +69,7 @@ export const post: APIRoute = async ({ request }) => {
       }),
     });
     if (!res.ok) {
-      return new Response(JSON.stringify(res.body), {
+      return new Response(res.body, {
         status: res.status,
       });
     }
