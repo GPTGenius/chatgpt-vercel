@@ -105,7 +105,7 @@ All global configurations will be stored locally
 - [ ] Export functionality to export as markdown and images
 - [ ] Theme color switching support, currently defaulting to gradient purple
 - [ ] Audio conversation support
-- [ ] Image generation using other models
+- [x] Image generation using other models
 
 These are some of the planned features to be developed. Collaborations are welcome, and feel free to suggest other ideas by submitting issues.
 

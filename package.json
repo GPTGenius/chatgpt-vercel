@@ -39,6 +39,7 @@
     "markdown-it": "^13.0.1",
     "markdown-it-highlightjs": "^4.0.1",
     "markdown-it-kbd": "^2.2.2",
+    "midjourney-client": "^1.0.8",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "solid-js": "^1.6.15"

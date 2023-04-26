@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import type { APIRoute } from 'astro';
 import { loadBalancer } from '@utils/server';
+import midjourney from 'midjourney-client';
+import { SupportedImageModels } from '@configs';
 import { apiKeyStrategy, apiKeys, baseURL, config, password as pwd } from '.';
 
 export { config };
@@ -13,7 +15,7 @@ export const post: APIRoute = async ({ request }) => {
   }
 
   const body = await request.json();
-  const { prompt, size = '256x256', n = 1, password } = body;
+  const { prompt, model, size = '256x256', n = 1, password } = body;
   let { key } = body;
 
   if (!key) {
@@ -37,6 +39,19 @@ export const post: APIRoute = async ({ request }) => {
   }
 
   try {
+    if ((model as SupportedImageModels) === 'Midjourney') {
+      const len = size?.split('x')?.[0] ?? 256;
+      const data = await midjourney(prompt, {
+        width: Number(len),
+        height: Number(len),
+      });
+      return new Response(
+        JSON.stringify({
+          data: data ?? [],
+        }),
+        { status: 200 }
+      );
+    }
     const image = await fetch(`https://${baseURL}/v1/images/generations`, {
       headers: {
         'Content-Type': 'application/json',
