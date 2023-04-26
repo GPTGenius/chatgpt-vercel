@@ -216,6 +216,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
           size: configs.imageSize || '256x256',
           n: configs.imagesCount || 1,
           password: configs.password,
+          model: configs.imageModel,
         }),
       });
       const { data = [], msg } = await res.json();

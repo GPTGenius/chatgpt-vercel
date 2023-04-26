@@ -19,7 +19,7 @@ Create a private ChatGPT website with one-click for free using Vercel, support m
 ## Features
 - ⚡ Deploy quickly and for free using Vercel
 - 💬 Text conversation with the ability to switch models and set context length
-- 🎨 Image generation conversation with options to adjust image size and count
+- 🎨 Image generation conversation supports the `DALL-E` and `Midjourney` models. It also allows for the adjustment of image size and count.
 - 🌈 Multiple preset prompts added to customize AI behavior
 - 🌏 Switch between various languages, currently supporting Simplified Chinese and English
 - 💭 Local chat history saved with search, import and export functionality
@@ -39,10 +39,11 @@ Click the icon at the top left to add a conversation, which has two types:
   - Supports adding preset prompts, type `/` or click the button at the bottom left to add.
   - Supports model configuration, click the settings icon at the top right to configure.
 - Image generation conversation:
-  - The model is fixed and based on the OpenAI DALL·E model
+  - The model is switchable, supports the OpenAI `DALL·E` model and `Midjourney` 
   - Does not support continuous conversation, and each sending will not carry the context.
   - Directly input the image effect you want, for example: `a cat`.
-  - The valid access time of the image link is `2` hours. Please save it in time if necessary.
+  - For model `DALL·E`, the valid access time of the image link is `2` hours. Please save it in time if necessary.
+  - For model `Midjourney`, it is recommended to add the prefix `mdjrny-v4 style`
 
 ### History record
 When `Save all conversations` is enabled in the global settings, it will be saved to local cache. By default, it will not be saved.
@@ -105,7 +106,7 @@ All global configurations will be stored locally
 - [ ] Export functionality to export as markdown and images
 - [ ] Theme color switching support, currently defaulting to gradient purple
 - [ ] Audio conversation support
-- [ ] Image generation using other models
+- [x] Image generation using other models
 
 These are some of the planned features to be developed. Collaborations are welcome, and feel free to suggest other ideas by submitting issues.
 
