@@ -6,7 +6,6 @@ import { Divider, Input, Select, Slider, Switch, Tooltip } from 'antd';
 import {
   defaultConversation,
   globalConfigLocalKey,
-  supportedImageModels,
   supportedImgSizes,
   supportedLanguages,
   supportedModels,
@@ -161,19 +160,21 @@ const Configuration: FC<ConfigurationProps> = ({
         <Divider className="!mt-6 !mb-6" orientation="left" plain>
           {i18n.chat_mode_image}
         </Divider>
-        <div className="flex items-center justify-between mb-6">
-          <div>{i18n.config_model}</div>
-          <Select
-            className="w-1/2"
-            value={configs.imageModel}
-            options={supportedImageModels.map((model) => ({
-              label: model,
-              value: model,
-            }))}
-            onChange={(imageModel) => updateConfigsAndStorages({ imageModel })}
+        <div className="mb-6">
+          <div className="mb-2">{i18n.config_images_count}</div>
+          <Slider
+            className="w-full"
+            min={1}
+            max={10}
+            step={1}
+            defaultValue={1}
+            value={configs.imagesCount}
+            onChange={(imagesCount) =>
+              updateConfigsAndStorages({ imagesCount })
+            }
           />
         </div>
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between">
           <div>{i18n.config_images_size}</div>
           <Select
             className="w-1/2"
@@ -183,21 +184,6 @@ const Configuration: FC<ConfigurationProps> = ({
               value: size,
             }))}
             onChange={(imageSize) => updateConfigsAndStorages({ imageSize })}
-          />
-        </div>
-        <div>
-          <div className="mb-2">{i18n.config_images_count}</div>
-          <Slider
-            className="w-full"
-            disabled={configs.imageModel === 'Midjourney'}
-            min={1}
-            max={10}
-            step={1}
-            defaultValue={1}
-            value={configs.imagesCount}
-            onChange={(imagesCount) =>
-              updateConfigsAndStorages({ imagesCount })
-            }
           />
         </div>
       </div>

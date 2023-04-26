@@ -35,7 +35,6 @@ specifiers:
   markdown-it: ^13.0.1
   markdown-it-highlightjs: ^4.0.1
   markdown-it-kbd: ^2.2.2
-  midjourney-client: ^1.0.8
   prettier: ^2.8.4
   prettier-plugin-astro: ^0.8.0
   punycode: ^2.3.0
@@ -63,7 +62,6 @@ dependencies:
   markdown-it: 13.0.1
   markdown-it-highlightjs: 4.0.1
   markdown-it-kbd: 2.2.2
-  midjourney-client: 1.0.8
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   solid-js: 1.6.15
@@ -1851,12 +1849,6 @@ packages:
 
   /character-entities/2.0.2:
     resolution: {integrity: sha512-shx7oQ0Awen/BRIdkjkvz54PnEEI/EjwXDSIZp86/KKdbafHh1Df/RYGBhn4hbe2+uKC9FnT5UCEdyPz3ai9hQ==}
-    dev: false
-
-  /chiaki/2.0.0:
-    resolution: {integrity: sha512-XCLb713fLcGC4hFG+3Fn9n80jws7vJsaF0TEOBp59OvtCRK7S+0UF4+DCvcSvs51M/dj2IHzn0667jd5MPb5oQ==}
-    dependencies:
-      unstreamify: 2.0.0
     dev: false
 
   /chokidar/3.5.3:
@@ -4053,12 +4045,6 @@ packages:
       braces: 3.0.2
       picomatch: 2.3.1
 
-  /midjourney-client/1.0.8:
-    resolution: {integrity: sha512-MXrC11oJynraOmC2stpyNQlKGTayof4gqzHGogwKj+KRvulzSYLt+qKKYoajvzzF2gsYk2XjyjF91BL1T93S2w==}
-    dependencies:
-      node-replicate: 2.0.0
-    dev: false
-
   /mime/1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
     engines: {node: '>=4'}
@@ -4167,12 +4153,6 @@ packages:
 
   /node-releases/2.0.10:
     resolution: {integrity: sha512-5GFldHPXVG/YZmFzJvKK2zDSzPKhEp0+ZR5SVaoSag9fsL5YgHbUHDfnG5494ISANDcK4KwPXAx2xqVEydmd7w==}
-    dev: false
-
-  /node-replicate/2.0.0:
-    resolution: {integrity: sha512-vJ8wDLpDh+zEznpTgRdO52+JG5g/mEaon0y9DTkvfMwZ16XjuxnCUGpfS9P8Oea3VXH1+bZJ++a/NzjPhN6QaA==}
-    dependencies:
-      chiaki: 2.0.0
     dev: false
 
   /nopt/5.0.0:
@@ -6039,10 +6019,6 @@ packages:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
     dev: true
-
-  /unstreamify/2.0.0:
-    resolution: {integrity: sha512-u4UWtoJglG5dlinKPrr0cdGOL9eGozILn1EmzQ0oforHVM+M/WB8ibwwlEQlbTYMDMIJe6TK/sbVN5WS7ePOxA==}
-    dev: false
 
   /update-browserslist-db/1.0.10_browserslist@4.21.5:
     resolution: {integrity: sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==}

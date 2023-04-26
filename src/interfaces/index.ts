@@ -1,8 +1,4 @@
-import {
-  SupportedImageModels,
-  SupportedImgSize,
-  SupportedModel,
-} from '@configs';
+import { SupportedImgSize, SupportedModel } from '@configs';
 
 export interface Message {
   content: string;
@@ -29,8 +25,7 @@ export interface Conversation {
 export interface GlobalConfig {
   password: string;
   openAIApiKey: string;
-  model: SupportedModel; // text model
-  imageModel: SupportedImageModels; // image model
+  model: SupportedModel;
   save: boolean;
   continuous: boolean;
   messagesCount: number;
