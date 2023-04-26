@@ -51,17 +51,26 @@ jobs:
         run: pnpm run typecheck
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    timeout-minutes: 10
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node_version: [16, 18]
+      fail-fast: false
+
     steps:
       - uses: actions/checkout@v3
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
 
-      - name: Set node
+      - name: Set node version to ${{ matrix.node_version }}
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: ${{ matrix.node_version }}
 
       - name: Install
         run: pnpm install --ignore-scripts
