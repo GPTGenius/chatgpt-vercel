@@ -6,7 +6,7 @@
   "license": "MIT",
   "packageManager": "pnpm@7.29.3",
   "engines": {
-    "node": ">=16.12.0",
+    "node": ">=18",
     "pnpm": ">=7.29.0 <8"
   },
   "scripts": {
@@ -41,6 +41,7 @@
     "markdown-it-kbd": "^2.2.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "replicate-fetch": "^0.1.1",
     "solid-js": "^1.6.15"
   },
   "devDependencies": {

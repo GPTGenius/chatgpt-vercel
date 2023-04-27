@@ -6,6 +6,7 @@
   <a href="https://github.com/GPTGenius/chatgpt-vercel/tags">
     <img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/release/GPTGenius/chatgpt-vercel">
   </a>
+  <img alt="node-current (scoped)" src="https://img.shields.io/node/v/replicate-fetch">
   <a href="https://github.com/GPTGenius/chatgpt-vercel/blob/main/LICENSE">
     <img alt="license" src="https://img.shields.io/github/license/GPTGenius/chatgpt-vercel">
   </a>
@@ -20,7 +21,7 @@
 ## 主要功能
 - ⚡ 通过 Vercel 一键免费部署，添加自己的域名即可无障碍访问
 - 💬 文本对话，可以自由切换模型，设置上下文长度
-- 🎨 图像生成对话，支持调整图片大小和图片数量
+- 🎨 图像生成对话，支持 `DALL-E` 和 `Midjourney` 模型，可以调整图片大小和数量
 - 🌈 添加多种预设提示，定制 AI 行为
 - 🌏 切换多种语言，目前支持 简体中文、英语
 - 💭 聊天记录本地保存，支持搜索、导入和导出等
@@ -40,10 +41,11 @@
   - 支持添加预设提示，输入`/`或者点击左下角按钮添加
   - 支持模型配置，点击右上角设置图标进行配置
 - 图像生成对话：
-  - 模型固定，基于 OpenAI DALL·E 模型
+  - 模型可选，支持 OpenAI `DALL·E` 模型和 `Midjourney` 模型
   - 不支持连续对话，每次发送不会携带上下文
   - 直接输入你想要的图片效果，例如：`一只猫`
-  - 图片链接的有效访问时间为 `2` 小时，如有需要请及时保存
+  - 对于 `DALL·E` 模型，图片链接的有效访问时间为 `2` 小时，如有需要请及时保存
+  - 对于 `Midjourney` 模型，推荐使用英文并加上前缀 `mdjrny-v4 style`
 
 ### 历史记录
 全局设置中开启`保留所有会话`时会保存到本地缓存，默认不保存
@@ -116,13 +118,13 @@
 - [ ] 支持导出功能，导出 markdown & 图片
 - [ ] 支持主题色切换，目前默认为渐变紫色
 - [ ] 支持音频对话
-- [ ] 支持通过其他模型生成图片
+- [x] 支持通过其他模型生成图片
 
 以上是计划开发的一些功能，欢迎共建，有其他想法也可以提相关 issue
 
 ## 本地开发
 需要：
-- **NodeJS** `v16.12.0` 或更高版本
+- **NodeJS** `v18` 或更高版本
 - **pnpm** `v7` 或更高版本
 
 代理：
