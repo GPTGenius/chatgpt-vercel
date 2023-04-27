@@ -6,6 +6,7 @@
   <a href="https://github.com/GPTGenius/chatgpt-vercel/tags">
     <img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/release/GPTGenius/chatgpt-vercel">
   </a>
+  <img alt="node-current (scoped)" src="https://img.shields.io/node/v/replicate-fetch">
   <a href="https://github.com/GPTGenius/chatgpt-vercel/blob/main/LICENSE">
     <img alt="license" src="https://img.shields.io/github/license/GPTGenius/chatgpt-vercel">
   </a>
@@ -123,7 +124,7 @@
 
 ## 本地开发
 需要：
-- **NodeJS** `v16.12.0` 或更高版本
+- **NodeJS** `v18` 或更高版本
 - **pnpm** `v7` 或更高版本
 
 代理：

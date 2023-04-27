@@ -6,6 +6,7 @@
   <a href="https://github.com/GPTGenius/chatgpt-vercel/tags">
     <img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/release/GPTGenius/chatgpt-vercel">
   </a>
+  <img alt="node-current (scoped)" src="https://img.shields.io/node/v/replicate-fetch">
   <a href="https://github.com/GPTGenius/chatgpt-vercel/blob/main/LICENSE">
     <img alt="license" src="https://img.shields.io/github/license/GPTGenius/chatgpt-vercel">
   </a>
@@ -112,7 +113,7 @@ These are some of the planned features to be developed. Collaborations are welco
 
 ## Development
 Requirements:
-- **NodeJS** `v16.12.0` or higher
+- **NodeJS** `v18` or higher
 - **pnpm** `v7` or higher
 
 Proxy
