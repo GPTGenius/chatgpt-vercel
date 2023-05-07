@@ -23,7 +23,7 @@ const Sidebar: FC<{
       ...items,
       [id]: {
         id,
-        title: i18n.status_empty,
+        title: '',
         mode,
         messages: [],
         createdAt: Date.now(),

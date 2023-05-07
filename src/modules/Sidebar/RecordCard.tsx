@@ -1,7 +1,8 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { RecordCardItem } from '@interfaces';
 import { getRelativeTime } from '@utils/date';
 import './index.css';
+import GlobalContext from '@contexts/global';
 
 interface RecordCardProps {
   data: RecordCardItem;
@@ -16,6 +17,7 @@ const RecordCard: FC<RecordCardProps> = ({
   onDelete,
   selected,
 }) => {
+  const { i18n } = useContext(GlobalContext);
   const contentClass = `text-sm ${
     selected ? 'text-[rgba(255,255,255,0.8)]' : 'text-[#a1a7a8]'
   }`;
@@ -32,7 +34,7 @@ const RecordCard: FC<RecordCardProps> = ({
         } flex items-baseline justify-between`}
         style={{ lineHeight: '2rem' }}
       >
-        <div className="truncate flex-1">{data.title}</div>
+        <div className="truncate flex-1">{data.title || i18n.status_empty}</div>
         <div
           className={`sidebar-record-item-time ${contentClass} w-[60px] text-right`}
         >

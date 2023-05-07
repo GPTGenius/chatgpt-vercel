@@ -53,8 +53,9 @@ export const defaultGloablConfig: GlobalConfig = {
   lang: 'en',
 };
 
-export const defaultConversation: Omit<Conversation, 'title'> = {
+export const defaultConversation: Conversation = {
   id: '1',
+  title: '',
   messages: [],
   mode: 'text',
   createdAt: Date.now(),
