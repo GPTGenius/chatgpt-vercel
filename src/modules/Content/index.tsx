@@ -55,11 +55,8 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
       [currentId]: {
         ...conversations[currentId],
         messages: msgs,
-        ...(msgs.length > 0
-          ? {
-              title: msgs[0].content,
-            }
-          : {}),
+        // If no title, set the first content
+        title: conversations[currentId].title || msgs[0].content,
       },
     }));
   };

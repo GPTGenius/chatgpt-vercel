@@ -43,7 +43,9 @@ const ContentHeader: FC<ContentHeaderProps> = ({
           />
         ) : null}
         <div className="text-[#232629] flex-1 flex overflow-hidden">
-          <div className="truncate">{conversation.title}</div>
+          <div className="truncate">
+            {conversation.title || i18n.status_empty}
+          </div>
           <div className="ml-1">
             <ConfigIcon
               name="ri-edit-2-line"

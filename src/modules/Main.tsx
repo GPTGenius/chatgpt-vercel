@@ -29,10 +29,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
   const [conversations, setConversations] = useState<
     Record<string, Conversation>
   >({
-    [defaultConversation.id]: {
-      ...defaultConversation,
-      title: i18n.status_empty,
-    },
+    [defaultConversation.id]: defaultConversation,
   });
 
   const [activeSetting, setActiveSetting] = useState(false);
