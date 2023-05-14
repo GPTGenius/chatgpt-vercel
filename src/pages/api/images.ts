@@ -24,7 +24,7 @@ export const get: APIRoute = async ({ request }) => {
   const model = params.get('model') as SupportedImageModels;
   const serverId = params.get('serverId') ?? dicordServerId;
   const channelId = params.get('channelId') ?? discordChannelId;
-  const token = params.get('discordToken') ?? discordToken;
+  const token = params.get('token') ?? discordToken;
   const prompt = params.get('prompt');
 
   if (model === 'Midjourney') {

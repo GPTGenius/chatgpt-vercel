@@ -240,7 +240,9 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
                 setTimeout(resp, midjourneyConfigs.interval)
               );
               const message: MessageItem = await (
-                await fetch(`/api/images?model=Midjourney&prompt=${content}`)
+                await fetch(
+                  `/api/images?model=Midjourney&prompt=${content}&serverId=${configs.discordServerId}&channelId=${configs.discordChannelId}&token=${configs.discordToken}`
+                )
               ).json();
               if (message && !isInProgress(message)) {
                 [image] = message.attachments;
