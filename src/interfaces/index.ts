@@ -7,6 +7,7 @@ import {
 export interface Message {
   content: string;
   role: 'assistant' | 'user';
+  imageModel?: SupportedImageModels; // distinguish avator
   createdAt?: number;
   expiredAt?: number; // for image mode
 }
@@ -38,6 +39,9 @@ export interface GlobalConfig {
   imagesCount: number;
   imageSize: SupportedImgSize;
   lang: Lang;
+  discordServerId: string;
+  discordChannelId: string;
+  discordToken: string;
 }
 
 export interface Prompt {

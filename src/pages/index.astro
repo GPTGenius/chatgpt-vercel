@@ -7,11 +7,13 @@ import 'highlight.js/styles/atom-one-dark.css';
 
 // read lang from env/process.env
 const lang: Lang = import.meta.env.LANGUAGE || process.env.LANGUAGE || 'en';
+// read inVercel from process.env
+const inVercel = !!process.env.VERCEL;
 ---
 
 <Layout title="ChatGPT">
   <div id="container">
-    <Main lang={lang} client:only="react" />
+    <Main lang={lang} inVercel={inVercel} client:only="react" />
   </div>
 </Layout>
 

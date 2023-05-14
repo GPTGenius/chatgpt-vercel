@@ -11,6 +11,7 @@ const GlobalContext = createContext<{
   setCurrentId: ReactSetState<string>;
   conversations: Record<string, Conversation>;
   setConversations: ReactSetState<Record<string, Conversation>>;
+  inVercel: boolean;
 }>({
   i18n: {},
   configs: {},
@@ -19,5 +20,6 @@ const GlobalContext = createContext<{
   setCurrentId: noop,
   conversations: {},
   setConversations: noop,
+  inVercel: false,
 });
 export default GlobalContext;

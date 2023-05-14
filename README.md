@@ -43,8 +43,8 @@ Click the icon at the top left to add a conversation, which has two types:
   - The model is switchable, supports the OpenAI `DALL·E` model and `Midjourney` 
   - Does not support continuous conversation, and each sending will not carry the context.
   - Directly input the image effect you want, for example: `a cat`.
-  - For model `DALL·E`, the valid access time of the image link is `2` hours. Please save it in time if necessary.
-  - For model `Midjourney`, it is recommended to add the prefix `mdjrny-v4 style`
+  - For model `DALL-E`, expend `OpenAI` tokens. The effective access time for the image link is `2` hours. Please make sure to save it in time if necessary.
+  - For model `Midjourney`, depending on the `Discord` configurations, image generation may take a while, with a default timeout of `5` minutes. Please be patient and wait.
 
 ### History record
 When `Save all conversations` is enabled in the global settings, it will be saved to local cache. By default, it will not be saved.
@@ -72,6 +72,16 @@ There are three ways to set your OpenAI API Key:
 
 > Attention: For Vercel, all environment variables need to be redeployed to take effect.
 
+## 3. Set Midjourney (optional)
+If you want to use the AI drawing feature of `Midjourney`, you can configure the relevant `Discord` settings , including the following fields:
+- `DISCORD_SERVER_ID`
+- `DISCORD_CHANNEL_ID`
+- `DISCORD_TOKEN`
+
+How to get ids and token:
+- [How to find ids](https://docs.statbot.net/docs/faq/general/how-find-id/)
+- [Get discord token](https://www.androidauthority.com/get-discord-token-3149920/)
+
 ## Other deployment methods
 Run `pnpm build` and `pnpm run server`. Refer: [astro-node](https://docs.astro.build/en/guides/integrations-guide/node/#standalone)
 
@@ -86,6 +96,9 @@ All deployment configurations could be configured in the `.env` file or in **Env
 | LANGUAGE            | en             | The default language of the website, including prompts. Supported languages: **zh**/**en**                                            |
 | API_KEY_STRATEGY    | random         | The scheduling strategy mode for multiple keys: **polling**/**random**                                                                |
 | OPENAI_API_BASE_URL | api.openai.com | The default address of the requested api                                                                                              |
+| DISCORD_SERVER_ID   | -              | Discord server id                                                                                                                     |
+| DISCORD_CHANNEL_ID  | -              | Discord channel id                                                                                                                    |
+| DISCORD_TOKEN       | -              | Discord token                                                                                                                         |  
 
 
 ### Global Configurations
@@ -97,11 +110,15 @@ All global configurations will be stored locally
 | Language                              | en            | The language of the website, including prompts. Supported languages: **zh**/**en**                                    |
 | Save all conversations                | true          | The conversation won't be lost after the page is refreshed                                                            |
 | Temperature                           | 1             | The larger the value, the more random the answer, with a range of 0-2                                                 |
-| Model                                 | gpt-3.5-turbo | Model used in api request, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility)   |
+| Text Conversation Model               | gpt-3.5-turbo | Model used in api request, [supported models](https://platform.openai.com/docs/models/model-endpoint-compatibility)   |
 | Continuous conversations              | true          | Carry the context for the conversations                                                                               |
 | Number of historical messages carried | 4             | For continuous conversations, the number of historical messages carried                                               |
+| Image Generation Conversation Model   | DALL-E        | Supported models: **DALL-E** / **Midjourney** / **Replicate**                                                         |
 | Number of generated images            | 1             | The number of images generated in a single image generation conversation                                              |
 | Size of generated images              | 256x256       | The size of a single image in image generation conversation                                                           |
+| Discord Server Id                     | -             | If it is configured on the page, the key in the environment variable will not be used                                 |
+| Discord Channel Id                    | -             | Ditto                                                                                                                 |
+| Discord Token                         | -             | Ditto                                                                                                                 |  
 
 ## Planned Features
 - [ ] Export functionality to export as markdown and images
