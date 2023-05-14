@@ -44,8 +44,8 @@
   - 模型可选，支持 OpenAI `DALL·E` 模型和 `Midjourney` 模型
   - 不支持连续对话，每次发送不会携带上下文
   - 直接输入你想要的图片效果，例如：`一只猫`
-  - 对于 `DALL·E` 模型，图片链接的有效访问时间为 `2` 小时，如有需要请及时保存
-  - 对于 `Midjourney` 模型，推荐使用英文并加上前缀 `mdjrny-v4 style`
+  - 对于 `DALL-E` 模型，消耗 `OpenAI` token，图片链接的有效访问时间为 `2` 小时，如有需要请及时保存
+  - 对于 `Midjourney` 模型，依赖 `Discord` 相关配置，图片生成时间一般较长，默认超时时间为 `5` 分钟，请耐心等待
 
 ### 历史记录
 全局设置中开启`保留所有会话`时会保存到本地缓存，默认不保存
@@ -73,12 +73,22 @@
 
 如果没有 OpenAI API Key 可查看 [也许是时候拥有自己的「ChatGPT」了](https://juejin.cn/post/7210274432332939322)
 
-### 3. 设置默认语言
+### 3. 配置 Midjourney（可选）
+如果你期望使用 `Midjourney` 的 AI 绘图功能，可以设置 `Discord` 的相关配置进行使用，包括以下字段：
+- `DISCORD_SERVER_ID`
+- `DISCORD_CHANNEL_ID`
+- `DISCORD_TOKEN`
+
+如何获得相关 id 和 token 可以参考：
+- [How to find ids](https://docs.statbot.net/docs/faq/general/how-find-id/)
+- [Get discord token](https://www.androidauthority.com/get-discord-token-3149920/)
+
+### 4. 设置默认语言（可选）
 站点的默认语言是英文的，页面中支持切换语言，如果你希望部署一个默认中文站点，可以设置 **LANGUAGE** 为 `zh`，支持在 Vercel 环境变量和 `.env` 文件中配置
 
 > 注意：Vercel 所有环境变量设置后需要重新部署才能生效
 
-### 4. 绑定域名（可选）
+### 5. 绑定域名（可选）
 拥有自己的域名，可以在 vercel 上的 domain 中进行设置，即可无障碍访问
 
 > vercel.app 域名受限，但 vercel 本身并未受限
@@ -97,22 +107,29 @@
 | LANGUAGE            | en             | 站点的默认语言，包含预设提示，支持的语言： **zh**/**en**                                               |
 | API_KEY_STRATEGY    | random         | 多个 key 时的调度策略模式：轮询（**polling**）、随机（**random**）                                     |
 | OPENAI_API_BASE_URL | api.openai.com | 请求 api 的默认地址                                                                                  |
+| DISCORD_SERVER_ID   | -              | Discord 服务器 id                                                                                   |
+| DISCORD_CHANNEL_ID  | -              | Discord 频道 id                                                                                     |
+| DISCORD_TOKEN       | -              | Discord token                                                                                       |                   
 
 
 ### 全局配置
 所有页面中的全局配置都会被缓存到本地
 
-| 配置项           | 默认值        | 描述                                                                                                      |
-| --------------- | ------------- | --------------------------------------------------------------------------------------------------------- |
-| OpenAI Api Key  | -             | 仅支持单个 key，页面里填写后不会使用环境变量中配置的 key                                                      |
-| 语言            | en            | 站点的语言，包含预设提示，支持的语言： **zh**/**en**                                                          |
-| 保留所有会话     | true          | 页面刷新会话不会丢失                                                                                        |
-| 发散程度         | 1             | 数值越大，回答越随机，范围是 0-2                                                                            |
-| 模型            | gpt-3.5-turbo | Api 请求中使用的模型，[支持的所有模型](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
-| 连续对话         | true          | 是否携带上下文进行对话                                                                                     |
-| 携带历史消息数   | 4             | 连续对话时，携带的历史消息数                                                                                 |
-| 生成图片数       | 1             | 图像生成对话时，单次对话生成的图片数                                                                         |
-| 生成图片尺寸     | 256x256       | 图像生成对话时，单个图片的尺寸大小                                                                           |
+| 配置项              | 默认值        | 描述                                                                                                      |
+| ------------------ | ------------- | --------------------------------------------------------------------------------------------------------- |
+| OpenAI Api Key     | -             | 仅支持单个 key，页面里填写后不会使用环境变量中配置的 key                                                      |
+| 语言               | en            | 站点的语言，包含预设提示，支持的语言： **zh**/**en**                                                          |
+| 保留所有会话        | true          | 页面刷新会话不会丢失                                                                                        |
+| 发散程度            | 1             | 数值越大，回答越随机，范围是 0-2                                                                            |
+| 文本对话模型        | gpt-3.5-turbo | Api 请求中使用的模型，[支持的所有模型](https://platform.openai.com/docs/models/model-endpoint-compatibility) |
+| 连续对话            | true          | 是否携带上下文进行对话                                                                                     |
+| 携带历史消息数      | 4             | 连续对话时，携带的历史消息数                                                                                 |
+| 图片生成对话模型    | DALL-E        | 支持的模型：**DALL-E** / **Midjourney** / **Replicate**                                                    |
+| 生成图片数          | 1             | 图像生成对话时，单次对话生成的图片数                                                                         |
+| 生成图片尺寸        | 256x256       | 图像生成对话时，单个图片的尺寸大小                                                                           |
+| Discord Server Id  | -              | 页面里填写后不会试用环境变量中配置的值                                                                      |
+| Discord Channel Id | -              | 同上                                                                                                     |
+| Discord Token      | -              | 同上                                                                                                     |  
 
 ## 计划中的功能
 - [ ] 支持导出功能，导出 markdown & 图片
