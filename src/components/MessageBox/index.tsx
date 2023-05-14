@@ -22,7 +22,7 @@ const MessageItem: FC<{ message: Message; index?: number }> = ({
       } ${message.role === 'user' ? 'flex-row-reverse ml-16' : 'mr-6'}`}
     >
       {message.role === 'assistant' ? (
-        <SystemAvatar className="mt-[14px] mr-2" />
+        <SystemAvatar className="mt-[14px] mr-2" role={message.imageModel} />
       ) : null}
       <div
         dangerouslySetInnerHTML={{
