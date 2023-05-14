@@ -18,7 +18,7 @@ import Configuration from './Configuration';
 
 const styles = getComputedStyle(document.documentElement);
 
-const Main: FC<{ lang: Lang }> = ({ lang }) => {
+const Main: FC<{ lang: Lang; inVercel: boolean }> = ({ lang, inVercel }) => {
   // gloabl configs
   const [configs, setConfigs] = useState<Partial<GlobalConfig>>({});
 
@@ -146,6 +146,7 @@ const Main: FC<{ lang: Lang }> = ({ lang }) => {
         setCurrentId,
         conversations,
         setConversations,
+        inVercel,
       }}
     >
       <ConfigProvider

@@ -4,6 +4,12 @@ import { Message, ReactSetState } from '@interfaces';
 import GlobalContext from '@contexts/global';
 import { hasMathJax, initMathJax, renderMaxJax } from '@utils/markdown';
 import { hasMath } from '@utils';
+import { midjourneyConfigs } from '@configs';
+import {
+  type MessageAttachment,
+  type MessageItem,
+  isInProgress,
+} from 'midjourney-fetch';
 import MessageInput from './MessageInput';
 import ContentHeader from './ContentHeader';
 
@@ -205,6 +211,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
       [current]: true,
     }));
     try {
+      const model = configs.imageModel;
       const res = await fetch('/api/images', {
         method: 'POST',
         body: JSON.stringify({
@@ -213,24 +220,63 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
           size: configs.imageSize || '256x256',
           n: configs.imagesCount || 1,
           password: configs.password,
-          model: configs.imageModel,
+          model,
+          serverId: configs.discordServerId,
+          channelId: configs.discordChannelId,
+          token: configs.discordToken,
         }),
       });
       const { data = [], msg } = await res.json();
 
       if (res.status < 400) {
-        const params = new URLSearchParams(data?.[0]);
-        const expiredAt = params.get('se');
-        updateMessages(
-          allMessages.concat([
-            {
-              role: 'assistant',
-              content: data.map((url) => `![](${url})`).join('\n'),
-              createdAt: Date.now(),
-              expiredAt: new Date(expiredAt).getTime(),
-            },
-          ])
-        );
+        if (model === 'Midjourney') {
+          const times = midjourneyConfigs.timeout / midjourneyConfigs.interval;
+          let count = 0;
+          let image: MessageAttachment | null = null;
+          while (count < times) {
+            try {
+              count += 1;
+              await new Promise((resp) =>
+                setTimeout(resp, midjourneyConfigs.interval)
+              );
+              const message: MessageItem = await (
+                await fetch(`/api/images?model=Midjourney&prompt=${content}`)
+              ).json();
+              if (message && !isInProgress(message)) {
+                [image] = message.attachments;
+                break;
+              }
+            } catch {
+              continue;
+            }
+          }
+          updateMessages(
+            allMessages.concat([
+              {
+                role: 'assistant',
+                content: image ? `![](${image.url})` : 'No result or timeout',
+                imageModel: model,
+                createdAt: Date.now(),
+              },
+            ])
+          );
+        } else {
+          const params = new URLSearchParams(data?.[0]);
+          const expiredAt = params.get('se');
+          updateMessages(
+            allMessages.concat([
+              {
+                role: 'assistant',
+                content: data.map((url) => `![](${url})`).join('\n'),
+                imageModel: model,
+                createdAt: Date.now(),
+                expiredAt: expiredAt
+                  ? new Date(expiredAt).getTime()
+                  : undefined,
+              },
+            ])
+          );
+        }
       } else {
         updateMessages(
           allMessages.concat([

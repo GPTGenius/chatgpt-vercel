@@ -28,6 +28,16 @@ export const apiKeyStrategy: StrategyMode =
 
 export const password = import.meta.env.PASSWORD || process.env.PASSWORD;
 
+// model midjourney configs
+export const dicordServerId =
+  import.meta.env.DISCORD_SERVER_ID || process.env.DISCORD_SERVER_ID;
+
+export const discordChannelId =
+  import.meta.env.DISCORD_CHANNEL_ID || process.env.DISCORD_CHANNEL_ID;
+
+export const discordToken =
+  import.meta.env.DISCORD_TOKEN || process.env.DISCORD_TOKEN;
+
 /**
  * https://vercel.com/docs/concepts/edge-network/regions#region-list
  * disable hkg1 HongKong
