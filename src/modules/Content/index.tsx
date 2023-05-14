@@ -210,8 +210,8 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
       ...map,
       [current]: true,
     }));
+    const model = configs.imageModel;
     try {
-      const model = configs.imageModel;
       const res = await fetch('/api/images', {
         method: 'POST',
         body: JSON.stringify({
@@ -285,6 +285,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
             {
               role: 'assistant',
               content: `[${res.status}]Error: ${msg || 'Unknown'}`,
+              imageModel: model,
               createdAt: Date.now(),
             },
           ])
@@ -296,6 +297,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
           {
             role: 'assistant',
             content: `Error: ${e.message || e.stack || e}`,
+            imageModel: model,
             createdAt: Date.now(),
           },
         ])
