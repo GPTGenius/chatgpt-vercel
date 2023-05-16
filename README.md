@@ -72,7 +72,7 @@ There are three ways to set your OpenAI API Key:
 
 > Attention: For Vercel, all environment variables need to be redeployed to take effect.
 
-## 3. Set Midjourney (optional)
+### 3. Set Midjourney (optional)
 If you want to use the AI drawing feature of `Midjourney`, you can configure the relevant `Discord` settings , including the following fields:
 - `DISCORD_SERVER_ID`
 - `DISCORD_CHANNEL_ID`

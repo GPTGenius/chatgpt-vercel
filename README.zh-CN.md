@@ -127,7 +127,7 @@
 | 图片生成对话模型    | DALL-E        | 支持的模型：**DALL-E** / **Midjourney** / **Replicate**                                                    |
 | 生成图片数          | 1             | 图像生成对话时，单次对话生成的图片数                                                                         |
 | 生成图片尺寸        | 256x256       | 图像生成对话时，单个图片的尺寸大小                                                                           |
-| Discord Server Id  | -              | 页面里填写后不会试用环境变量中配置的值                                                                      |
+| Discord Server Id  | -              | 页面里填写后不会使用环境变量中配置的值                                                                      |
 | Discord Channel Id | -              | 同上                                                                                                     |
 | Discord Token      | -              | 同上                                                                                                     |  
 
