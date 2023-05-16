@@ -8,10 +8,11 @@ import SystemAvatar from '@components/Avatar/system';
 import useCopyCode from '@hooks/useCopyCode';
 import './index.css';
 
-const MessageItem: FC<{ message: Message; index?: number }> = ({
-  message,
-  index,
-}) => {
+const MessageItem: FC<{
+  message: Message;
+  mode?: ConversationMode;
+  index?: number;
+}> = ({ message, mode, index }) => {
   const { i18n } = useContext(GlobalContext);
   const isExpired = message.expiredAt && message.expiredAt <= Date.now();
   const createdAt = getRelativeTime(message.createdAt, true);
@@ -32,6 +33,8 @@ const MessageItem: FC<{ message: Message; index?: number }> = ({
         }}
         className={`prose message-box shadow-sm p-4 ${
           message.role === 'user' ? 'bg-gradient text-white' : 'bg-[#ebeced]'
+        } ${
+          mode === 'image' ? 'img-no-margin' : ''
         } break-words overflow-hidden rounded-[16px]`}
       />
       {createdAt ? (
@@ -97,7 +100,7 @@ const MessageBox: FC<{
         />
       ) : null}
       {messages.map((message, index) => (
-        <MessageItem key={index} index={index} message={message} />
+        <MessageItem key={index} index={index} mode={mode} message={message} />
       ))}
       {streamMessage ? (
         <MessageItem message={{ role: 'assistant', content: streamMessage }} />

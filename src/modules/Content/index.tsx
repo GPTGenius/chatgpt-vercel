@@ -60,6 +60,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
       ...msg,
       [currentId]: {
         ...conversations[currentId],
+        updatedAt: msgs.slice(-1)?.[0]?.createdAt,
         messages: msgs,
         // If no title, set the first content
         title: conversations[currentId].title || msgs[0].content,
