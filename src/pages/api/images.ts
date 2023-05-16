@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro';
 import { loadBalancer } from '@utils/server';
 import { createOpenjourney } from 'replicate-fetch';
 import { SupportedImageModels } from '@configs';
-import { Midjourney, findMessageByPrompt } from 'midjourney-fetch';
+import { Midjourney } from 'midjourney-fetch';
 import {
   apiKeyStrategy,
   apiKeys,
@@ -22,9 +22,9 @@ export const get: APIRoute = async ({ request }) => {
   const params = new URL(url).searchParams;
 
   const model = params.get('model') as SupportedImageModels;
-  const serverId = params.get('serverId') ?? dicordServerId;
-  const channelId = params.get('channelId') ?? discordChannelId;
-  const token = params.get('token') ?? discordToken;
+  const serverId = params.get('serverId') || dicordServerId;
+  const channelId = params.get('channelId') || discordChannelId;
+  const token = params.get('token') || discordToken;
   const prompt = params.get('prompt');
 
   if (model === 'Midjourney') {
@@ -53,19 +53,28 @@ export const get: APIRoute = async ({ request }) => {
     const midjourney = new Midjourney({
       serverId,
       channelId,
-      discordToken: token,
+      token,
     });
     midjourney.debugger = true;
+    try {
+      const message = await midjourney.getMessage(prompt);
 
-    const messgaes = await midjourney.getMessages();
-
-    const message = findMessageByPrompt(messgaes, prompt);
-    if (message) {
-      return new Response(JSON.stringify(message), { status: 200 });
+      if (message) {
+        return new Response(JSON.stringify(message), { status: 200 });
+      }
+      return new Response(JSON.stringify({ msg: 'No content found' }), {
+        status: 200,
+      });
+    } catch (e) {
+      return new Response(JSON.stringify({ msg: e.message || e.stack || e }), {
+        status: 500,
+      });
     }
   }
 
-  return new Response(JSON.stringify({ data: {} }), { status: 200 });
+  return new Response('{}', {
+    status: 200,
+  });
 };
 
 export const post: APIRoute = async ({ request }) => {
@@ -141,7 +150,7 @@ export const post: APIRoute = async ({ request }) => {
       const midjourney = new Midjourney({
         serverId,
         channelId,
-        discordToken: token,
+        token,
       });
       midjourney.debugger = true;
 

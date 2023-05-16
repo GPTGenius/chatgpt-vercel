@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { FC, useContext, useEffect, useState } from 'react';
 import MessageBox from '@components/MessageBox';
 import { Message, ReactSetState } from '@interfaces';
@@ -240,16 +241,19 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
               await new Promise((resp) =>
                 setTimeout(resp, midjourneyConfigs.interval)
               );
-              const message: MessageItem = await (
+              const message: MessageItem & { msg?: string } = await (
                 await fetch(
                   `/api/images?model=Midjourney&prompt=${content}&serverId=${configs.discordServerId}&channelId=${configs.discordChannelId}&token=${configs.discordToken}`
                 )
               ).json();
-              if (message && !isInProgress(message)) {
+              console.log(count, JSON.stringify(message));
+              // msg means error message
+              if (message && !message.msg && !isInProgress(message)) {
                 [image] = message.attachments;
                 break;
               }
-            } catch {
+            } catch (e) {
+              console.log(count, e.message || e.stack || e);
               continue;
             }
           }
