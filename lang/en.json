@@ -25,6 +25,7 @@
   "config_images_size": "Size of generated images:",
   "config_language": "Language:",
   "config_password": "Password:",
+  "config_general": "General",
   "status_loading": "AI is thinking...",
   "status_empty": "New Conversation",
   "status_image_expired": "Image has expired",
