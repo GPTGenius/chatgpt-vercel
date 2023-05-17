@@ -6,11 +6,13 @@ import { Collapse, Input, Select, Slider, Switch, Tooltip } from 'antd';
 import {
   defaultConversation,
   globalConfigLocalKey,
+  layoutConfig,
   supportedImageModels,
   supportedImgSizes,
   supportedLanguages,
   supportedModels,
 } from '@configs';
+import { setClassByLayout } from '@utils';
 
 const { Panel } = Collapse;
 
@@ -23,7 +25,7 @@ const Configuration: FC<ConfigurationProps> = ({
   setActiveSetting,
   setConfigs,
 }) => {
-  const { i18n, configs, setConversations, setCurrentId, inVercel } =
+  const { i18n, configs, setConversations, setCurrentId, inVercel, isMobile } =
     useContext(GlobalContext);
 
   const updateConfigsAndStorages = (updates: Partial<GlobalConfig>) => {
@@ -97,6 +99,23 @@ const Configuration: FC<ConfigurationProps> = ({
               onChange={(lang) => updateConfigsAndStorages({ lang })}
             />
           </div>
+          {!isMobile ? (
+            <div className="flex items-center justify-between mb-6">
+              <div>{i18n.config_layout}</div>
+              <Select
+                className="w-1/2"
+                value={configs.layout}
+                options={layoutConfig.map((layout) => ({
+                  label: i18n[`layout_${layout}`],
+                  value: layout,
+                }))}
+                onChange={(layout) => {
+                  updateConfigsAndStorages({ layout });
+                  setClassByLayout(layout);
+                }}
+              />
+            </div>
+          ) : null}
           <div className="flex items-center justify-between">
             <div>{i18n.config_save}</div>
             <Switch
