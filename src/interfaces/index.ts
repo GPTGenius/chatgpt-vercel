@@ -1,4 +1,5 @@
 import {
+  LayoutConfig,
   SupportedImageModels,
   SupportedImgSize,
   SupportedModel,
@@ -42,6 +43,7 @@ export interface GlobalConfig {
   discordServerId: string;
   discordChannelId: string;
   discordToken: string;
+  layout: LayoutConfig;
 }
 
 export interface Prompt {

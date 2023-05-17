@@ -12,17 +12,29 @@ const inVercel = !!process.env.VERCEL;
 ---
 
 <Layout title="ChatGPT">
-  <div id="container">
+  <div id="container" class="container-default">
     <Main lang={lang} inVercel={inVercel} client:only="react" />
   </div>
 </Layout>
 
-<style>
-  #container {
+<style is:global>
+  .container-default {
     max-width: 1200px;
     width: 80vw;
     height: 80vh;
   }
+
+  .container-loose {
+    max-width: 1800px;
+    width: 90vw;
+    height: 90vh;
+  }
+
+  .container-full {
+    width: 100vw;
+    height: 100vh;
+  }
+
   /* mobile style */
   @media screen and (max-width: 768px) {
     #container {
