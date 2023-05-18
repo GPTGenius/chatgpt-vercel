@@ -167,5 +167,9 @@
 - 英文预设提示修改自：[awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)
 - 中文预设提示修改自： [awesome-chatgpt-prompts-zh](https://github.com/PlexPt/awesome-chatgpt-prompts-zh)
 
+## Star 历史
+
+[![Star History Chart](https://api.star-history.com/svg?repos=GPTGenius/chatgpt-vercel&type=Date)](https://star-history.com/#GPTGenius/chatgpt-vercel&Date)
+
 ## 协议
 基于 [MIT 协议](./LICENSE)

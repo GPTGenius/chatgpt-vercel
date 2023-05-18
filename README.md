@@ -156,5 +156,9 @@ Any contributions are highly appreciated. Here are some tips:
 - English prompts are modified from [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)
 - Chinese prompts are modified from [awesome-chatgpt-prompts-zh](https://github.com/PlexPt/awesome-chatgpt-prompts-zh)
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=GPTGenius/chatgpt-vercel&type=Date)](https://star-history.com/#GPTGenius/chatgpt-vercel&Date)
+
 ## License
 Based on [MIT License](./LICENSE)
