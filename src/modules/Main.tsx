@@ -9,7 +9,7 @@ import {
 import type { Conversation, GlobalConfig, Lang } from '@interfaces';
 import { getI18n } from '@utils/i18n';
 import { debounce } from 'lodash-es';
-import { isMatchMobile } from '@utils';
+import { isMatchMobile, setClassByLayout } from '@utils';
 import { ConfigProvider } from 'antd';
 import Sidebar from './Sidebar';
 import Content from './Content';
@@ -103,7 +103,7 @@ const Main: FC<{ lang: Lang; inVercel: boolean }> = ({ lang, inVercel }) => {
     const localConfigsStr = localStorage.getItem(globalConfigLocalKey);
     if (localConfigsStr) {
       try {
-        const localConfigs = JSON.parse(localConfigsStr);
+        const localConfigs: GlobalConfig = JSON.parse(localConfigsStr);
         setConfigs((currentConfigs) => ({
           ...defaultConfigs,
           ...currentConfigs,
@@ -111,6 +111,9 @@ const Main: FC<{ lang: Lang; inVercel: boolean }> = ({ lang, inVercel }) => {
         }));
         if (localConfigs.save) {
           setConversationsFromLocal();
+        }
+        if (localConfigs.layout) {
+          setClassByLayout(localConfigs.layout);
         }
       } catch (e) {
         setConfigs(defaultConfigs);

@@ -43,6 +43,12 @@ export const supportedLanguages = [
   },
 ];
 
+export const layoutConfig = ['full', 'loose', 'default'] as const;
+
+export type LayoutConfig = (typeof layoutConfig)[number];
+
+export const defaultLayoutConfig: LayoutConfig = 'default';
+
 export const defaultGloablConfig: GlobalConfig = {
   password: '',
   openAIApiKey: '',
@@ -58,6 +64,7 @@ export const defaultGloablConfig: GlobalConfig = {
   discordChannelId: '',
   discordServerId: '',
   discordToken: '',
+  layout: defaultLayoutConfig,
 };
 
 export const defaultConversation: Conversation = {
