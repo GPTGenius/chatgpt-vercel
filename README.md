@@ -82,6 +82,11 @@ How to get ids and token:
 - [How to find ids](https://docs.statbot.net/docs/faq/general/how-find-id/)
 - [Get discord token](https://www.androidauthority.com/get-discord-token-3149920/)
 
+You can visit [midjourney-cookbook](https://gptgenius.github.io/midjourney-cookbook/) to get some samples about `Midjourney` prompts.
+
+### 4. Keep code synchronized (optional)
+see [Sync Fork](docs/sync.md)
+
 ## Other deployment methods
 Run `pnpm build` and `pnpm run server`. Refer: [astro-node](https://docs.astro.build/en/guides/integrations-guide/node/#standalone)
 

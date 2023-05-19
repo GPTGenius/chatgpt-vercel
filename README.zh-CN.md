@@ -73,6 +73,8 @@
 
 如果没有 OpenAI API Key 可查看 [也许是时候拥有自己的「ChatGPT」了](https://juejin.cn/post/7210274432332939322)
 
+> 注意：Vercel 所有环境变量设置后需要重新部署才能生效
+
 ### 3. 配置 Midjourney（可选）
 如果你期望使用 `Midjourney` 的 AI 绘图功能，可以设置 `Discord` 的相关配置进行使用，包括以下字段：
 - `DISCORD_SERVER_ID`
@@ -83,15 +85,18 @@
 - [How to find ids](https://docs.statbot.net/docs/faq/general/how-find-id/)
 - [Get discord token](https://www.androidauthority.com/get-discord-token-3149920/)
 
+可以前往 [midjourney-cookbook](https://gptgenius.github.io/midjourney-cookbook/) 获取一些 `Midjourney` prompt 样例
+
 ### 4. 设置默认语言（可选）
 站点的默认语言是英文的，页面中支持切换语言，如果你希望部署一个默认中文站点，可以设置 **LANGUAGE** 为 `zh`，支持在 Vercel 环境变量和 `.env` 文件中配置
-
-> 注意：Vercel 所有环境变量设置后需要重新部署才能生效
 
 ### 5. 绑定域名（可选）
 拥有自己的域名，可以在 vercel 上的 domain 中进行设置，即可无障碍访问
 
 > vercel.app 域名受限，但 vercel 本身并未受限
+
+### 6. 保持代码同步更新（可选）
+见 [Sync Fork](docs/sync.md)
 
 ## 其他部署方式
 运行 `pnpm build` 和 `pnpm run server`，参考：[astro-node](https://docs.astro.build/en/guides/integrations-guide/node/#standalone)
