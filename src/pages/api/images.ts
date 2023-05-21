@@ -3,7 +3,11 @@ import type { APIRoute } from 'astro';
 import { loadBalancer } from '@utils/server';
 import { createOpenjourney } from 'replicate-fetch';
 import { SupportedImageModels } from '@configs';
-import { Midjourney } from 'midjourney-fetch';
+import {
+  Midjourney,
+  type MessageType,
+  type MessageTypeProps,
+} from 'midjourney-fetch';
 import {
   apiKeyStrategy,
   apiKeys,
@@ -18,14 +22,15 @@ import {
 export { config };
 
 export const get: APIRoute = async ({ request }) => {
-  const { url } = request;
+  const { url, headers } = request;
   const params = new URL(url).searchParams;
 
   const model = params.get('model') as SupportedImageModels;
   const serverId = params.get('serverId') || dicordServerId;
   const channelId = params.get('channelId') || discordChannelId;
-  const token = params.get('token') || discordToken;
+  const token = headers.get('Authorization') || discordToken;
   const prompt = params.get('prompt');
+  const type = (params.get('type') as MessageType) || 'imagine';
 
   if (model === 'Midjourney') {
     if (!prompt) {
@@ -56,12 +61,34 @@ export const get: APIRoute = async ({ request }) => {
       token,
     });
     midjourney.debugger = true;
+
     try {
-      const message = await midjourney.getMessage(prompt);
+      let options: MessageTypeProps = { type: 'imagine' };
+
+      if (type === 'upscale') {
+        const index = params.get('index');
+        if (!index) {
+          return new Response(
+            JSON.stringify({
+              msg: 'No upscale index provided',
+            }),
+            {
+              status: 400,
+            }
+          );
+        }
+        options = {
+          index: Number(index),
+          type: 'upscale',
+        };
+      }
+
+      const message = await midjourney.getMessage(prompt, options);
 
       if (message) {
         return new Response(JSON.stringify(message), { status: 200 });
       }
+
       return new Response(JSON.stringify({ msg: 'No content found' }), {
         status: 200,
       });
@@ -134,7 +161,8 @@ export const post: APIRoute = async ({ request }) => {
     if (model === 'Midjourney') {
       const serverId = body.serverId || dicordServerId;
       const channelId = body.channelId || discordChannelId;
-      const token = body.token || discordToken;
+      const token = request.headers.get('Authorization') || discordToken;
+      const type: MessageType = body.type || 'imagine';
 
       if (!serverId || !channelId || !token) {
         return new Response(
@@ -154,7 +182,21 @@ export const post: APIRoute = async ({ request }) => {
       });
       midjourney.debugger = true;
 
-      await midjourney.interactions(prompt);
+      if (type === 'upscale') {
+        const {
+          messageId,
+          index,
+          customId,
+        }: { messageId: string; index: number; customId: string } = body;
+
+        await midjourney.createUpscale({
+          messageId,
+          index,
+          customId,
+        });
+      } else {
+        await midjourney.createImage(prompt);
+      }
 
       return new Response('{}', { status: 200 });
     }

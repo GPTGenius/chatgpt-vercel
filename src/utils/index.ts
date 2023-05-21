@@ -1,6 +1,6 @@
 import { LayoutConfig } from '@configs';
 import { Conversation, Message, RecordCardItem } from '@interfaces';
-import mediumZoom, { Zoom } from 'medium-zoom';
+import mediumZoom from 'medium-zoom';
 
 export const getMaxIndex = (tabs: RecordCardItem[]) => {
   let max = tabs.length;

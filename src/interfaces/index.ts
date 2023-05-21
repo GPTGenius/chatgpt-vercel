@@ -1,3 +1,4 @@
+import type { MessageItem } from 'midjourney-fetch';
 import {
   LayoutConfig,
   SupportedImageModels,
@@ -5,10 +6,18 @@ import {
   SupportedModel,
 } from '@configs';
 
+export type MidjourneyMessage = Pick<
+  MessageItem,
+  'id' | 'components' | 'attachments'
+> & {
+  prompt: string;
+};
+
 export interface Message {
   content: string;
   role: 'assistant' | 'user';
   imageModel?: SupportedImageModels; // distinguish avator
+  midjourneyMessage?: MidjourneyMessage;
   createdAt?: number;
   expiredAt?: number; // for image mode
 }
