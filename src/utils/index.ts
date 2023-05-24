@@ -1,5 +1,6 @@
 import { LayoutConfig } from '@configs';
 import { Conversation, Message, RecordCardItem } from '@interfaces';
+import mediumZoom from 'medium-zoom';
 
 export const getMaxIndex = (tabs: RecordCardItem[]) => {
   let max = tabs.length;
@@ -82,4 +83,11 @@ export const setClassByLayout = (layout?: LayoutConfig) => {
   };
   const targetClass = classMap[layout ?? 'default'];
   container.className = targetClass;
+};
+
+export const registerMediumZoom = (isMobile = false) => {
+  mediumZoom('.prose img:not(.medium-zoom-image)', {
+    background: 'rgba(0, 0, 0, 0.6)',
+    margin: isMobile ? 16 : 48,
+  });
 };

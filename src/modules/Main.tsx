@@ -9,7 +9,7 @@ import {
 import type { Conversation, GlobalConfig, Lang } from '@interfaces';
 import { getI18n } from '@utils/i18n';
 import { debounce } from 'lodash-es';
-import { isMatchMobile, setClassByLayout } from '@utils';
+import { registerMediumZoom, isMatchMobile, setClassByLayout } from '@utils';
 import { ConfigProvider } from 'antd';
 import Sidebar from './Sidebar';
 import Content from './Content';
@@ -56,6 +56,10 @@ const Main: FC<{ lang: Lang; inVercel: boolean }> = ({ lang, inVercel }) => {
   useLayoutEffect(() => {
     window.addEventListener('resize', handleDebounceResize);
   }, []);
+
+  useEffect(() => {
+    registerMediumZoom(isMobile);
+  }, [currentId, conversations, isMobile]);
 
   const setConversationsFromLocal = useCallback(() => {
     try {

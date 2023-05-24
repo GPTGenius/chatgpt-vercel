@@ -7,10 +7,12 @@ import { hasMathJax, initMathJax, renderMaxJax } from '@utils/markdown';
 import { hasMath } from '@utils';
 import { midjourneyConfigs } from '@configs';
 import {
-  type MessageAttachment,
   type MessageItem,
+  type MessageType,
   isInProgress,
+  getHashFromCustomId,
 } from 'midjourney-fetch';
+import { updateComponentStatus } from '@utils/midjourney';
 import MessageInput from './MessageInput';
 import ContentHeader from './ContentHeader';
 
@@ -197,15 +199,50 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
     }
   };
 
-  const sendImageChatMessages = async (content: string) => {
+  const sendImageChatMessages = async (
+    content: string,
+    type: MessageType = 'imagine',
+    extraParams: Partial<{
+      customId: string;
+      messageId: string;
+      index: number;
+    }> = {}
+  ) => {
+    const { messageId, index } = extraParams;
     const current = currentId;
-    const allMessages: Message[] = messages.concat([
+    let messageInput = content;
+    let allMessages: Message[] = messages;
+    if (
+      (type === 'upscale' || type === 'variation') &&
+      typeof index === 'number' &&
+      messageId
+    ) {
+      // add flag to mark, only in frontend
+      if (index > 0) {
+        messageInput = `/${
+          type === 'variation' ? 'V' : 'U'
+        }${index} ${messageInput}`;
+      } else {
+        messageInput = `/🔄 ${messageInput}`;
+      }
+
+      // update status
+      allMessages = updateComponentStatus({
+        type,
+        messages: allMessages,
+        messageId,
+        index,
+      });
+    }
+    // concat user input
+    allMessages = allMessages.concat([
       {
         role: 'user',
-        content,
+        content: messageInput,
         createdAt: Date.now(),
       },
     ]);
+
     updateMessages(allMessages);
     setText('');
     setLoadingMap((map) => ({
@@ -213,20 +250,45 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
       [current]: true,
     }));
     const model = configs.imageModel;
+    let params: Record<string, string | number> = {
+      password: configs.password,
+      model,
+      prompt: content,
+    };
+    if (model === 'Midjourney') {
+      params = {
+        ...params,
+        serverId: configs.discordServerId,
+        channelId: configs.discordChannelId,
+        type,
+      };
+      if (type === 'upscale' || type === 'variation') {
+        params = {
+          ...params,
+          ...extraParams,
+        };
+      }
+    } else if (model === 'Replicate') {
+      params = {
+        ...params,
+        size: configs.imageSize || '256x256',
+      };
+    } else {
+      params = {
+        ...params,
+        key: configs.openAIApiKey,
+        size: configs.imageSize || '256x256',
+        n: configs.imagesCount || 1,
+      };
+    }
     try {
+      const timestamp = new Date().toISOString();
       const res = await fetch('/api/images', {
         method: 'POST',
-        body: JSON.stringify({
-          key: configs.openAIApiKey,
-          prompt: content,
-          size: configs.imageSize || '256x256',
-          n: configs.imagesCount || 1,
-          password: configs.password,
-          model,
-          serverId: configs.discordServerId,
-          channelId: configs.discordChannelId,
-          token: configs.discordToken,
-        }),
+        body: JSON.stringify(params),
+        headers: {
+          Authorization: model === 'Midjourney' ? configs.discordToken : '',
+        },
       });
       const { data = [], msg } = await res.json();
 
@@ -234,7 +296,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
         if (model === 'Midjourney') {
           const times = midjourneyConfigs.timeout / midjourneyConfigs.interval;
           let count = 0;
-          let image: MessageAttachment | null = null;
+          let result: MessageItem | undefined;
           while (count < times) {
             try {
               count += 1;
@@ -243,13 +305,22 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
               );
               const message: MessageItem & { msg?: string } = await (
                 await fetch(
-                  `/api/images?model=Midjourney&prompt=${content}&serverId=${configs.discordServerId}&channelId=${configs.discordChannelId}&token=${configs.discordToken}`
+                  `/api/images?model=Midjourney&prompt=${content}&serverId=${
+                    configs.discordServerId
+                  }&channelId=${configs.discordChannelId}&type=${type}&index=${
+                    index ?? ''
+                  }&timestamp=${timestamp}`,
+                  {
+                    headers: {
+                      Authorization: configs.discordToken,
+                    },
+                  }
                 )
               ).json();
               console.log(count, JSON.stringify(message));
               // msg means error message
               if (message && !message.msg && !isInProgress(message)) {
-                [image] = message.attachments;
+                result = message;
                 break;
               }
             } catch (e) {
@@ -257,19 +328,38 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
               continue;
             }
           }
-          updateMessages(
-            allMessages.concat([
-              {
-                role: 'assistant',
-                content: image ? `![](${image.url})` : 'No result or timeout',
-                imageModel: model,
-                createdAt: Date.now(),
-              },
-            ])
-          );
+          if (result) {
+            updateMessages(
+              allMessages.concat([
+                {
+                  role: 'assistant',
+                  content: `![](${result.attachments[0].url})`,
+                  imageModel: model,
+                  midjourneyMessage: {
+                    id: result.id,
+                    attachments: result.attachments,
+                    components: result.components,
+                    prompt: content,
+                  },
+                  createdAt: Date.now(),
+                },
+              ])
+            );
+          } else {
+            updateMessages(
+              allMessages.concat([
+                {
+                  role: 'assistant',
+                  content: 'No result or timeout',
+                  imageModel: model,
+                  createdAt: Date.now(),
+                },
+              ])
+            );
+          }
         } else {
-          const params = new URLSearchParams(data?.[0]);
-          const expiredAt = params.get('se');
+          const searchParams = new URLSearchParams(data?.[0]);
+          const expiredAt = searchParams.get('se');
           updateMessages(
             allMessages.concat([
               {
@@ -328,6 +418,16 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
           messages={messages}
           mode={mode}
           loading={loading}
+          onOperationClick={(type, customId, messageId, prompt) => {
+            const { index } = getHashFromCustomId(type, customId);
+            if (typeof index === 'number') {
+              sendImageChatMessages(prompt, type, {
+                customId,
+                index,
+                messageId,
+              });
+            }
+          }}
         />
       </div>
       <MessageInput
