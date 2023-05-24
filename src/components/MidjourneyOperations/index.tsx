@@ -15,7 +15,10 @@ const MidjourneyOperations: FC<{
   onClick?: (type: MessageType, id: string) => void;
 }> = ({ message, onClick }) => {
   const upscale = filterUpscale(message.components[0]?.components ?? []);
-  const variation = filterVariation(message.components[1]?.components ?? []);
+  const variation = filterVariation([
+    ...(message.components[0]?.components ?? []),
+    ...(message.components[1]?.components ?? []),
+  ]);
   return (
     <div>
       {upscale.map((option) => {
@@ -30,7 +33,7 @@ const MidjourneyOperations: FC<{
               isAvailable && onClick?.('upscale', option.custom_id)
             }
           >
-            {option.label}
+            {option.label || option.emoji?.name}
           </CheckableTag>
         );
       })}
@@ -43,10 +46,10 @@ const MidjourneyOperations: FC<{
             checked={!isAvailable}
             style={isAvailable ? { background: 'rgba(0, 0, 0, 0.06)' } : {}}
             onClick={() =>
-              isAvailable && onClick?.('upscale', option.custom_id)
+              isAvailable && onClick?.('variation', option.custom_id)
             }
           >
-            {option.label}
+            {option.label || option.emoji?.name}
           </CheckableTag>
         );
       })}

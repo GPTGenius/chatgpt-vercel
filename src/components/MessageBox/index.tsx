@@ -136,7 +136,7 @@ const MessageBox: FC<{
           index={index}
           mode={mode}
           message={message}
-          onOperationClick={onOperationClick}
+          onOperationClick={loading ? () => null : onOperationClick}
         />
       ))}
       {streamMessage ? (

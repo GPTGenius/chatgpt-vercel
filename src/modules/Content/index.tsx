@@ -10,8 +10,9 @@ import {
   type MessageItem,
   type MessageType,
   isInProgress,
+  getHashFromCustomId,
 } from 'midjourney-fetch';
-import { getIndexFromCustomId, updateComponentStatus } from '@utils/midjourney';
+import { updateComponentStatus } from '@utils/midjourney';
 import MessageInput from './MessageInput';
 import ContentHeader from './ContentHeader';
 
@@ -207,18 +208,30 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
       index: number;
     }> = {}
   ) => {
+    const { messageId, index } = extraParams;
     const current = currentId;
     let messageInput = content;
     let allMessages: Message[] = messages;
-    if (type === 'upscale' && extraParams.index && extraParams.messageId) {
+    if (
+      (type === 'upscale' || type === 'variation') &&
+      typeof index === 'number' &&
+      messageId
+    ) {
       // add flag to mark, only in frontend
-      messageInput = `/U${extraParams.index} ${messageInput}`;
+      if (index > 0) {
+        messageInput = `/${
+          type === 'variation' ? 'V' : 'U'
+        }${index} ${messageInput}`;
+      } else {
+        messageInput = `/🔄 ${messageInput}`;
+      }
+
       // update status
       allMessages = updateComponentStatus({
         type,
         messages: allMessages,
-        messageId: extraParams.messageId,
-        index: extraParams.index,
+        messageId,
+        index,
       });
     }
     // concat user input
@@ -240,16 +253,16 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
     let params: Record<string, string | number> = {
       password: configs.password,
       model,
+      prompt: content,
     };
     if (model === 'Midjourney') {
       params = {
         ...params,
-        prompt: content,
         serverId: configs.discordServerId,
         channelId: configs.discordChannelId,
         type,
       };
-      if (type === 'upscale') {
+      if (type === 'upscale' || type === 'variation') {
         params = {
           ...params,
           ...extraParams,
@@ -258,19 +271,18 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
     } else if (model === 'Replicate') {
       params = {
         ...params,
-        prompt: content,
         size: configs.imageSize || '256x256',
       };
     } else {
       params = {
         ...params,
         key: configs.openAIApiKey,
-        prompt: content,
         size: configs.imageSize || '256x256',
         n: configs.imagesCount || 1,
       };
     }
     try {
+      const timestamp = new Date().toISOString();
       const res = await fetch('/api/images', {
         method: 'POST',
         body: JSON.stringify(params),
@@ -296,8 +308,8 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
                   `/api/images?model=Midjourney&prompt=${content}&serverId=${
                     configs.discordServerId
                   }&channelId=${configs.discordChannelId}&type=${type}&index=${
-                    extraParams.index ?? ''
-                  }`,
+                    index ?? ''
+                  }&timestamp=${timestamp}`,
                   {
                     headers: {
                       Authorization: configs.discordToken,
@@ -407,8 +419,8 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
           mode={mode}
           loading={loading}
           onOperationClick={(type, customId, messageId, prompt) => {
-            const index = getIndexFromCustomId(type, customId);
-            if (index) {
+            const { index } = getHashFromCustomId(type, customId);
+            if (typeof index === 'number') {
               sendImageChatMessages(prompt, type, {
                 customId,
                 index,

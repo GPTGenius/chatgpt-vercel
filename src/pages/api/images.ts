@@ -31,6 +31,7 @@ export const get: APIRoute = async ({ request }) => {
   const token = headers.get('Authorization') || discordToken;
   const prompt = params.get('prompt');
   const type = (params.get('type') as MessageType) || 'imagine';
+  const timestamp = params.get('timestamp');
 
   if (model === 'Midjourney') {
     if (!prompt) {
@@ -63,14 +64,14 @@ export const get: APIRoute = async ({ request }) => {
     midjourney.debugger = true;
 
     try {
-      let options: MessageTypeProps = { type: 'imagine' };
+      let options: MessageTypeProps = { type: 'imagine', timestamp };
 
-      if (type === 'upscale') {
+      if (type === 'upscale' || type === 'variation') {
         const index = params.get('index');
         if (!index) {
           return new Response(
             JSON.stringify({
-              msg: 'No upscale index provided',
+              msg: `No ${type} index provided`,
             }),
             {
               status: 400,
@@ -78,8 +79,9 @@ export const get: APIRoute = async ({ request }) => {
           );
         }
         options = {
+          ...options,
           index: Number(index),
-          type: 'upscale',
+          type,
         };
       }
 
@@ -182,16 +184,23 @@ export const post: APIRoute = async ({ request }) => {
       });
       midjourney.debugger = true;
 
-      if (type === 'upscale') {
-        const {
-          messageId,
-          index,
-          customId,
-        }: { messageId: string; index: number; customId: string } = body;
+      if (type === 'upscale' || type === 'variation') {
+        const { messageId, customId }: { messageId: string; customId: string } =
+          body;
 
-        await midjourney.createUpscale({
+        if (!messageId || !customId) {
+          return new Response(
+            JSON.stringify({
+              msg: 'No messageId or customId',
+            }),
+            {
+              status: 400,
+            }
+          );
+        }
+
+        await midjourney.createUpscaleOrVariation(type, {
           messageId,
-          index,
           customId,
         });
       } else {

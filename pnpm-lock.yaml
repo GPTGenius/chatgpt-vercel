@@ -36,7 +36,7 @@ specifiers:
   markdown-it-highlightjs: ^4.0.1
   markdown-it-kbd: ^2.2.2
   medium-zoom: ^1.0.8
-  midjourney-fetch: 1.0.0-beta.0
+  midjourney-fetch: 1.0.0
   prettier: ^2.8.4
   prettier-plugin-astro: ^0.8.0
   punycode: ^2.3.0
@@ -66,7 +66,7 @@ dependencies:
   markdown-it-highlightjs: 4.0.1
   markdown-it-kbd: 2.2.2
   medium-zoom: 1.0.8
-  midjourney-fetch: 1.0.0-beta.0
+  midjourney-fetch: 1.0.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   replicate-fetch: 0.1.1
@@ -4060,11 +4060,12 @@ packages:
       braces: 3.0.2
       picomatch: 2.3.1
 
-  /midjourney-fetch/1.0.0-beta.0:
-    resolution: {integrity: sha512-ZBaUHmpXvav6UFi0xWVbD92WqReaYpcgSMliKJxWAQPtqD8UFuvSHON1cqP4z6nPJ3748cxA+WpA8eh8r6kN0w==}
+  /midjourney-fetch/1.0.0:
+    resolution: {integrity: sha512-UKZ7UxjsaBAxfA5YwMTMUxCkocFjWitjoabWpiDk8II9EsjpgOsHeXw3jqrFw9HpcF3SL5SH1NZSXF2W8mBpQA==}
     engines: {node: '>=18', pnpm: '>=8'}
     dependencies:
       '@sapphire/snowflake': 3.5.1
+      dayjs: 1.11.7
     dev: false
 
   /mime/1.6.0:
