@@ -66,15 +66,17 @@ const ContentHeader: FC<ContentHeaderProps> = ({
             }}
           />
         </Tooltip>
-        <Tooltip title={i18n.action_prompt}>
-          <ConfigIcon
-            name="ri-user-add-line mr-2"
-            onClick={() => {
-              setText('/');
-              setShowPrompt(true);
-            }}
-          />
-        </Tooltip>
+        {conversation.mode === 'image' ? null : (
+          <Tooltip title={i18n.action_prompt}>
+            <ConfigIcon
+              name="ri-user-add-line mr-2"
+              onClick={() => {
+                setText('/');
+                setShowPrompt(true);
+              }}
+            />
+          </Tooltip>
+        )}
         <ConfigIcon
           name="ri-settings-3-line"
           onClick={() => setActiveSetting((active) => !active)}
