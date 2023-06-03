@@ -34,7 +34,7 @@ const MessageItem: FC<{
       {message.role === 'assistant' ? (
         <SystemAvatar className="mt-[14px] mr-2" role={message.imageModel} />
       ) : null}
-      <div>
+      <div className="overflow-hidden">
         <div
           dangerouslySetInnerHTML={{
             __html: isExpired
@@ -45,7 +45,7 @@ const MessageItem: FC<{
             message.role === 'user' ? 'bg-gradient text-white' : 'bg-[#ebeced]'
           } ${
             mode === 'image' ? 'img-no-margin' : ''
-          } break-words overflow-hidden rounded-[16px]`}
+          } break-words rounded-[16px]`}
         />
         {createdAt ? (
           <div

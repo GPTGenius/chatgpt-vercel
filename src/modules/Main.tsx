@@ -194,10 +194,14 @@ const Main: FC<{ lang: Lang; inVercel: boolean }> = ({ lang, inVercel }) => {
             </>
           ) : (
             <>
-              <div className={activeSetting ? 'w-1/4' : 'w-1/3'}>
+              <div
+                className={`${activeSetting ? 'w-1/4' : 'w-1/3'} max-w-[400px]`}
+              >
                 {getSidebar()}
               </div>
-              <div className={`${activeSetting ? 'w-3/4' : 'w-2/3'} flex`}>
+              <div
+                className={`${activeSetting ? 'w-3/4' : 'w-2/3'} flex flex-1`}
+              >
                 <div
                   className={`h-full ${
                     activeSetting ? 'w-2/3' : 'w-full'
@@ -206,7 +210,7 @@ const Main: FC<{ lang: Lang; inVercel: boolean }> = ({ lang, inVercel }) => {
                   {currentId ? getContent() : getEmpty()}
                 </div>
                 {activeSetting ? (
-                  <div className="w-1/3">{getConfigration()}</div>
+                  <div className="w-1/3 max-w-[400px]">{getConfigration()}</div>
                 ) : null}
               </div>
             </>
