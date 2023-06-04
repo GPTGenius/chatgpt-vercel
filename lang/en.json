@@ -2,6 +2,7 @@
   "default_text_tips": "Powered by OpenAI and Vercel\n- Chat with us now. Press `Enter` to send and `Shift`+`Enter` to add a new line. \n- Input `/` or click the button at the bottom left to add a preset prompt",
   "default_image_tips": "Powered by OpenAI, Replicate and Vercel\n- Chat with us now. Press `Enter` to send and `Shift`+`Enter` to add a new line. \n- The image generation does not support continuous dialogue. Please input directly the desired image effect, for example: `a cat`.\n- For model `DALL-E`, expend `OpenAI` tokens. The effective access time for the image link is `2` hours. Please make sure to save it in time if necessary.\n- For model `Midjourney`, depending on the `Discord` configurations, image generation may take a while, with a default timeout of `5` minutes. Please be patient and wait.\n- For model `Replicate`, there are certain free allowances, but they are only available for local and custom deployments. It is recommended to add the prefix `mdjrny-v4 style`",
   "chat_placeholder": "Start a conversation",
+  "chat_expanded_placeholder": "Press `Enter` to add a new line and `Shirt` + `Enter` to send",
   "empty_conversation": "Please select a conversation",
   "search_placeholder": "Search",
   "action_clear": "Clear all conversations",

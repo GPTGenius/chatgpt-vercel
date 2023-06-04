@@ -2,6 +2,7 @@
   "default_text_tips": "由 OpenAI 和 Vercel 提供支持\n- 点击下方发起聊天，`Enter`键发送，`Shift`+`Enter`键换行\n- 输入`/`或者点击左下角按钮添加预设提示",
   "default_image_tips": "由 OpenAI、Replicate 和 Vercel 提供支持\n- 点击下方发起聊天，`Enter`键发送，`Shift`+`Enter`键换行\n- 图片生成不支持连续对话，直接输入你想要的图片效果，例如：`一只猫`\n- 对于 `DALL-E` 模型，消耗 `OpenAI` token，图片链接的有效访问时间为 `2` 小时，如有需要请及时保存\n- 对于 `Midjourney` 模型，依赖 `Discord` 相关配置，图片生成时间一般较长，默认超时时间为 `5` 分钟，请耐心等待\n- 对于 `Replicate` 模型，有一定免费次数但仅本地和自定义部署时可用，推荐使用英文且加上前缀 `mdjrny-v4 style`",
   "chat_placeholder": "开始聊天",
+  "chat_expanded_placeholder": "`Enter` 换行, `Shirt` + `Enter` 发送",
   "empty_conversation": "请点击左侧对话",
   "search_placeholder": "搜索",
   "action_clear": "清空所有会话",

@@ -32,7 +32,7 @@ const MessageInput: FC<{
   const { i18n, currentId } = useContext(GlobalContext);
   const [promptKeyword, setPromptKeyword] = useState('');
   const [isInputComposition, setIsInputComposition] = useState(false);
-
+  const [isExpanded, setIsExpanded] = useState(false);
   // textarea ref
   const ref = useRef(null);
 
@@ -66,7 +66,7 @@ const MessageInput: FC<{
   }, [currentId]);
 
   return (
-    <div className="flex items-center p-5 pt-5">
+    <div className="flex items-start p-5 pt-5">
       <PromptSelect
         keyword={promptKeyword}
         showPrompt={showPrompt}
@@ -75,7 +75,11 @@ const MessageInput: FC<{
         <div className="flex-1 border border-[#dfdfdf] rounded-lg relative">
           <Input.TextArea
             ref={ref}
-            placeholder={i18n.chat_placeholder}
+            placeholder={
+              isExpanded
+                ? i18n.chat_expanded_placeholder
+                : i18n.chat_placeholder
+            }
             value={text}
             disabled={loading}
             autoFocus
@@ -94,14 +98,28 @@ const MessageInput: FC<{
             onCompositionStart={() => setIsInputComposition(true)}
             onCompositionEnd={() => setIsInputComposition(false)}
             onPressEnter={(e) => {
-              if (!e.shiftKey && !isInputComposition) {
-                e.preventDefault();
-                handleSubmit();
+              if (isInputComposition) {
+                return;
               }
+              if (isExpanded && !e.shiftKey) {
+                return;
+              }
+              if (!isExpanded && e.shiftKey) {
+                return;
+              }
+              e.preventDefault();
+              handleSubmit();
             }}
             size="large"
-            autoSize={{ minRows: 1, maxRows: 5 }}
-            allowClear
+            autoSize={isExpanded ? null : { minRows: 1, maxRows: 5 }}
+            rows={isExpanded ? 10 : null}
+            style={{ resize: 'none' }}
+          />
+          <i
+            className={`absolute right-0 translate-x-[-50%] top-0 translate-y-[-0%] z-50 cursor-pointer text-gradient text-[24px] ml-[0.5rem] ${
+              isExpanded ? 'ri-fullscreen-exit-fill' : 'ri-fullscreen-fill'
+            }`}
+            onClick={() => setIsExpanded(!isExpanded)}
           />
           {streamMessage && loading ? (
             <Button

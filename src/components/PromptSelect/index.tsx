@@ -67,7 +67,7 @@ const PromptSelect: FC<{
       menu={{ items }}
       placement="topLeft"
       open={items.length > 0 && showPrompt}
-      getPopupContainer={(node) => node}
+      getPopupContainer={(node) => node.parentElement}
       autoAdjustOverflow={false}
     >
       {children}
