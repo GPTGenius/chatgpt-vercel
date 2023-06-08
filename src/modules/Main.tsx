@@ -1,4 +1,11 @@
-import { FC, useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import {
+  FC,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import GlobalContext from '@contexts/global';
 import {
   defaultConversation,
@@ -11,6 +18,7 @@ import { getI18n } from '@utils/i18n';
 import { debounce } from 'lodash-es';
 import { registerMediumZoom, isMatchMobile, setClassByLayout } from '@utils';
 import { ConfigProvider } from 'antd';
+import { writeHistory } from '@utils/history';
 import Sidebar from './Sidebar';
 import Content from './Content';
 import Empty from './Empty';
@@ -36,6 +44,13 @@ const Main: FC<{ lang: Lang; inVercel: boolean }> = ({ lang, inVercel }) => {
 
   // media query
   const [isMobile, setIsMobile] = useState(isMatchMobile());
+
+  // mobile history ref
+  const historyRef = useRef({
+    activeSetting,
+    isMobile,
+    currentId,
+  });
 
   const list = Object.values(conversations).map((conversation) => ({
     key: conversation.id,
@@ -138,6 +153,42 @@ const Main: FC<{ lang: Lang; inVercel: boolean }> = ({ lang, inVercel }) => {
       localStorage.removeItem(localConversationKey);
     }
   }, [conversations, configs.save]);
+
+  useEffect(() => {
+    historyRef.current = {
+      currentId,
+      activeSetting,
+      isMobile,
+    };
+  }, [currentId, activeSetting, isMobile]);
+
+  useEffect(() => {
+    if (isMobile && currentId) {
+      writeHistory();
+    }
+  }, [isMobile, currentId]);
+
+  // handle mobile go back
+  useEffect(() => {
+    const handleHistoryBack = () => {
+      if (historyRef.current.isMobile) {
+        if (historyRef.current.currentId) {
+          if (historyRef.current.activeSetting) {
+            setActiveSetting(false);
+          } else {
+            setCurrentId(undefined);
+          }
+        } else {
+          window.history.go(-1);
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handleHistoryBack);
+    return () => {
+      window.removeEventListener('popstate', handleHistoryBack);
+    };
+  }, []);
 
   const getSidebar = () => <Sidebar data={list} />;
 

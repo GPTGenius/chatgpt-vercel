@@ -29,6 +29,12 @@ const MessageItem: FC<{
   const { i18n, isMobile } = useContext(GlobalContext);
   const isExpired = message.expiredAt && message.expiredAt <= Date.now();
   const createdAt = getRelativeTime(message.createdAt, true);
+
+  const onCopy = () => {
+    copyToClipboard(message.content);
+    GlobalMessage.success(i18n.success_copy);
+  };
+
   return (
     <div
       className={`msg-fade-in flex items-start ${
@@ -66,7 +72,7 @@ const MessageItem: FC<{
           } break-words rounded-[16px]`}
         />
         <div
-          className={`message-box-hover hover:visible flex justify-between items-end ${
+          className={`message-box-hover hover:visible flex justify-between items-center ${
             isMobile ? '' : 'invisible'
           }`}
         >
@@ -75,17 +81,20 @@ const MessageItem: FC<{
           ) : (
             <div />
           )}
-          <div className="flex items-center">
-            <CheckableTag
-              checked={false}
-              className="mb-[2px] mr-0 text-[#a1a7a8]"
-              onClick={() => {
-                copyToClipboard(message.content);
-                GlobalMessage.success(i18n.success_copy);
-              }}
-            >
-              {i18n.action_copy}
-            </CheckableTag>
+          <div className="flex items-center ml-1">
+            {isMobile ? (
+              <div className="text-[#a1a7a8] text-xs" onClick={onCopy}>
+                {i18n.action_copy}
+              </div>
+            ) : (
+              <CheckableTag
+                checked={false}
+                className="mb-[2px] mr-0 text-[#a1a7a8]"
+                onClick={onCopy}
+              >
+                {i18n.action_copy}
+              </CheckableTag>
+            )}
           </div>
         </div>
       </div>
