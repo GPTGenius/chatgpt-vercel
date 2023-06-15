@@ -8,6 +8,7 @@ import {
   type MessageType,
   type MessageTypeProps,
 } from 'midjourney-fetch';
+import { discordImageCdn } from '@configs/server';
 import {
   apiKeyStrategy,
   apiKeys,
@@ -17,6 +18,7 @@ import {
   dicordServerId,
   discordChannelId,
   discordToken,
+  discordImageProxy,
 } from '.';
 
 export { config };
@@ -88,7 +90,23 @@ export const get: APIRoute = async ({ request }) => {
       const message = await midjourney.getMessage(prompt, options);
 
       if (message) {
-        return new Response(JSON.stringify(message), { status: 200 });
+        return new Response(
+          JSON.stringify(
+            discordImageProxy
+              ? {
+                  ...message,
+                  attachments: message.attachments.map((attachment) => ({
+                    ...attachment,
+                    url: attachment.url.replace(
+                      discordImageCdn,
+                      discordImageProxy
+                    ),
+                  })),
+                }
+              : message
+          ),
+          { status: 200 }
+        );
       }
 
       return new Response(JSON.stringify({ msg: 'No content found' }), {

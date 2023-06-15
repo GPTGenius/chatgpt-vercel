@@ -103,7 +103,8 @@ All deployment configurations could be configured in the `.env` file or in **Env
 | OPENAI_API_BASE_URL | api.openai.com | The default address of the requested api                                                                                              |
 | DISCORD_SERVER_ID   | -              | Discord server id                                                                                                                     |
 | DISCORD_CHANNEL_ID  | -              | Discord channel id                                                                                                                    |
-| DISCORD_TOKEN       | -              | Discord token                                                                                                                         |  
+| DISCORD_TOKEN       | -              | Discord token                                                                                                                         |
+| DISCORD_IMAGE_PROXY | -              | Discord image proxy url                                                                                                               |  
 
 
 ### Global Configurations
