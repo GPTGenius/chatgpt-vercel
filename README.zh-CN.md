@@ -114,7 +114,8 @@
 | OPENAI_API_BASE_URL | api.openai.com | 请求 api 的默认地址                                                                                  |
 | DISCORD_SERVER_ID   | -              | Discord 服务器 id                                                                                   |
 | DISCORD_CHANNEL_ID  | -              | Discord 频道 id                                                                                     |
-| DISCORD_TOKEN       | -              | Discord token                                                                                       |                   
+| DISCORD_TOKEN       | -              | Discord token                                                                                       |
+| DISCORD_IMAGE_PROXY | -              | Discord 返回图片代理地址                                                                             |                   
 
 
 ### 全局配置
