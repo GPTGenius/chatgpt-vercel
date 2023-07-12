@@ -17,11 +17,10 @@ export const apiBaseUrl =
   'api.openai.com';
 
 // use proxy in local env
-export const baseURL = (
-  process.env.NODE_ENV === 'development' && !disableProxy
-    ? localProxy
-    : apiBaseUrl
-)?.replace(/^https?:\/\//i, '');
+export const baseURL = (disableProxy ? apiBaseUrl : localProxy)?.replace(
+  /^https?:\/\//i,
+  ''
+);
 
 export const apiKeyStrategy: StrategyMode =
   import.meta.env.API_KEY_STRATEGY || process.env.API_KEY_STRATEGY || 'random';

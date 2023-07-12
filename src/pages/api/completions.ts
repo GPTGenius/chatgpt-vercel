@@ -21,27 +21,27 @@ export const post: APIRoute = async ({ request }) => {
   let { key, model } = body;
 
   if (!key) {
+    // 无key 验证密码
+    if (pwd && password !== pwd) {
+      return new Response(
+        JSON.stringify({
+          msg: 'No password or incorrect password, or you can provide an API key',
+        }),
+        {
+          status: 401,
+        }
+      );
+    }
+    // 验证通过后使用配置的 key
     const next = loadBalancer(apiKeys, apiKeyStrategy);
     key = next();
   }
-
-  model = model || defaultModel;
-
-  if (pwd && password !== pwd) {
-    return new Response(
-      JSON.stringify({ msg: 'No password or wrong password' }),
-      {
-        status: 401,
-      }
-    );
-  }
-
   if (!key) {
     return new Response(JSON.stringify({ msg: 'No API key provided' }), {
       status: 400,
     });
   }
-
+  model = model || defaultModel;
   if (!supportedModels.includes(model)) {
     return new Response(
       JSON.stringify({ msg: `Not supported model ${model}` }),
