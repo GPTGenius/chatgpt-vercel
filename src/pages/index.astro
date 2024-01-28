@@ -11,7 +11,7 @@ const lang: Lang = import.meta.env.LANGUAGE || process.env.LANGUAGE || 'en';
 const inVercel = !!process.env.VERCEL;
 ---
 
-<Layout title="ChatGPT">
+<Layout title="Building NEXTera">
   <div id="container" class="container-default">
     <Main lang={lang} inVercel={inVercel} client:only="react" />
   </div>
