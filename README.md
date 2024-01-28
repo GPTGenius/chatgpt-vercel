@@ -1,6 +1,6 @@
 ![](assets/preview.png)
 
-<h2 align="center">ChatGPT-Vercel</h2>
+<h2 align="center">NEXTera-Vercel</h2>
 
 <p align="center">
   <a href="https://github.com/GPTGenius/chatgpt-vercel/tags">
